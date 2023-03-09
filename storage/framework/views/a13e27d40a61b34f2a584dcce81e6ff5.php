@@ -10,9 +10,14 @@
     <div class="p-4 ">
         <div class="pb-2 flex justify-between border-b ">
             <div class="text-lg font-medium uppercase align-baseline inline-block leading-none py-3">Regional Summary</b> </div>
-            <div class="flex justify-center space-x-4 ">
+            <div class="flex justify-center space-x-2 ">
                 <div class="w-60">
                     <input type="date"  class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500">
+                </div>
+                <div class="w-60">
+                    <select class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500">
+                        <option value="">Select Region</option>
+                    </select>
                 </div>
                 <button type="button" class=" text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs px-5 py-2.5 mb-1  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex justify-between space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 mr-1">

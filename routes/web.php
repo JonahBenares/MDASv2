@@ -12,6 +12,8 @@ use App\Http\Controllers\ReportRegionalAverageController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PowerPlantController;
 use App\Http\Controllers\PowerPlantTypeController;
+use App\Http\Controllers\CommodityController;
+use App\Http\Controllers\ResourceTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,10 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::resource('commodity', CommodityController::class);
+Route::resource('resourcetype', ResourceTypeController::class);
+
 
 Route::resource('uploadschedules', UploadScheduleController::class);
 Route::resource('uploadhap', UploadHAPController::class);

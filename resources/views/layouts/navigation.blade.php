@@ -69,10 +69,16 @@
                           	<li>
                             	<a href="{{ route('location.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Location</a>
                           	</li>
-                              <li>
+                            <li>
+                            	<a href="{{ route('commodity.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Commodity</a>
+                          	</li>
+                            <li>
+                            	<a href="{{ route('resourcetype.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Resource Type</a>
+                          	</li>
+                            <li>
                             	<a href="{{ route('powerplant.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Power Plant</a>
                           	</li>
-                              <li>
+                            <li>
                             	<a href="{{ route('powerplanttype.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Power Plant Type</a>
                           	</li>
                         </ul>

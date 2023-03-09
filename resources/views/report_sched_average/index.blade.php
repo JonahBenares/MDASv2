@@ -55,7 +55,7 @@
         </div>
         <div class="relative overflow-x-auto h-96">
             <table class="w-full text-sm text-left text-gray-500 white:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400 sticky top-0 z-50">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400 sticky top-0 z-10">
                     <tr>
                         <th scope="col" class="px-1 py-1 border align-bottom" width="10%">Resource_ID</th>
                         <th scope="col" class="px-1 py-1 border" align="center">1</th>
