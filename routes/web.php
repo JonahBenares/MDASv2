@@ -11,6 +11,7 @@ use App\Http\Controllers\ReportRegionalController;
 use App\Http\Controllers\ReportRegionalAverageController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PowerPlantController;
+use App\Http\Controllers\PowerPlantTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +50,5 @@ Route::resource('reportregional', ReportRegionalController::class);
 Route::resource('reportregionalaverage', ReportRegionalAverageController::class);
 Route::resource('location', LocationController::class);
 Route::resource('powerplant', PowerPlantController::class);
+Route::resource('powerplanttype', PowerPlantTypeController::class);
 

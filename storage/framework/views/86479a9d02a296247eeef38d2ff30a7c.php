@@ -114,7 +114,7 @@
                             	<a href="<?php echo e(route('powerplant.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Power Plant</a>
                           	</li>
                               <li>
-                            	<a href="#" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Power Plant Type</a>
+                            	<a href="<?php echo e(route('powerplanttype.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Power Plant Type</a>
                           	</li>
                         </ul>
                     </div>
