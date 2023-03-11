@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+[x-cloak] {
+  display: none;
+}
 /* Works on Firefox */
 * {
     scrollbar-width: thin;
@@ -31,6 +33,6 @@
     border: 3px solid rgba(255, 255, 255, 0);
   }
   
-  [x-cloak] {
+  div.bg-gray-900{
     display: none;
   }
