@@ -9,7 +9,7 @@
 <?php $component->withAttributes([]); ?>
     <div class="p-4 ">
         <div class="pb-4 flex justify-between">
-            <div class="text-lg  font-medium uppercase">Schedule & Prices</div>
+            <div class="text-lg  font-medium uppercase">Upload Prices & Schedule & Load</div>
             <div class="">
                 <a href="<?php echo e(route('uploadschedules.index')); ?>" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Upload New</a>
             </div>

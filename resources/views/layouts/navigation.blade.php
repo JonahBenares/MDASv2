@@ -101,7 +101,7 @@
                         </div>
                         <ul class="py-2 text-sm text-gray-700 white:text-gray-400" aria-labelledby="dropdownLargeButton">
                           	<li>
-                            	<a href="{{ route('uploadschedules.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Upload Prices & Schedule & Load</a>
+                            	<a href="{{ route('uploadschedules.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Prices & Schedule & Load</a>
                           	</li>
                           	<li>
                             	<a href="{{ route('uploadhap.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Hour Ahead Projection</a>
@@ -129,10 +129,10 @@
                         </div>
                         <ul class="py-2 text-sm text-gray-700 white:text-gray-400" aria-labelledby="dropdownLargeButton">
                             <li>
-                              <a href="{{ route('reportschedules.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Upload Prices & Schedule & Load</a>
+                              <a href="{{ route('reportschedules.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Prices & Schedule & Load</a>
                             </li>
                             <li>
-                                <a href="{{ route('reportschedaverage.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Upload Prices & Schedule & Load <b>(Average)</b></a>
+                                <a href="{{ route('reportschedaverage.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Prices & Schedule & Load <b>(Average)</b></a>
                               </li>
                             <li>
                               <a href="{{ route('uploadhap.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Hour Ahead Projection</a>
