@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commodity;
+use App\Models\Grid;
 use Illuminate\Http\Request;
 
-class CommodityController extends Controller
+class GridController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('mf_commodity.index');
+        return view('mf_grid.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class CommodityController extends Controller
      */
     public function create()
     {
-        return view('mf_commodity.create');
+        return view('mf_grid.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class CommodityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Commodity $commodity)
+    public function show(Grid $grid)
     {
         //
     }
@@ -42,15 +42,15 @@ class CommodityController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Commodity $id)
+    public function edit(Grid $id)
     {
-        return view('mf_commodity.edit', $id);
+        return view('mf_grid.edit', $id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Commodity $commodity)
+    public function update(Request $request, Grid $grid)
     {
         //
     }
@@ -58,7 +58,7 @@ class CommodityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Commodity $commodity)
+    public function destroy(Grid $grid)
     {
         //
     }
