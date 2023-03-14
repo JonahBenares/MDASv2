@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('region', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grid_id')->constrained();
+            $table->foreignId('grid_id')->constrained('grid');
             $table->integer('region_code')->default(0);
             $table->string('region_name')->nullable();
             $table->timestamps();
