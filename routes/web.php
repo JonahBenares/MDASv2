@@ -12,7 +12,7 @@ use App\Http\Controllers\ReportRegionalAverageController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\PowerPlantController;
 use App\Http\Controllers\PowerPlantTypeController;
-use App\Http\Controllers\CommodityController;
+use App\Http\Controllers\GridController;
 use App\Http\Controllers\ResourceTypeController;
 
 /*
@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('commodity', CommodityController::class);
+Route::resource('grid', GridController::class);
 Route::resource('resourcetype', ResourceTypeController::class);
 
 
