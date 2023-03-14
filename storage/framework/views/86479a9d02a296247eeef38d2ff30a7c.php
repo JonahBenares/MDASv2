@@ -108,11 +108,9 @@
                         </div>
                         <ul class="py-2 text-sm text-gray-700 white:text-gray-400" aria-labelledby="dropdownLargeButton">
                           	<li>
-                            	<a href="<?php echo e(route('location.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Location</a>
+                            	<a href="<?php echo e(route('region.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Region</a>
                           	</li>
-                            <li>
-                            	<a href="<?php echo e(route('commodity.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Commodity</a>
-                          	</li>
+                            
                             <li>
                             	<a href="<?php echo e(route('resourcetype.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Resource Type</a>
                           	</li>

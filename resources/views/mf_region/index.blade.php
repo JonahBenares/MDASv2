@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="p-4 ">
         <div class="mb-4 pb-2 flex justify-between border-b">
-            <div class="text-lg  font-medium uppercase py-2">Location</div>
+            <div class="text-lg  font-medium uppercase py-2">Region</div>
             <div class="">
-                <a href="{{ route('location.create') }}" class=""> 
+                <a href="{{ route('region.create') }}" class=""> 
                     <div class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1">
                             <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
@@ -18,7 +18,7 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            LVM
+                            Grid
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Code
@@ -45,7 +45,7 @@
                             Laptop
                         </td>
                         <td class="px-6 py-4 flex justify-center space-x-1">
-                            <a href="{{ route('location.edit','1') }}" class="">
+                            <a href="{{ route('region.edit','1') }}" class="">
                                 <div class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-2xl text-sm px-2 py-2 white:bg-indigo-600 white:hover:bg-indigo-700 focus:outline-none white:focus:ring-indigo-800">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
                                         <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
@@ -74,7 +74,7 @@
                             Laptop
                         </td>
                         <td class="px-6 py-4 flex justify-center space-x-1">
-                            <a href="{{ route('location.edit','1') }}" class="">
+                            <a href="{{ route('region.edit','1') }}" class="">
                                 <div class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-2xl text-sm px-2 py-2 white:bg-indigo-600 white:hover:bg-indigo-700 focus:outline-none white:focus:ring-indigo-800">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
                                         <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
@@ -102,7 +102,7 @@
                             Laptop
                         </td>
                         <td class="px-6 py-4 flex justify-center space-x-1">
-                            <a href="{{ route('location.edit','1') }}" class="">
+                            <a href="{{ route('region.edit','1') }}" class="">
                                 <div class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-2xl text-sm px-2 py-2 white:bg-indigo-600 white:hover:bg-indigo-700 focus:outline-none white:focus:ring-indigo-800">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
                                         <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
