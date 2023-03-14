@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Location;
+use App\Models\Region;
 use Illuminate\Http\Request;
 
-class LocationController extends Controller
+class RegionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('mf_location.index');
+        return view('mf_region.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        return view('mf_location.create');
+        return view('mf_region.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class LocationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Location $location)
+    public function show(Region $region)
     {
         //
     }
@@ -42,15 +42,15 @@ class LocationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Location $id)
+    public function edit(Region $id)
     {
-        return view('mf_location.edit',$id);
+        return view('mf_region.edit',$id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Location $location)
+    public function update(Request $request, Region $region)
     {
         //
     }
@@ -58,7 +58,7 @@ class LocationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Location $location)
+    public function destroy(Region $region)
     {
         //
     }

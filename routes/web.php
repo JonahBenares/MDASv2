@@ -9,10 +9,10 @@ use App\Http\Controllers\ReportScheduleController;
 use App\Http\Controllers\ReportSchedAverageController;
 use App\Http\Controllers\ReportRegionalController;
 use App\Http\Controllers\ReportRegionalAverageController;
-use App\Http\Controllers\LocationController;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\PowerPlantController;
 use App\Http\Controllers\PowerPlantTypeController;
-use App\Http\Controllers\CommodityController;
+use App\Http\Controllers\GridController;
 use App\Http\Controllers\ResourceTypeController;
 
 /*
@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('commodity', CommodityController::class);
+Route::resource('grid', GridController::class);
 Route::resource('resourcetype', ResourceTypeController::class);
 
 
@@ -54,7 +54,7 @@ Route::resource('reportschedules', ReportScheduleController::class);
 Route::resource('reportschedaverage', ReportSchedAverageController::class);
 Route::resource('reportregional', ReportRegionalController::class);
 Route::resource('reportregionalaverage', ReportRegionalAverageController::class);
-Route::resource('location', LocationController::class);
+Route::resource('region', RegionController::class);
 Route::resource('powerplant', PowerPlantController::class);
 Route::resource('powerplanttype', PowerPlantTypeController::class);
 
