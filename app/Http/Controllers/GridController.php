@@ -12,7 +12,8 @@ class GridController extends Controller
      */
     public function index()
     {
-        return view('mf_grid.index');
+        $grid=Grid::all()->sortBy('grid_name');
+        return view('mf_grid.index',compact('grid'));
     }
 
     /**
@@ -28,7 +29,13 @@ class GridController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input=$request->all();
+        $res=Grid::create($input);
+        if($res){
+            return redirect()->route('grid.create')->with('success',"Grid Added Successfully");
+        }else{
+            return redirect()->route('grid.create')->with('fail',"Error! Try Again!");
+        }
     }
 
     /**
@@ -42,17 +49,21 @@ class GridController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Grid $id)
+    public function edit($id)
     {
-        return view('mf_grid.edit', $id);
+        $grid=Grid::find($id);
+        return view('mf_grid.edit', compact('grid'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Grid $grid)
+    public function update(Request $request, $id)
     {
-        //
+        $grid = Grid::find($id);
+        $input = $request->all();
+        $grid->update($input);
+        return redirect()->route('grid.edit',$id)->with('success',"Grid Updated Successfully");
     }
 
     /**

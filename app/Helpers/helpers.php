@@ -1,12 +1,12 @@
 <?php
-use App\Models\Location;
-if (!function_exists('getLocationName')) {
-    function getLocationName($id){
-        $emp= Location::select('full_name')
+use App\Models\Grid;
+if (!function_exists('getGridName')) {
+    function getGridName($id){
+        $emp= Grid::select('grid_name')
         ->where("id","=",$id)
         ->get();
 
-        $name= $emp[0]['full_name'];
+        $name= $emp[0]['grid_name'];
 
         return $name;
     }

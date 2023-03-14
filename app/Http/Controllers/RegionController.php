@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Region;
+use App\Models\Grid;
 use Illuminate\Http\Request;
 
 class RegionController extends Controller
@@ -12,7 +13,8 @@ class RegionController extends Controller
      */
     public function index()
     {
-        return view('mf_region.index');
+        $region=Region::all()->sortBy('region_name');
+        return view('mf_region.index',compact('region'));
     }
 
     /**
@@ -20,7 +22,8 @@ class RegionController extends Controller
      */
     public function create()
     {
-        return view('mf_region.create');
+        $grid=Grid::all();
+        return view('mf_region.create',compact('grid'));
     }
 
     /**
@@ -28,7 +31,13 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input=$request->all();
+        $res=Region::create($input);
+        if($res){
+            return redirect()->route('region.create')->with('success',"Region Added Successfully");
+        }else{
+            return redirect()->route('region.create')->with('fail',"Error! Try Again!");
+        }
     }
 
     /**
@@ -42,17 +51,22 @@ class RegionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Region $id)
+    public function edit($id)
     {
-        return view('mf_region.edit',$id);
+        $grid=Grid::all();
+        $region=Region::find($id);
+        return view('mf_region.edit',compact('grid','region'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Region $region)
+    public function update(Request $request, $id)
     {
-        //
+        $region = Region::find($id);
+        $input = $request->all();
+        $region->update($input);
+        return redirect()->route('region.edit',$id)->with('success',"Region Updated Successfully");
     }
 
     /**
