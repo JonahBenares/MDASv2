@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('summary_id')->default(0);
             $table->foreignId('powerplant_type')->constrained('pp_type');
             $table->foreignId('grid_id')->constrained('grid');
-            $table->foreignId('resource_id')->constrained('pp_resources');
+            $table->foreignId('resource_id')->constrained('pp_resource');
             $table->float('schedule_mw', 10,4)->default(0);
             $table->integer('outage_type')->default(0);
             $table->text('remark')->nullable();
