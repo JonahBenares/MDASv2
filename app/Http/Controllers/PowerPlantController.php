@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PowerPlant;
+use App\Models\Grid;
+use App\Models\PowerplantType;
 use Illuminate\Http\Request;
 
 class PowerPlantController extends Controller
@@ -12,7 +14,9 @@ class PowerPlantController extends Controller
      */
     public function index()
     {
-        return view('power_plant.index');
+        $grid=Grid::all();
+        $powerplant_type=PowerplantType::all();
+        return view('power_plant.index',compact('grid','powerplant_type'));
     }
 
     /**
@@ -20,7 +24,9 @@ class PowerPlantController extends Controller
      */
     public function create()
     {
-        return view('power_plant.create');
+        $grid=Grid::all();
+        $powerplant_type=PowerplantType::all();
+        return view('power_plant.create',compact('grid','powerplant_type'));
     }
 
     /**
@@ -28,7 +34,13 @@ class PowerPlantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input=$request->all();
+        $res=PowerPlant::create($input);
+        if($res){
+            return redirect()->route('powerplant.create')->with('success',"Power Plant Added Successfully!");
+        }else{
+            return redirect()->route('powerplant.create')->with('fail',"Error! Try Again!");
+        }
     }
 
     /**

@@ -14,15 +14,27 @@
             </div>
         </div>
         <div class="relative overflow-x-auto border-b mb-2 pb-4">
-            <form class="">
+            @if(Session::has('success'))
+                <div class="mb-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    <span class="block sm:inline">{{Session::get('success')}}</span>
+                </div>
+            @endif
+            @if(Session::has('fail'))
+                <div class="mb-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <span class="block sm:inline">{{Session::get('fail')}}</span>
+                </div>
+            @endif
+            <form action="{{ route('resourcetype.update',$resource_type->id) }}" method='POST'>
+                @csrf
+                @method('PUT')
                 <div class="flex justify-center space-x-2">
                     <div class="mb-2 w-60">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Code</label>
-                        <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                        <input name="resource_code" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$resource_type->resource_code}}">
                     </div>
                     <div class="mb-2 w-80">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Resource Type</label>
-                        <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                        <input name="resource_name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$resource_type->resource_name}}">
                     </div>
                     <button type="submit" class="mb-2 mt-7 text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center white:bg-indigo-600 white:hover:bg-indigo-600 white:focus:ring-indigo-800">Update</button>
                 </div>

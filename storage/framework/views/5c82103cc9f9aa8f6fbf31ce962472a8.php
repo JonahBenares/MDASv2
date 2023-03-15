@@ -31,6 +31,14 @@
         $(document).ready( function () {
             $('#table-01').DataTable();
         } );
+        $(document).on("click", ".editType", function () {
+            var id = $(this).attr("data-id");
+            var legend = $(this).attr("data-color");
+            var type_name = $(this).attr("data-type");
+            $("#id").val(id);
+            $("#legend").val(legend);
+            $("#type_name").val(type_name);
+        });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </html>

@@ -12,7 +12,8 @@ class PriceNodesController extends Controller
      */
     public function index()
     {
-        return view('mf_pricenodes.index');
+        $price_nodes=PriceNodes::all()->sortBy('description');
+        return view('mf_pricenodes.index',compact('price_nodes'));
     }
 
     /**
@@ -28,7 +29,13 @@ class PriceNodesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input=$request->all();
+        $res=PriceNodes::create($input);
+        if($res){
+            return redirect()->route('pricenodes.create')->with('success',"Price Node Added Successfully");
+        }else{
+            return redirect()->route('pricenodes.create')->with('fail',"Error! Try Again!");
+        }
     }
 
     /**
@@ -42,17 +49,21 @@ class PriceNodesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PriceNodes $id)
+    public function edit($id)
     {
-        return view('mf_pricenodes.edit', $id);
+        $price_nodes=PriceNodes::find($id);
+        return view('mf_pricenodes.edit', compact('price_nodes'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PriceNodes $priceNodes)
+    public function update(Request $request, $id)
     {
-        //
+        $pricenodes = PriceNodes::find($id);
+        $input = $request->all();
+        $pricenodes->update($input);
+        return redirect()->route('pricenodes.edit',$id)->with('success',"Price Node Updated Successfully");
     }
 
     /**

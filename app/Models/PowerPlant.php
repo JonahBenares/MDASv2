@@ -8,4 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class PowerPlant extends Model
 {
     use HasFactory;
+    protected $table = 'powerplants';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'facility_name',
+        'powerplant_type_id',
+        'subtype_id',
+        'operator',
+        'participant_id',
+        'short_name',
+        'region_id',
+        'region',
+        'municipality',
+        'grid_id',
+        'capacity_installed',
+        'capacity_dependable',
+        'number_of_units',
+        'ippa',
+        'fit_approved',
+        'owner_type',
+        'type_of_contract',
+        'status'
+    ];
 }

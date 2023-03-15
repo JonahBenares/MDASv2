@@ -59,4 +59,6 @@ Route::resource('reportregionalaverage', ReportRegionalAverageController::class)
 Route::resource('region', RegionController::class);
 Route::resource('powerplant', PowerPlantController::class);
 Route::resource('powerplanttype', PowerPlantTypeController::class);
+Route::get('/powerplanttype/show/{id}', [PowerPlantTypeController::class, 'show'])->name('show');
+Route::post('/powerplanttype/insertSub', [PowerPlantTypeController::class, 'insertSub'])->name('insertSub');
 

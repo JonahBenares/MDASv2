@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ResourceType extends Model
 {
     use HasFactory;
+    protected $table = 'resource_type';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'resource_code',
+        'resource_name'
+    ];
 }
