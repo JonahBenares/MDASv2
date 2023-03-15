@@ -14,6 +14,7 @@ use App\Http\Controllers\PowerPlantController;
 use App\Http\Controllers\PowerPlantTypeController;
 use App\Http\Controllers\GridController;
 use App\Http\Controllers\ResourceTypeController;
+use App\Http\Controllers\PriceNodesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::resource('grid', GridController::class);
+Route::resource('pricenodes', PriceNodesController::class);
 Route::resource('resourcetype', ResourceTypeController::class);
 
 

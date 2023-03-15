@@ -68,9 +68,12 @@
                         <ul class="py-2 text-sm text-gray-700 white:text-gray-400" aria-labelledby="dropdownLargeButton">
                             <li>
                                 <a href="{{ route('grid.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Grid</a>
-                              </li>
+                            </li>
                           	<li>
                             	<a href="{{ route('region.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Region</a>
+                          	</li>
+                            <li>
+                            	<a href="{{ route('pricenodes.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Price Nodes</a>
                           	</li>
                             <li>
                             	<a href="{{ route('resourcetype.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Resource Type</a>
