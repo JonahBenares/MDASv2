@@ -42,19 +42,19 @@
                     </div>
                 </div>
                 <div class="flex justify-between space-x-2">
-                    <div class="mb-2 w-6/12">
+                    <div class="mb-2 w-full">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Municipality/Province</label>
                         <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                     </div>
-                    <div class="mb-2 w-3/12">
+                    <!-- <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Location</label>
                         <select class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                         </select>
-                    </div>
-                    <div class="mb-2 w-3/12">
+                    </div> -->
+                    <!-- <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Participant ID</label>
                         <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
+                    </div> -->
                 </div>
                 <div class="flex justify-between space-x-2">
                     <div class="mb-2 w-3/12">
@@ -82,16 +82,15 @@
                 <div class="flex justify-between space-x-2">
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">IPPA</label>
-                        <select class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                        </select>
+                        <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                     </div>
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Fit Approved</label>
-                        <select class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light"></select>
+                        <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                     </div>
                     <div class="mb-2 w-2/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Owner Type</label>
-                        <select class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light"></select>
+                        <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                     </div>
                     <div class="mb-2 w-2/12">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Type of Contract</label>
