@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('powerplants', function (Blueprint $table) {
             $table->id();
             $table->string('facility_name')->nullable();
-            $table->foreignId('powerplant_type_id')->constrained('pp_type');
-            $table->foreignId('subtype_id')->constrained('pp_subtype');
+            $table->foreignId('pp_type_id')->references('id')->on('pp_type');
+            $table->foreignId('subtype_id')->references('id')->on('pp_subtype');
             $table->string('operator')->nullable();
             $table->integer('participant_id')->default(0);
             $table->string('short_name')->nullable();
-            $table->foreignId('region_id')->constrained('region');
+            $table->foreignId('region_id')->references('id')->on('region');
             $table->string('municipality')->nullable();
-            $table->foreignId('grid_id')->constrained('grid');
+            $table->foreignId('grid_id')->references('id')->on('grid');
             $table->float('capacity_installed', 10,4)->default(0);
             $table->float('capacity_dependable', 10,4)->default(0);
             $table->integer('number_of_units')->default(0);
