@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pp_resource', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('powerplant_id')->constrained('powerplants');
+            $table->foreignId('powerplant_id')->references('id')->on('powerplants');
             $table->string('resource_id')->nullable();
             $table->string('date_commissioned')->nullable();
             $table->string('hex')->nullable();
