@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('powerplant_type_id')->constrained('pp_type');
             $table->foreignId('subtype_id')->constrained('pp_subtype');
             $table->string('operator')->nullable();
-            $table->dropColumn('participant_id');
+            $table->integer('participant_id')->default(0);
             $table->string('short_name')->nullable();
             $table->foreignId('region_id')->constrained('region');
             $table->string('municipality')->nullable();
@@ -40,6 +40,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('powerplants');
-            $table->integer('participant_id')->default(0);
     }
 };
