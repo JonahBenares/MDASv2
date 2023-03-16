@@ -73,16 +73,49 @@ class PowerPlantTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PowerPlantType $powerPlantType)
+    public function update(Request $request)
     {
-        //
+        // $powerplanttype = PowerPlantType::find($request->id);
+        // $input = $request->all();
+        // $powerplanttype->update($input);
+        $powerplanttype = PowerPlantType::find($request->id);
+        $powerplanttype->update(
+            [
+                'type_name' => $request->type_name,
+                'legend' => $request->legend,
+            ]
+        );
+        return redirect()->route('powerplanttype.index',['id'=>$request->id])->with('success',"Powerplant Type Updated Successfully");
+    }
+
+    public function updateSub(Request $request)
+    {
+        $powerplantsub = PowerPlantSub::find($request->subid);
+        $powerplantsub->update(
+            [
+                'subtype_name' => $request->subtype_name,
+            ]
+        );
+        return redirect()->route('powerplanttype.index',['id'=>$request->type_id])->with('success',"Powerplant Subtype Updated Successfully");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PowerPlantType $powerPlantType)
+    public function destroy($id,$type_id)
     {
-        //
+        PowerPlantSub::find($id)->delete();
+        return redirect()->route('powerplanttype.index',['id'=>$type_id])->with('success',"Powerplant Subtype Deleted Successfully");
+    }
+
+    public function destroyType($id)
+    {
+        $res=PowerPlantSub::where('type_id',$id)->delete();
+        if($res){
+            PowerPlantType::find($id)->delete();
+            return redirect()->route('powerplanttype.index',['id'=>$id])->with('success',"Powerplant Type Deleted Successfully");
+        }else{
+            return redirect()->route('powerplanttype.index',['id'=>$id])->with('fail',"Error! Try Again!");
+        }
     }
 }

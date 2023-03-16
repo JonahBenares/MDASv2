@@ -38,6 +38,77 @@
             $("#legend").val(legend);
             $("#type_name").val(type_name);
         });
+        $(document).on("click", ".editSub", function () {
+            var id = $(this).attr("data-id");
+            var subtype = $(this).attr("data-subtypename");
+            var type = $(this).attr("data-type");
+            $("#subid").val(id);
+            $("#subtype_name").val(subtype);
+            $("#type_id").val(type);
+        });
+        $(document).ready(function() {
+            $('#type-dropdown').on('change', function () {
+                var type_id = this.value;
+                $("#subtype-dropdown").html('');
+                var base_url = '{{URL::to("/")}}';
+                $.ajax({
+                    type: "POST",
+                    url: base_url+"/powerplant/fetchsub",
+                    data: {
+                        type_id: type_id,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    cache: false,
+                    success: function (result) {
+                        $('#subtype-dropdown').html('<option value="">-- Select Subtype --</option>');
+                        $.each(result.subtype, function (key, value) {
+                            $("#subtype-dropdown").append('<option value="' + value.id + '">' + value.subtype_name + '</option>');
+                        });
+                    }
+                });
+            });
+
+            $('#grid-dropdown').on('change', function () {
+                var grid_id = this.value;
+                $("#region-dropdown").html('');
+                $("#region_id").val('');
+                var base_url = '{{URL::to("/")}}';
+                $.ajax({
+                    type: "POST",
+                    url: base_url+"/powerplant/fetchregion",
+                    data: {
+                        grid_id: grid_id,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    cache: false,
+                    success: function (result) {
+                        $('#region-dropdown').html('<option value="">-- Select Region --</option>');
+                        $.each(result.region, function (key, value) {
+                            $("#region-dropdown").append('<option value="' + value.id + '">' + value.region_name + '</option>');
+                        });
+                    }
+                });
+            });
+            $('#region-dropdown').on('change', function () {
+                var region_id = this.value;
+                var base_url = '{{URL::to("/")}}';
+                $.ajax({
+                    type: "POST",
+                    url: base_url+"/powerplant/fetchregionid",
+                    data: {
+                        region_id: region_id,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    cache: false,
+                    success: function (response) {
+                        document.getElementById("region_id").value  = response.region_code;
+                    }
+                });
+            });
+        });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </html>

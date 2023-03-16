@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\PowerPlant;
 use App\Models\Grid;
+use App\Models\Region;
 use App\Models\PowerplantType;
+use App\Models\PowerplantSub;
 use Illuminate\Http\Request;
 
 class PowerPlantController extends Controller
@@ -15,8 +17,8 @@ class PowerPlantController extends Controller
     public function index()
     {
         $grid=Grid::all();
-        $powerplant_type=PowerplantType::all();
-        return view('power_plant.index',compact('grid','powerplant_type'));
+        $powerplant=PowerPlant::all()->sortBy('short_name');
+        return view('power_plant.index',compact('grid','powerplant'));
     }
 
     /**
@@ -25,8 +27,27 @@ class PowerPlantController extends Controller
     public function create()
     {
         $grid=Grid::all();
-        $powerplant_type=PowerplantType::all();
+        $grid=Grid::all();
+        $powerplant_type=PowerplantType::all()->sortBy('type_name');
         return view('power_plant.create',compact('grid','powerplant_type'));
+    }
+
+    public function fetchSub(Request $request)
+    {
+        $data['subtype'] = PowerplantSub::where("type_id", $request->type_id)->get(["subtype_name", "id"]);
+        return response()->json($data);
+    }
+
+    public function fetchRegion(Request $request)
+    {
+        $data['region'] = Region::where("grid_id", $request->grid_id)->get(["region_name", "id"]);
+        return response()->json($data);
+    }
+
+    public function fetchRegionid(Request $request)
+    {
+        $region_code = Region::find($request->region_id);
+        return response()->json($region_code);
     }
 
     /**
@@ -36,6 +57,7 @@ class PowerPlantController extends Controller
     {
         $input=$request->all();
         $res=PowerPlant::create($input);
+        $lastInsertID = $res->id;
         if($res){
             return redirect()->route('powerplant.create')->with('success',"Power Plant Added Successfully!");
         }else{

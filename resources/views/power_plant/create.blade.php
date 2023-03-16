@@ -25,7 +25,7 @@
                     <span class="block sm:inline">{{Session::get('fail')}}</span>
                 </div>
             @endif
-            <form class="mx-20" method="POST" action="{{ route('powerplant.store') }}">
+            <form class="mx-20" method="POST" action="{{ route('powerplant.store') }}" onsubmit="return confirm('Are you sure you want to proceed next?');">
                 @csrf
                 <div class="flex justify-between space-x-2">
                     <div class="mb-2 w-9/12">
@@ -41,11 +41,16 @@
                 <div class="flex justify-between space-x-2">
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Type</label>
-                        <select name="powerplant_type_id" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light"></select>
+                        <select name="powerplant_type_id" id="type-dropdown" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                            <option value="">--Select Type--</option>
+                            @foreach($powerplant_type AS $pt)
+                                <option value="{{$pt->id}}">{{$pt->type_name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Sub Type</label>
-                        <select name="subtype_id" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light"></select>
+                        <select name="subtype_id" id="subtype-dropdown" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light"></select>
                     </div>
                     <div class="mb-2 w-6/12">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Operator</label>
@@ -59,7 +64,7 @@
                     </div>
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Grid</label>
-                        <select name="grid_id" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                        <select name="grid_id" id="grid-dropdown" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                             <option value="">--Select Grid--</option>
                             @foreach($grid AS $g)
                                 <option value="{{$g->id}}">{{$g->grid_name}}</option>
@@ -68,11 +73,11 @@
                     </div>
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Region</label>
-                        <input name="region" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                        <select name="region" id="region-dropdown" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light"></select>
                     </div>
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Region ID</label>
-                        <input name="region_id" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                        <input name="region_id" id='region_id' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                     </div>
                 </div>
                 <div class="flex justify-between space-x-2">
@@ -116,7 +121,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end space-x-2 mt-2">
-                    <button type="submit" class="mb-2 w-2/12 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800">Save</button>
+                    <button type="submit" class="mb-2 w-2/12 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800">Next</button>
                 </div>
             </form>
         </div>
