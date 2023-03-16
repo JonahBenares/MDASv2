@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="p-4 ">
         <div class="mb-4 pb-2 flex justify-between border-b">
-            <div class="text-lg  font-medium uppercase py-2">Power Plant <span class="bg-blue-500 rounded-2xl p-1 px-2 font-bold text-white text-xs">Add new</span></div>
+            <div class="text-lg  font-medium uppercase py-2">Add Unit <span class="bg-blue-500 rounded-2xl p-1 px-2 font-bold text-white text-xs">Add new</span></div>
             <div class="">
                 <a href="{{ route('powerplant.index') }}" class=""> 
                     <div class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 white:bg-blue-600 white:hover:bg-blue-700 focus:outline-none white:focus:ring-blue-800 flex">
@@ -27,101 +27,25 @@
             @endif
             <form class="mx-20" method="POST" action="{{ route('powerplant.store') }}" onsubmit="return confirm('Are you sure you want to proceed next?');">
                 @csrf
+                @for($x=1;$x<=$count;$x++)
                 <div class="flex justify-between space-x-2">
                     <div class="mb-2 w-9/12">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Facility Name</label>
-                        <input name="facility_name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Resource ID</label>
+                        <input name="resource_id" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                     </div>
                     <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Short Name</label>
-                        <input name="short_name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                    
-                </div>
-                <div class="flex justify-between space-x-2">
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Type</label>
-                        <select name="powerplant_type_id" id="type-dropdown" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                            <option value="">--Select Type--</option>
-                            @foreach($powerplant_type AS $pt)
-                                <option value="{{$pt->id}}">{{$pt->type_name}}</option>
-                            @endforeach
-                        </select>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Date Comissioned</label>
+                        <input type="date" name="date_commissioned" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                     </div>
                     <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Sub Type</label>
-                        <select name="subtype_id" id="subtype-dropdown" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light"></select>
-                    </div>
-                    <div class="mb-2 w-6/12">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Operator</label>
-                        <input name="operator" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Color</label>
+                        <input type="color" name="legend" id='legend' class="block text-sm w-full h-10 p-1  text-gray-600  bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40">
                     </div>
                 </div>
-                <div class="flex justify-between space-x-2">
-                    <div class="mb-2 w-3/12">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Municipality/Province</label>
-                        <input name="municipality" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Grid</label>
-                        <select name="grid_id" id="grid-dropdown" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                            <option value="">--Select Grid--</option>
-                            @foreach($grid AS $g)
-                                <option value="{{$g->id}}">{{$g->grid_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Region</label>
-                        <select name="region" id="region-dropdown" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light"></select>
-                    </div>
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Region ID</label>
-                        <input name="region_id" id='region_id' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                </div>
-                <div class="flex justify-between space-x-2">
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Capacity Installed (MW)</label>
-                        <input name="capacity_installed" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Capacity Dependable (MW)</label>
-                        <input name="capacity_dependable" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                    <div class="mb-2 w-3/12">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Number of Units</label>
-                        <input name="number_of_units" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">IPPA</label>
-                        <input name="ippa" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                </div>
-                <div class="flex justify-between space-x-2">
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Fit Approved</label>
-                        <input name="fit_approved" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Owner Type</label>
-                        <input name="owner_type" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                    <div class="mb-2 w-3/12">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Type of Contract</label>
-                        <input name="type_of_contract" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                    </div>
-                    <div class="mb-2 w-3/12">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Status</label>
-                        <select name="status" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
-                            <option value="">--Select Status--</option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-                    </div>
-                </div>
+                @endfor
                 <div class="flex justify-end space-x-2 mt-2">
-                    <button type="submit" class="mb-2 w-2/12 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800">Next</button>
+                    <input type="hidden" name='id' value="{{$id->id}}">
+                    <button type="submit" class="mb-2 w-2/12 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800">Save</button>
                 </div>
             </form>
         </div>

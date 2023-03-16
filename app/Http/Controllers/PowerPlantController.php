@@ -55,22 +55,40 @@ class PowerPlantController extends Controller
      */
     public function store(Request $request)
     {
-        $input=$request->all();
-        $res=PowerPlant::create($input);
-        $lastInsertID = $res->id;
+        // $input=$request->all();
+        // $res=PowerPlant::create($input);
+        $res=PowerPlant::insertGetId([
+            'facility_name'=> $request->facility_name,
+            'pp_type_id'=> $request->pp_type_id,
+            'subtype_id'=> $request->subtype_id,
+            'operator'=> $request->operator,
+            'short_name'=> $request->short_name,
+            'region_id'=> $request->region_id,
+            'region'=> $request->region,
+            'municipality'=> $request->municipality,
+            'grid_id'=> $request->grid_id,
+            'capacity_installed'=> $request->capacity_installed,
+            'capacity_dependable'=> $request->capacity_dependable,
+            'number_of_units'=> $request->number_of_units,
+            'ippa'=> $request->ippa,
+            'fit_approved'=> $request->fit_approved,
+            'owner_type'=> $request->owner_type,
+            'type_of_contract'=> $request->type_of_contract,
+            'status'=> $request->status
+        ]);
         if($res){
-            return redirect()->route('powerplant.create')->with('success',"Power Plant Added Successfully!");
+            return redirect()->route('showResource',['id'=>$res,'count'=>$request->number_of_units]);
         }else{
-            return redirect()->route('powerplant.create')->with('fail',"Error! Try Again!");
+            return redirect()->route('showResource',['id'=>$res,'count'=>$request->number_of_units]);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(PowerPlant $powerPlant)
+    public function show(PowerPlant $id,$count)
     {
-        //
+        return view('power_plant.show', compact('id','count'));
     }
 
     /**

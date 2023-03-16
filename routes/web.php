@@ -61,6 +61,7 @@ Route::resource('powerplant', PowerPlantController::class);
 Route::post('/powerplant/fetchsub', [PowerPlantController::class, 'fetchSub']);
 Route::post('/powerplant/fetchregion', [PowerPlantController::class, 'fetchRegion']);
 Route::post('/powerplant/fetchregionid', [PowerPlantController::class, 'fetchRegionid']);
+Route::get('/powerplant/show/{id}/{count}', [PowerPlantController::class, 'show'])->name('showResource');
 Route::resource('powerplanttype', PowerPlantTypeController::class);
 Route::get('/powerplanttype/show/{id}', [PowerPlantTypeController::class, 'show'])->name('show');
 Route::post('/powerplanttype/insertSub', [PowerPlantTypeController::class, 'insertSub'])->name('insertSub');
