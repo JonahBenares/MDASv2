@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('region_name')->nullable();
             $table->foreignId('grid_id')->constrained('grid');
             $table->string('resource_name')->nullable();
-            $table->foreignId('resource_id')->constrained('pp_resource');
+            $table->foreignId('resource_id')->references('id')->on('pp_resource');
             $table->string('resource_type')->nullable();
-            $table->foreignId('resource_type_id')->constrained('resource_type');
+            $table->foreignId('resource_type_id')->references('id')->on('resource_type');
             $table->float('schedule_mw', 10,4)->default(0);
             $table->float('lmp', 10,4)->default(0);
             $table->float('loss_factor', 10,4)->default(0);

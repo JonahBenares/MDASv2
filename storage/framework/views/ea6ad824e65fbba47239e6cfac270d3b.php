@@ -32,22 +32,25 @@
                             Facility Name
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Short Name
-                        </th>
-                        <th scope="col" class="px-6 py-3">
                             Type
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Sub Type
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Operator
+                            Capacity Installed
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Municipality
+                            Capacity Dependable
                         </th>
                         <th scope="col" class="px-6 py-3">
                             No. of Units
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Location/Municipality
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Operator
                         </th>
                         <th scope="col" class="px-6 py-3" width="5%" align="center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
@@ -79,6 +82,9 @@
                         </td>
                         <td class="px-6 py-4">
                             Silver
+                        </td>
+                        <td class="px-6 py-4">
+                            Laptop
                         </td>
                         <td class="px-6 py-4">
                             Laptop
