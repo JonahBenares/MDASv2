@@ -25,21 +25,21 @@
                     <span class="block sm:inline">{{Session::get('fail')}}</span>
                 </div>
             @endif
-            <form class="mx-20" method="POST" action="{{ route('powerplant.store') }}" onsubmit="return confirm('Are you sure you want to proceed next?');">
+            <form class="mx-20" method="POST" action="{{ route('insertResource') }}">
                 @csrf
                 @for($x=1;$x<=$count;$x++)
                 <div class="flex justify-between space-x-2">
                     <div class="mb-2 w-9/12">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Resource ID</label>
-                        <input name="resource_id" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                        <input name="resource_id[]" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                     </div>
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Date Comissioned</label>
-                        <input type="date" name="date_commissioned" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                        <input type="date" name="date_commissioned[]" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                     </div>
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Color</label>
-                        <input type="color" name="legend" id='legend' class="block text-sm w-full h-10 p-1  text-gray-600  bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40">
+                        <input type="color" name="legend[]" id='legend' class="block text-sm w-full h-10 p-1  text-gray-600  bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40">
                     </div>
                 </div>
                 @endfor

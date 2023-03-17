@@ -7,6 +7,7 @@ use App\Models\Grid;
 use App\Models\Region;
 use App\Models\PowerplantType;
 use App\Models\PowerplantSub;
+use App\Models\PowerplantResource;
 use Illuminate\Http\Request;
 
 class PowerPlantController extends Controller
@@ -26,7 +27,6 @@ class PowerPlantController extends Controller
      */
     public function create()
     {
-        $grid=Grid::all();
         $grid=Grid::all();
         $powerplant_type=PowerplantType::all()->sortBy('type_name');
         return view('power_plant.create',compact('grid','powerplant_type'));
@@ -91,20 +91,104 @@ class PowerPlantController extends Controller
         return view('power_plant.show', compact('id','count'));
     }
 
+    public function editResource($id,$count)
+    {
+        $resource=PowerPlantResource::where('powerplant_id',$id)->get();
+        return view('power_plant.edit_resource', compact('id','count','resource'));
+    }
+
+
+    public function insertResource(Request $request)
+    {
+        foreach ($request->resource_id as $key => $value) {
+            $res=PowerplantResource::create([
+                'powerplant_id'=> $request->id,
+                'resource_id'=> $request->resource_id[$key],
+                'date_commissioned'=> $request->date_commissioned[$key],
+                'hex'=> $request->legend[$key]
+            ]);
+        }
+        if($res){
+            return redirect()->route('powerplant.index')->with('success',"Powerplant Added Successfully");
+        }else{
+            return redirect()->route('powerplant.index')->with('fail',"Error! Try Again!");
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PowerPlant $id)
+    public function edit($id)
     {
-        return view('power_plant.edit', $id);
+        $powerplant=PowerPlant::find($id);
+        $grid=Grid::all();
+        $region=Region::all();
+        $powerplant_type=PowerplantType::all()->sortBy('type_name');
+        $powerplant_subtype=PowerplantSub::all()->sortBy('subtype_name');
+        return view('power_plant.edit', compact('powerplant','grid','powerplant_type','powerplant_subtype','region'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PowerPlant $powerPlant)
+    public function update(Request $request, $id)
     {
-        //
+        $powerplant = PowerPlant::find($id);
+        $powerplant->update([
+            'facility_name'=> $request->facility_name,
+            'pp_type_id'=> $request->pp_type_id,
+            'subtype_id'=> $request->subtype_id,
+            'operator'=> $request->operator,
+            'short_name'=> $request->short_name,
+            'region_id'=> $request->region_id,
+            'region'=> $request->region,
+            'municipality'=> $request->municipality,
+            'grid_id'=> $request->grid_id,
+            'capacity_installed'=> $request->capacity_installed,
+            'capacity_dependable'=> $request->capacity_dependable,
+            'number_of_units'=> $request->number_of_units,
+            'ippa'=> $request->ippa,
+            'fit_approved'=> $request->fit_approved,
+            'owner_type'=> $request->owner_type,
+            'type_of_contract'=> $request->type_of_contract,
+            'status'=> $request->status
+        ]);
+        if($powerplant){
+            return redirect()->route('editResource',['id'=>$id,'count'=>$request->number_of_units]);
+        }else{
+            return redirect()->route('editResource',['id'=>$id,'count'=>$request->number_of_units]);
+        }
+    }
+
+    public function updateResource(Request $request)
+    {
+        $x=0;
+        foreach ($request->resource_id as $key => $value) {
+            $resource_disp = PowerPlantResource::where('powerplant_id',$request->id)->get();
+            $resource_id=(!empty($resource_disp[$x]['id'])) ? $resource_disp[$x]['id'] : '0';
+            $count=PowerPlantResource::where('id',$resource_id)->count();
+            if($count!=0){
+                $resource = PowerPlantResource::find($resource_id);
+                $resource->update([
+                    'resource_id'=> $request->resource_id[$key],
+                    'date_commissioned'=> $request->date_commissioned[$key],
+                    'hex'=> $request->legend[$key]
+                ]);
+            }else{
+                $resource=PowerplantResource::create([
+                    'powerplant_id'=> $request->id,
+                    'resource_id'=> $request->resource_id[$key],
+                    'date_commissioned'=> $request->date_commissioned[$key],
+                    'hex'=> $request->legend[$key]
+                ]);
+            }
+            $x++;
+        }
+        if($resource){
+            return redirect()->route('powerplant.index')->with('success',"Powerplant Added Successfully");
+        }else{
+            return redirect()->route('powerplant.index')->with('fail',"Error! Try Again!");
+        }
     }
 
     /**
