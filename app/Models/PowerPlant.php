@@ -12,10 +12,9 @@ class PowerPlant extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'facility_name',
-        'powerplant_type_id',
+        'pp_type_id',
         'subtype_id',
         'operator',
-        'participant_id',
         'short_name',
         'region_id',
         'region',

@@ -58,7 +58,19 @@ Route::resource('reportregional', ReportRegionalController::class);
 Route::resource('reportregionalaverage', ReportRegionalAverageController::class);
 Route::resource('region', RegionController::class);
 Route::resource('powerplant', PowerPlantController::class);
+Route::post('/powerplant/fetchsub', [PowerPlantController::class, 'fetchSub']);
+Route::post('/powerplant/fetchregion', [PowerPlantController::class, 'fetchRegion']);
+Route::post('/powerplant/fetchregionid', [PowerPlantController::class, 'fetchRegionid']);
+Route::post('/powerplant/insertResource', [PowerPlantController::class, 'insertResource'])->name('insertResource');
+Route::get('/powerplant/show/{id}/{count}', [PowerPlantController::class, 'show'])->name('showResource');
+Route::get('/powerplant/editResource/{id}/{count}', [PowerPlantController::class, 'editResource'])->name('editResource');
+Route::post('/powerplant/updateResource', [PowerPlantController::class, 'updateResource'])->name('updateResource');
 Route::resource('powerplanttype', PowerPlantTypeController::class);
 Route::get('/powerplanttype/show/{id}', [PowerPlantTypeController::class, 'show'])->name('show');
 Route::post('/powerplanttype/insertSub', [PowerPlantTypeController::class, 'insertSub'])->name('insertSub');
+Route::put('/edit-type',[PowerPlantTypeController::class, 'update'])->name('edit_type');
+Route::put('/update-sub', [PowerPlantTypeController::class, 'updateSub'])->name('updateSub');
+Route::get('/powerplanttype/destroy/{id}/{type_id}', [PowerPlantTypeController::class, 'destroy'])->name("destroy");
+Route::get('/destroy-type/{id}', [PowerPlantTypeController::class, 'destroyType'])->name("destroyType");
+
 
