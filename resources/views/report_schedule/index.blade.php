@@ -45,6 +45,11 @@
                     <option value="">Select Power Plant Type</option>
                 </select>
             </div>
+            <div class="w-60">
+                <select type="text" id="small-input" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500">
+                    <option value="">Select Include/ Exclude 0 MW</option>
+                </select>
+            </div>
             <button type="button" class=" text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs px-5 py-2.5 mb-1  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex justify-between space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 mr-1">
                     <path fill-rule="evenodd" d="M3.792 2.938A49.069 49.069 0 0112 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 011.541 1.836v1.044a3 3 0 01-.879 2.121l-6.182 6.182a1.5 1.5 0 00-.439 1.061v2.927a3 3 0 01-1.658 2.684l-1.757.878A.75.75 0 019.75 21v-5.818a1.5 1.5 0 00-.44-1.06L3.13 7.938a3 3 0 01-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836z" clip-rule="evenodd" />
@@ -110,53 +115,53 @@
                         <th scope="col" class="px-1 py-1 border align-bottom sticky left-[161px] bg-white" align="center">Resource_Type</th>
                         <th scope="col" class="px-1 py-1 border align-bottom sticky left-[268px] bg-white" align="center">Resource_Name</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                         <th scope="col" class="px-1 py-1 border w-10" align="center">MW</th>
-                        <th scope="col" class="px-1 py-1 border w-10" align="center">Prices</th>
+                        <th scope="col" class="px-1 py-1 border w-10" align="center">P</th>
                     </tr>
                 </thead>
                 <tbody>

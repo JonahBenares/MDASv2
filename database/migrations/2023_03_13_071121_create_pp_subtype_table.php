@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pp_subtype', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id')->constrained('pp_type');
+            $table->foreignId('type_id')->references('id')->on('pp_type');
             $table->string('subtype_name')->nullable();
             $table->timestamps();
         });

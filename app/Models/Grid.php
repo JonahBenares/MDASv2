@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Grid extends Model
 {
     use HasFactory;
+    protected $table = 'grid';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'grid_code',
+        'grid_name'
+    ];
 }

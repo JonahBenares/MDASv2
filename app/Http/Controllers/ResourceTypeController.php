@@ -12,7 +12,8 @@ class ResourceTypeController extends Controller
      */
     public function index()
     {
-        return view('resource_type.index');
+        $resource_type=ResourceType::all()->sortBy('resource_name');
+        return view('resource_type.index',compact('resource_type'));
     }
 
     /**
@@ -28,7 +29,13 @@ class ResourceTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input=$request->all();
+        $res=ResourceType::create($input);
+        if($res){
+            return redirect()->route('resourcetype.create')->with('success',"Resource Type Added Successfully");
+        }else{
+            return redirect()->route('resourcetype.create')->with('fail',"Error! Try Again!");
+        }
     }
 
     /**
@@ -42,17 +49,21 @@ class ResourceTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ResourceType $id)
+    public function edit($id)
     {
-        return view('resource_type.edit',$id);
+        $resource_type=ResourceType::find($id);
+        return view('resource_type.edit',compact('resource_type'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ResourceType $resourceType)
+    public function update(Request $request, $id)
     {
-        //
+        $resourcetype = ResourceType::find($id);
+        $input = $request->all();
+        $resourcetype->update($input);
+        return redirect()->route('resourcetype.edit',$id)->with('success',"Resource Type Updated Successfully");
     }
 
     /**

@@ -11,40 +11,31 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            RUN_TIME
+                            RUN TIME
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            MKT_TYPE
+                            INTERVAL END
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            TIME_INTERVAL
+                            PRICE NODE
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            REGION_NAME
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            RESOURCE_NAME
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            RESOURCE_TYPE
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            SCHED_MW
+                            mw
                         </th>
                         <th scope="col" class="px-6 py-3">
                             LMP
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            LOSS_FACTOR
+                            LOSS FACTOR
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            LMP_SMP
+                            ENERGY
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            LMP_LOSS
+                            LOSS
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            LMP_CONGESTION
+                            CONGESTION
                         </th>
                     </tr>
                 </thead>
@@ -77,15 +68,6 @@
                         <td class="px-6 py-4">
                             Laptop
                         </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
                     </tr>
                     <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
@@ -115,15 +97,6 @@
                         <td class="px-6 py-4">
                             Laptop
                         </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
                     </tr>
                     <tr class="bg-white white:bg-gray-800 hover:bg-gray-50 white:hover:bg-gray-600">
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
@@ -152,15 +125,6 @@
                         </td>
                         <td class="px-6 py-4">
                             Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
                         </td>
                     </tr>
                 </tbody>

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->integer('outage_interval')->default(0);
             $table->integer('outage_hour')->default(0);
             $table->integer('summary_id')->default(0);
-            $table->foreignId('powerplant_type')->constrained('pp_type');
-            $table->foreignId('grid_id')->constrained('grid');
-            $table->foreignId('resource_id')->constrained('pp_resource');
+            $table->foreignId('powerplant_type')->references('id')->on('pp_type');
+            $table->foreignId('grid_id')->references('id')->on('grid');
+            $table->foreignId('resource_id')->references('id')->on('pp_resource');
             $table->float('schedule_mw', 10,4)->default(0);
             $table->integer('outage_type')->default(0);
             $table->text('remark')->nullable();
