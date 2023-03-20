@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="flex justify-between space-x-2">
-                    <div class="mb-2 w-full">
+                    <div class="mb-2 w-3/12">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Location/Municipality</label>
                         <input name="municipality" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->municipality}}">
                     </div>
@@ -90,38 +90,39 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Region ID</label>
                         <input name="region_id" id='region_id' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->region_id}}">
                     </div>
-                    <div class="mb-2 w-2/12">
+                </div>
+                <div class="flex justify-between space-x-2">
+                    <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Capacity Installed (MW)</label>
                         <input name="capacity_installed" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->capacity_installed}}">
                     </div>
-                    <div class="mb-2 w-2/12">
+                    <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Capacity Dependable (MW)</label>
                         <input name="capacity_dependable" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->capacity_dependable}}">
                     </div>
-                    <div class="mb-2 w-2/12">
+                    <div class="mb-2 w-3/12">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Number of Units</label>
                         <input name="number_of_units" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->number_of_units}}">
-                    </div>
-                    
-                </div>
-                <div class="flex justify-between space-x-2">
+                    </div>  
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">IPPA</label>
                         <input name="ippa" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->ippa}}">
                     </div>
+                </div>
+                <div class="flex justify-between space-x-2">
                     <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Fit Approved</label>
                         <input name="fit_approved" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->fit_approved}}">
                     </div>
-                    <div class="mb-2 w-2/12">
+                    <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Owner Type</label>
                         <input name="owner_type" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->owner_type}}">
                     </div>
-                    <div class="mb-2 w-2/12">
+                    <div class="mb-2 w-3/12">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Type of Contract</label>
                         <input name="type_of_contract" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->type_of_contract}}">
                     </div>
-                    <div class="mb-2 w-2/12">
+                    <div class="mb-2 w-3/12">
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Status</label>
                         <select name="status" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
                             <option value="">--Select Status--</option>
