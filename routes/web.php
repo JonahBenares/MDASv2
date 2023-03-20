@@ -15,6 +15,7 @@ use App\Http\Controllers\PowerPlantTypeController;
 use App\Http\Controllers\GridController;
 use App\Http\Controllers\ResourceTypeController;
 use App\Http\Controllers\PriceNodesController;
+use App\Http\Controllers\ActualOutagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,11 +48,11 @@ Route::resource('grid', GridController::class);
 Route::resource('pricenodes', PriceNodesController::class);
 Route::resource('resourcetype', ResourceTypeController::class);
 
-
 Route::resource('uploadschedules', UploadScheduleController::class);
 Route::resource('uploadhap', UploadHAPController::class);
 Route::resource('uploadregional', UploadRegionalController::class);
 
+Route::resource('actualoutages', ActualOutagesController::class);
 Route::resource('reportschedules', ReportScheduleController::class);
 Route::resource('reportschedaverage', ReportSchedAverageController::class);
 Route::resource('reportregional', ReportRegionalController::class);
