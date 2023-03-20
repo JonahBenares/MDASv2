@@ -18,7 +18,7 @@ class PowerPlantController extends Controller
     public function index()
     {
         $grid=Grid::all();
-        $powerplant=PowerPlant::all()->sortBy('short_name');
+        $powerplant=PowerPlant::where('status','Active')->orderBy('short_name')->get();
         return view('power_plant.index',compact('grid','powerplant'));
     }
 
@@ -185,7 +185,7 @@ class PowerPlantController extends Controller
             $x++;
         }
         if($resource){
-            return redirect()->route('powerplant.index')->with('success',"Powerplant Added Successfully");
+            return redirect()->route('powerplant.index')->with('success',"Powerplant Updated Successfully");
         }else{
             return redirect()->route('powerplant.index')->with('fail',"Error! Try Again!");
         }
@@ -194,8 +194,14 @@ class PowerPlantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PowerPlant $powerPlant)
+    public function destroy($id)
     {
-        //
+        $res=PowerPlantResource::where('powerplant_id',$id)->delete();
+        if($res){
+            PowerPlant::find($id)->delete();
+            return redirect()->route('powerplant.index')->with('success',"Powerplant Deleted Successfully");
+        }else{
+            return redirect()->route('powerplant.index')->with('fail',"Error! Try Again!");
+        }
     }
 }

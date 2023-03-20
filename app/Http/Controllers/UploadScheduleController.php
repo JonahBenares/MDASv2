@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\UploadSchedule;
 use Illuminate\Http\Request;
+use App\Imports\ImportSchedule;
+use Maatwebsite\Excel\Excel as ExcelExcel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UploadScheduleController extends Controller
 {
@@ -28,7 +31,14 @@ class UploadScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=[
+            'run_hour'=>$request->run_hour,
+            'grid_id'=>1,
+            'resource_id'=>1,
+            'resource_type_id'=>1,
+            'upload_by'=>0
+        ];
+        Excel::import(new ImportSchedule($data), request()->file('mpsl'));
     }
 
     /**

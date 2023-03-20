@@ -65,6 +65,7 @@ Route::post('/powerplant/insertResource', [PowerPlantController::class, 'insertR
 Route::get('/powerplant/show/{id}/{count}', [PowerPlantController::class, 'show'])->name('showResource');
 Route::get('/powerplant/editResource/{id}/{count}', [PowerPlantController::class, 'editResource'])->name('editResource');
 Route::post('/powerplant/updateResource', [PowerPlantController::class, 'updateResource'])->name('updateResource');
+Route::get('/destroy-powerplant/{id}', [PowerPlantController::class, 'destroy'])->name("destroyPoweplant");
 Route::resource('powerplanttype', PowerPlantTypeController::class);
 Route::get('/powerplanttype/show/{id}', [PowerPlantTypeController::class, 'show'])->name('show');
 Route::post('/powerplanttype/insertSub', [PowerPlantTypeController::class, 'insertSub'])->name('insertSub');
