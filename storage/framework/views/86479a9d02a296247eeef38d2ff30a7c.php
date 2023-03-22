@@ -187,7 +187,10 @@
                             <li>
                                 <a href="<?php echo e(route('reportregionalaverage.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Regional Summary <b>(Average)</b></a>
                             </li>
-                      </ul>
+                            <li>
+                                <a href="<?php echo e(route('actualoutages.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Actual Outages</b></a>
+                            </li>
+                        </ul>
                     </div>
                 </li>
             </ul>
