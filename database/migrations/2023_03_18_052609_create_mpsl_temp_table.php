@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('mpsl_temp', function (Blueprint $table) {
             $table->id();
             $table->string('mkt_type')->nullable();
-            $table->dateTime('run_time')->nullable();
+            $table->date('run_time')->nullable();
             $table->integer('run_hour')->default(0);
             $table->dateTime('time_interval')->nullable();
             $table->string('region_name')->nullable();
-            $table->foreignId('grid_id')->constrained('grid');
+            $table->integer('grid_id')->default(0);
             $table->string('resource_name')->nullable();
-            $table->foreignId('resource_id')->references('id')->on('pp_resource');
+            $table->integer('resource_id')->default(0);
             $table->string('resource_type')->nullable();
-            $table->foreignId('resource_type_id')->references('id')->on('resource_type');
+            $table->integer('resource_type_id')->default(0);
             $table->float('schedule_mw', 10,4)->default(0);
             $table->float('lmp', 10,4)->default(0);
             $table->float('loss_factor', 10,4)->default(0);

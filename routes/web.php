@@ -49,6 +49,7 @@ Route::resource('resourcetype', ResourceTypeController::class);
 
 
 Route::resource('uploadschedules', UploadScheduleController::class);
+Route::post('/uploadschedules/saveall', [UploadScheduleController::class, 'saveall'])->name('saveall');
 Route::resource('uploadhap', UploadHAPController::class);
 Route::resource('uploadregional', UploadRegionalController::class);
 
