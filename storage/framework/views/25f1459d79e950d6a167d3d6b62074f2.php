@@ -22,7 +22,7 @@
                         <span class="sr-only">Close modal</span> 
                     </button>
                 </div>
-                <form class="mx-20" method="POST" action="<?php echo e(route('powerplanttype.store')); ?>">
+                <form method="POST" action="<?php echo e(route('powerplanttype.store')); ?>">
                     <?php echo csrf_field(); ?>
                     <!-- Modal body -->
                     <div class="px-6">
@@ -86,7 +86,7 @@
                         <span class="sr-only">Close modal</span> 
                     </button>
                 </div>
-                <form class="mx-20" method="POST" action="<?php echo e(route('insertSub')); ?>">
+                <form method="POST" action="<?php echo e(route('insertSub')); ?>">
                     <?php echo csrf_field(); ?>
                     <!-- Modal body -->
                     <div class="px-6">
@@ -151,13 +151,13 @@
                 <span class="block sm:inline"><?php echo e(Session::get('fail')); ?></span>
             </div>
         <?php endif; ?>
-        <div class="flex justify-center space-x-2">
+        <div class="flex justify-center space-x-2 mb-4 pb-2 border-b">
             <span class="py-2 ">Type:</span>
             <div class="w-10/12  ">
                 <div class="flex justify-start space-x-2 overflow-x-auto">
                     <?php $x=1; ?>
                     <?php $__currentLoopData = $powerplant_type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="flex justify-center border border-gray-100 shadow-md rounded-lg mb-2">
+                    <div class="flex justify-center border border-gray-100 shadow-md rounded-lg mb-2 ">
                         <a href="<?php echo e(route('show', $pt->id)); ?>" class="text-gray-900 bg-white font-medium rounded-lg rounded-r-none text-sm text-center inline-flex items-center white:focus:ring-gray-800 white:bg-white white:border-gray-700 white:text-gray-900 white:hover:bg-gray-200">
                             <span style="background-color:<?php echo e($pt->legend); ?>" class="w-5 rounded-r-none rounded-lg px-4 py-2 mr-2"><br></span> <?php echo e($pt->type_name); ?>
 
@@ -183,20 +183,23 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
-            <button data-modal-target="addType" data-modal-toggle="addType" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5" type="button">
+            <button data-modal-target="addType" data-modal-toggle="addType" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5" type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </button>
         </div>
-        <br><br>
         
-        <div class="relative overflow-y-auto h-80 border mb-5 shadow-md">
+        <div class="relative overflow-y-auto h-80 rounded-lg mb-5 shadow-md border border-blue-500 border-2">
+            <div class="flex justify-start">
+                <div class="w-20 bg-blue-500 py-1"><br></div>
+                <div class="px-2 py-1">Natural Gas</div>
+            </div>
             <?php if(isset($_GET['id'])): ?>
-            <table class="w-full text-sm text-left text-gray-500 white:text-gray-400 " id="as-01">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400">
+            <table class="w-full text-sm text-left text-gray-500 white:text-gray-400 border-t " id="as-01">
+                <thead class="text-xs text-gray-700 border-b bg-gray-50 white:bg-gray-700 white:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3 uppercase">
                             Sub Type Name
                         </th>
                         <th scope="col" class="px-6 py-3" width="5%" align="center">
@@ -215,11 +218,11 @@
                     <?php if(!empty($subtype)): ?>
                         <?php $__currentLoopData = $subtype; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                <td scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap white:text-white">
                                     <?php echo e($s->subtype_name); ?>
 
                                 </td>
-                                <td class="px-6 py-4 flex justify-center space-x-1">
+                                <td class="px-6 py-2 flex justify-center space-x-1">
                                     <a data-modal-target="updateSub" data-modal-toggle="updateSub" class="editSub" data-id='<?php echo e($s->id); ?>' data-type='<?php echo e($s->type_id); ?>' data-subtypename='<?php echo e($s->subtype_name); ?>'>
                                         <div class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-2xl text-sm px-2 py-2 white:bg-indigo-600 white:hover:bg-indigo-700 focus:outline-none white:focus:ring-indigo-800">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
