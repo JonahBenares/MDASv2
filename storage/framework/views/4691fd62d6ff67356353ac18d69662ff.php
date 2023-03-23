@@ -350,6 +350,11 @@
                 </tbody>
             </table>
         </div>
+        <div class="w-full fixed bottom-0 px-5 pb-2 flex justify-center left-0">
+            <button data-modal-target="addOutage" data-modal-toggle="addOutage" type="button" class=" text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 mb-1 pt-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full">
+                Save
+            </button>
+        </div>
     </div>
   <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
