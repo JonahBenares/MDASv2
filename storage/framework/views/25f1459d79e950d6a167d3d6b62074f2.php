@@ -190,10 +190,10 @@
             </button>
         </div>
         
-        <div class="relative overflow-y-auto h-80 rounded-lg mb-5 shadow-md border border-blue-500 border-2">
+        <div class="relative overflow-y-auto h-80 rounded-lg mb-5 shadow-md border border-2" style="border-color:<?php echo e($legend); ?>">
             <div class="flex justify-start">
-                <div class="w-20 bg-blue-500 py-1"><br></div>
-                <div class="px-2 py-1">Natural Gas</div>
+                <div class="w-20 py-1" style="background-color:<?php echo e($legend); ?>"><br></div>
+                <div class="px-2 py-1"><?php echo e($powerplanttype); ?></div>
             </div>
             <?php if(isset($_GET['id'])): ?>
             <table class="w-full text-sm text-left text-gray-500 white:text-gray-400 border-t " id="as-01">

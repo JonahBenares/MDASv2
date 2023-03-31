@@ -14,11 +14,15 @@ class PowerPlantTypeController extends Controller
     public function index()
     {   
         $subtype=array();
+        $legend='';
+        $powerplanttype='';
         if(isset($_GET['id'])){
+            $legend=PowerPlantType::where('id',$_GET['id'])->value('legend');
+            $powerplanttype=PowerPlantType::where('id',$_GET['id'])->value('type_name');
             $subtype=PowerPlantSub::where('type_id',$_GET['id'])->get();
         }
         $powerplant_type=PowerPlantType::all()->sortBy('type_name');
-        return view('powerplant_type.index',compact('powerplant_type','subtype'));
+        return view('powerplant_type.index',compact('powerplant_type','subtype','powerplanttype','legend'));
     }
 
     /**
