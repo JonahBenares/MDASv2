@@ -72,10 +72,10 @@
                                 {{$p->facility_name}}
                             </td>
                             <td class="px-6 py-4">
-                                {{getTypename($p->pp_type_id)}}
+                                {{ (!empty($p->pp_type_id)) ? getTypename($p->pp_type_id) : '' }}
                             </td>
                             <td class="px-6 py-4">
-                                {{getSubtypename($p->subtype_id)}}
+                                {{ (!empty($p->subtype_id)) ? getSubtypename($p->subtype_id) : '' }}
                             </td>
                             <td class="px-6 py-4">
                                 {{$p->capacity_installed}}

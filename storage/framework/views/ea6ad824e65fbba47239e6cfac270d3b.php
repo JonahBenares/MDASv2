@@ -82,11 +82,11 @@
 
                             </td>
                             <td class="px-6 py-4">
-                                <?php echo e(getTypename($p->pp_type_id)); ?>
+                                <?php echo e((!empty($p->pp_type_id)) ? getTypename($p->pp_type_id) : ''); ?>
 
                             </td>
                             <td class="px-6 py-4">
-                                <?php echo e(getSubtypename($p->subtype_id)); ?>
+                                <?php echo e((!empty($p->subtype_id)) ? getSubtypename($p->subtype_id) : ''); ?>
 
                             </td>
                             <td class="px-6 py-4">
