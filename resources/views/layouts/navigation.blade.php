@@ -147,7 +147,13 @@
                                 <a href="{{ route('reportregionalaverage.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Regional Summary <b>(Average)</b></a>
                             </li>
                             <li>
-                                <a href="{{ route('actualoutages.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Actual Outages</b></a>
+                                <a href="{{ route('reportregionalweekly.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Regional Summary <b>(Weekly)</b></a>
+                            </li>
+                            <li>
+                                <a href="{{ route('reportactualoutages.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Actual Outages</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('reportoutagestype.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Outages Per Type </b>(Graph)</b></a>
                             </li>
                         </ul>
                     </div>

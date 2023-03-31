@@ -109,6 +109,156 @@
                 });
             });
         });
+
+        function btnChange(count){
+            $("#operators"+count).show();
+            $("#btn_change"+count).hide();
+            // $(".btn_change").each(function(index, element){
+            //     var btn=document.getElementsByClassName("btn_change")[index];
+            //     $(btn).click(function(){
+            //         document.getElementsByClassName("btn_change")[index].style.display = "none";
+            //         document.getElementsByClassName("addtext")[index].style.display = "block";
+            //     });
+            // });
+        }
+
+        function hideSelectPowerplant(){
+            var btn=document.getElementsByClassName("powerplant");
+            for(var i=0;i<btn.length;i++){
+                var powerplant=document.getElementsByClassName("powerplant")[i].value;
+                if(powerplant!=''){
+                    document.getElementsByClassName("resource_name")[i].style.display = "none";
+                }else{
+                    document.getElementsByClassName("resource_name")[i].style.display = "block";
+                }
+            }
+        }
+
+        function hideSelectResource(){
+            var btn=document.getElementsByClassName("resource_name");
+            for(var i=0;i<btn.length;i++){
+                var resource=document.getElementsByClassName("resource_name")[i].value;
+                if(resource!=''){
+                    document.getElementsByClassName("powerplant")[i].style.display = "none";
+                }else{
+                    document.getElementsByClassName("powerplant")[i].style.display = "block";
+                }
+            }
+        }
+
+        function addPowerplant() {
+            var base_url = '{{URL::to("/")}}';
+            var redirect = base_url+'/uploadschedules/insertpowerplant';
+            var operator =document.getElementById("operators").value;
+            var counter =document.getElementById("counter").value;
+            $.ajax({
+                type: "POST",
+                url: redirect,
+                data: {
+                    operator: operator,
+                    _token: '{{csrf_token()}}'
+                },
+                async:true,
+                success: function(output){
+                    $("#powerplant"+counter).empty();
+                    for (var i = 0; i < counter; i++) {
+                        var option = document.createElement("OPTION");
+                        option.innerHTML = operator;
+                        var powerplant = document.getElementById("powerplant"+i);
+                        powerplant.options.add(option);
+                        option.value = output;
+                    }
+                    document.getElementById("operators").value='';
+                }
+            });
+        }
+
+        var checkuser=document.getElementById('check_user').value;
+        if(parseInt(checkuser)!=0){
+            $(window).on('load', function() {
+                
+                //if(parseInt(checkuser)!=0){
+                    let modal = new Modal(document.getElementById('checkUser'),{placement:'center'});
+                    $('#loadData').hide();
+                    modal.show();
+                //}
+            });
+        }
+
+        function loadSchedule() {
+            $('#loadData').show();
+            let modal = new Modal(document.getElementById('checkUser'),{placement:'center'});
+            modal.hide();
+        }
+
+        function cancelSchedule() {
+            var base_url = '{{URL::to("/")}}';
+            var redirect = base_url+'/uploadschedules/cancelschedule';
+            let confirmAction = confirm("Are you sure you want to cancel this data?");
+            if (confirmAction) {
+                $.ajax({
+                    type: "POST",
+                    url: redirect,
+                    data: {
+                        _token: '{{csrf_token()}}'
+                    },
+                    beforeSend: function(){
+                        let modal = new Modal(document.getElementById('checkUser'),{placement:'center'});
+                        modal.hide();
+                        document.getElementById("hexagon-spinner").style.display = "block";
+                        //document.getElementById('alt').innerHTML='<b>Please wait, Cancelling Data...</b>'; 
+                    },
+                    success: function(output){
+                        alert('Unsaved import data successfully deleted!');
+                        document.getElementById("hexagon-spinner").style.display = "none";
+                        //document.getElementById('alt').innerHTML=''; 
+                        location.reload();
+                    }
+                });
+            }
+        }
+
+        // function importSchedule() {
+        //     $('#savecsv').hide();
+        //     document.getElementById("hexagon-spinner").style.display = "block";
+        // }
+        function importSchedule() {
+            var base_url = '{{URL::to("/")}}';
+            var redirect = base_url+'/uploadschedules/store-data';
+            var formData = new FormData();
+            var file = $('#mpsl').prop('files')[0];
+            formData.append('mpsl', file);
+            formData.append('run_hour', $('#run_hour').val());
+            formData.append('user_id', $('#user_id').val());
+            $.ajax({
+                type: "POST",
+                url: redirect,
+                data: formData,
+                contentType : false,
+                processData : false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(){
+                    //$('#savecsv').hide();
+                    document.getElementById("hexagon-spinner").style.display = "block";
+                },
+                success: function(output){
+                    //$('#loadData').empty().load(window.location.href + '#loadTable');
+                    $("#loadData").load(window.location.href+" #loadTable");
+                    document.getElementById("hexagon-spinner").style.display = "none";
+                    document.getElementById("mpsl").value='';
+                    document.getElementById("run_hour").value='';
+                }
+            });
+        }
+
+        function saveAllsched() {
+            $('#saveall').hide();
+            document.getElementById("hexagon-spinner").style.display = "block";
+            //document.getElementById('altsaveall').innerHTML='<b>Please wait, Saving Data...</b>'; 
+        }
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </html>

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->float('lmp_smp', 10,4)->default(0);
             $table->float('lmp_loss', 10,4)->default(0);
             $table->float('congestion', 10,4)->default(0);
+            $table->integer('saved')->default(0);
             $table->integer('upload_by')->default(0);
             $table->timestamps();
         });

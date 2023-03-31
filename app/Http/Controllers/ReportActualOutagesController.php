@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ActualOutages;
+use App\Models\ReportActualOutages;
 use Illuminate\Http\Request;
 
-class ActualOutagesController extends Controller
+class ReportActualOutagesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('actual_outages.index');
+        return view('report_actual_outages.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class ActualOutagesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ActualOutages $actualOutages)
+    public function show(ReportActualOutages $reportActualOutages)
     {
         //
     }
@@ -42,7 +42,7 @@ class ActualOutagesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ActualOutages $actualOutages)
+    public function edit(ReportActualOutages $reportActualOutages)
     {
         //
     }
@@ -50,7 +50,7 @@ class ActualOutagesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ActualOutages $actualOutages)
+    public function update(Request $request, ReportActualOutages $reportActualOutages)
     {
         //
     }
@@ -58,7 +58,7 @@ class ActualOutagesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ActualOutages $actualOutages)
+    public function destroy(ReportActualOutages $reportActualOutages)
     {
         //
     }

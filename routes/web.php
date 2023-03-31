@@ -9,13 +9,15 @@ use App\Http\Controllers\ReportScheduleController;
 use App\Http\Controllers\ReportSchedAverageController;
 use App\Http\Controllers\ReportRegionalController;
 use App\Http\Controllers\ReportRegionalAverageController;
+use App\Http\Controllers\ReportRegionalWeeklyController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\PowerPlantController;
 use App\Http\Controllers\PowerPlantTypeController;
 use App\Http\Controllers\GridController;
 use App\Http\Controllers\ResourceTypeController;
 use App\Http\Controllers\PriceNodesController;
-use App\Http\Controllers\ActualOutagesController;
+use App\Http\Controllers\ReportActualOutagesController;
+use App\Http\Controllers\ReportOutagesTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,14 +52,20 @@ Route::resource('resourcetype', ResourceTypeController::class);
 
 Route::resource('uploadschedules', UploadScheduleController::class);
 Route::post('/uploadschedules/saveall', [UploadScheduleController::class, 'saveall'])->name('saveall');
+Route::post('/uploadschedules/insertpowerplant', [UploadScheduleController::class, 'insertpowerplant']);
+Route::post('/uploadschedules/cancelschedule', [UploadScheduleController::class, 'cancelschedule']);
+Route::post('/uploadschedules/store-data', [UploadScheduleController::class, 'store']);
+Route::post('/uploadschedules/uploadindex', [UploadScheduleController::class, 'index']);
 Route::resource('uploadhap', UploadHAPController::class);
 Route::resource('uploadregional', UploadRegionalController::class);
 
-Route::resource('actualoutages', ActualOutagesController::class);
+Route::resource('reportactualoutages', ReportActualOutagesController::class);
+Route::resource('reportoutagestype', ReportOutagesTypeController::class);
 Route::resource('reportschedules', ReportScheduleController::class);
 Route::resource('reportschedaverage', ReportSchedAverageController::class);
 Route::resource('reportregional', ReportRegionalController::class);
 Route::resource('reportregionalaverage', ReportRegionalAverageController::class);
+Route::resource('reportregionalweekly', ReportRegionalWeeklyController::class);
 Route::resource('region', RegionController::class);
 Route::resource('powerplant', PowerPlantController::class);
 Route::post('/powerplant/fetchsub', [PowerPlantController::class, 'fetchSub']);
