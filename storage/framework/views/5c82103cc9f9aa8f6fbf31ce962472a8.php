@@ -17,6 +17,52 @@
         <!-- Scripts -->
         <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     </head>
+    <style>
+        #hexagon-spinner {
+            position: fixed;
+            width: 100%;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            padding-left :50%;
+            padding-top :250px;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 999;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
+
+        .hexagon-loader {
+            background-color: purple;
+            height: 40px;
+            width: 40px;
+            animation-name: spin;
+            animation-duration: 0.8s;
+            /* Things added */
+            animation-iteration-count: infinite;
+            display: inline-block;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(359deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(359deg);
+            }
+        }
+    </style>
     <body class="font-sans antialiased bg-gray-100">
         <div class="bg-white mt-24 mx-4 shadow-md rounded-lg">
             <?php echo $__env->make('layouts.navigation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -258,6 +304,32 @@
             $('#saveall').hide();
             document.getElementById("hexagon-spinner").style.display = "block";
             //document.getElementById('altsaveall').innerHTML='<b>Please wait, Saving Data...</b>'; 
+        }
+
+        function importRegional() {
+            var base_url = '<?php echo e(URL::to("/")); ?>';
+            var redirect = base_url+'/uploadregional/store-regional';
+            var formData = new FormData();
+            var file = $('#reg_sum').prop('files')[0];
+            formData.append('reg_sum', file);
+            formData.append('user_id', $('#user_id').val());
+            $.ajax({
+                type: "POST",
+                url: redirect,
+                data: formData,
+                contentType : false,
+                processData : false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(){
+                    document.getElementById("hexagon-spinner").style.display = "block";
+                },
+                success: function(output){
+                    document.getElementById("hexagon-spinner").style.display = "none";
+                    document.getElementById("reg_sum").value='';
+                }
+            });
         }
 
     </script>

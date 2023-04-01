@@ -3,8 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\UploadRegional;
+use App\Models\Region;
+use App\Models\Commodity;
 use Illuminate\Http\Request;
-
+use App\Imports\ImportRegional;
+use Maatwebsite\Excel\Excel as ExcelExcel;
+use Maatwebsite\Excel\Facades\Excel;
+use Auth;
+ini_set('max_execution_time', 10000);
+ini_set('max_input_vars', 100000);
 class UploadRegionalController extends Controller
 {
     /**
@@ -12,7 +19,12 @@ class UploadRegionalController extends Controller
      */
     public function index()
     {
-        return view('upload_regional.index');
+        $region_list=Region::all();
+        $commodity_list=Commodity::all()->sortBy('commodity_name');
+        $check_exist = Commodity::pluck('commodity_code')->all();
+        $check_user=UploadRegional::where('upload_by',Auth::id())->whereNotIn('commodity_type', $check_exist)->count();
+        $checker = UploadRegional::where('upload_by',Auth::id())->whereNotIn('commodity_type', $check_exist)->select('commodity_type')->distinct('commodity_type')->orderBy('commodity_type','ASC')->get();
+        return view('upload_regional.index',compact('region_list','commodity_list','check_user','checker'));
     }
 
     /**
@@ -28,7 +40,10 @@ class UploadRegionalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=[
+            'upload_by'=>$request->user_id
+        ];
+        Excel::import(new ImportRegional($data), request()->file('reg_sum'));
     }
 
     /**

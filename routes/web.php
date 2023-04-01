@@ -58,6 +58,7 @@ Route::post('/uploadschedules/store-data', [UploadScheduleController::class, 'st
 Route::post('/uploadschedules/uploadindex', [UploadScheduleController::class, 'index']);
 Route::resource('uploadhap', UploadHAPController::class);
 Route::resource('uploadregional', UploadRegionalController::class);
+Route::post('/uploadregional/store-regional', [UploadRegionalController::class, 'store']);
 
 Route::resource('reportactualoutages', ReportActualOutagesController::class);
 Route::resource('reportoutagestype', ReportOutagesTypeController::class);

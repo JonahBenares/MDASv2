@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('mkt_type')->nullable();
             $table->dateTime('time_interval')->nullable();
             $table->string('region_name')->nullable();
-            $table->foreignId('grid_id')->references('id')->on('grid');
+            $table->integer('grid_id')->default(0);
             $table->string('commodity_type')->nullable();
-            $table->foreignId('commodity_id')->references('id')->on('commodity');
+            $table->integer('commodity_id')->default(0);
             $table->float('demand', 10,4)->default(0);
             $table->float('generation', 10,4)->default(0);
             $table->float('losses', 10,4)->default(0);
