@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\UploadHAP;
+use App\Models\PriceNodes;
 use Illuminate\Http\Request;
-
+use App\Imports\ImportHap;
+use Maatwebsite\Excel\Excel as ExcelExcel;
+use Maatwebsite\Excel\Facades\Excel;
+use Auth;
+ini_set('max_execution_time', 10000);
+ini_set('max_input_vars', 100000);
 class UploadHAPController extends Controller
 {
     /**
@@ -28,7 +34,10 @@ class UploadHAPController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=[
+            'upload_by'=>$request->user_id
+        ];
+        Excel::import(new ImportHap($data), request()->file('hap'));
     }
 
     /**

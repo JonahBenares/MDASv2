@@ -332,6 +332,33 @@
             });
         }
 
+        function importHap() {
+            var base_url = '<?php echo e(URL::to("/")); ?>';
+            var redirect = base_url+'/uploadhap/store-hap';
+            var formData = new FormData();
+            var file = $('#hap').prop('files')[0];
+            formData.append('hap', file);
+            formData.append('user_id', $('#user_id').val());
+            $.ajax({
+                type: "POST",
+                url: redirect,
+                data: formData,
+                contentType : false,
+                processData : false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(){
+                    document.getElementById("hexagon-spinner").style.display = "block";
+                },
+                success: function(output){
+                    document.getElementById("hexagon-spinner").style.display = "none";
+                    document.getElementById("hap").value='';
+                    alert('Data Successfully Saved!');
+                }
+            });
+        }
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </html>

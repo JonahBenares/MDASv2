@@ -16,7 +16,7 @@ return new class extends Migration
             $table->dateTime('run_time')->nullable();
             $table->dateTime('interval_end')->nullable();
             $table->string('price_node')->nullable();
-            $table->foreignId('price_node_id')->references('id')->on('price_node');
+            $table->integer('price_node_id')->default(0);
             $table->float('mw', 10,4)->default(0);
             $table->float('lmp', 10,4)->default(0);
             $table->float('loss_factor', 10,4)->default(0);

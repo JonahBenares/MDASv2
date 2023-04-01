@@ -57,6 +57,7 @@ Route::post('/uploadschedules/cancelschedule', [UploadScheduleController::class,
 Route::post('/uploadschedules/store-data', [UploadScheduleController::class, 'store']);
 Route::post('/uploadschedules/uploadindex', [UploadScheduleController::class, 'index']);
 Route::resource('uploadhap', UploadHAPController::class);
+Route::post('/uploadhap/store-hap', [UploadHAPController::class, 'store']);
 Route::resource('uploadregional', UploadRegionalController::class);
 Route::post('/uploadregional/store-regional', [UploadRegionalController::class, 'store']);
 
