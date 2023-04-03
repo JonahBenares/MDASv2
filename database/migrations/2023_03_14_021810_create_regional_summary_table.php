@@ -27,6 +27,7 @@ return new class extends Migration
             $table->float('export', 10,4)->default(0);
             $table->float('load_bid', 10,4)->default(0);
             $table->float('load_curtailed', 10,4)->default(0);
+            $table->string('identifier')->nullable();
             $table->integer('upload_by')->default(0);
             $table->timestamps();
         });

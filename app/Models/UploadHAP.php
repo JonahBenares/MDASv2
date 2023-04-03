@@ -21,6 +21,7 @@ class UploadHAP extends Model
         'energy',
         'loss',
         'congestion',
+        'identifier',
         'upload_by'
     ];
 }

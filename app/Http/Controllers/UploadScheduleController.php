@@ -42,8 +42,10 @@ class UploadScheduleController extends Controller
      */
     public function store(Request $request)
     {
+        $identifier=generateRandomString();
         $data=[
             'run_hour'=>$request->run_hour,
+            'identifier'=>$identifier,
             'upload_by'=>$request->user_id
         ];
         Excel::import(new ImportSchedule($data), request()->file('mpsl'));
@@ -61,7 +63,8 @@ class UploadScheduleController extends Controller
 
     public function saveall(Request $request){
         $check_exist = PowerplantResource::all();
-        $data=UploadScheduleTemp::where('upload_by',Auth::id())->chunk(500, function($saveall) use($request,&$save) {
+        //$identifier=generateRandomString();
+        $data=UploadScheduleTemp::where('upload_by',Auth::id())->chunk(500, function($saveall) use($request,&$save,&$identifier) {
             $x=0;
             $data_insert=[];
             $id=[];
@@ -94,6 +97,7 @@ class UploadScheduleController extends Controller
 
                
                 $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
+                
                 $data_insert[] =[
                     'run_time'=>$sa->run_time,
                     'run_hour'=>$sa->run_hour,
@@ -112,6 +116,7 @@ class UploadScheduleController extends Controller
                     'lmp_loss'=>$sa->lmp_loss,
                     'congestion'=>$sa->congestion,
                     'upload_by'=>$sa->upload_by,
+                    'identifier'=>$sa->identifier,
                     'created_at'=>date('Y-m-d h:i:s'),
                     'updated_at'=>date('Y-m-d h:i:s')
                 ];
@@ -120,23 +125,25 @@ class UploadScheduleController extends Controller
             $save=UploadSchedule::insert($data_insert);
         });
         if($save){
-            $sched = UploadSchedule::select('id')->where('upload_by',Auth::id())->get();
-            UploadScheduleTemp::whereIn('id', $sched->pluck('id'))->delete();
-            return redirect()->route('uploadschedules.index');
+            $sched = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->get();
+            $identifier_url = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->value('identifier');
+            UploadScheduleTemp::whereIn('identifier', $sched->pluck('identifier'))->delete();
+            return redirect()->route('uploadschedules.show',$identifier_url);
         }
     }
 
     public function cancelschedule(){
         $sched = UploadScheduleTemp::where('upload_by',Auth::id())->get();
-        UploadScheduleTemp::whereIn('id', $sched->pluck('id'))->delete();
+        UploadScheduleTemp::whereIn('identifier', $sched->pluck('identifier'))->delete();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(UploadSchedule $id)
+    public function show($identifier)
     {
-        return view('upload_schedule.show',$id);
+        $scheduleload=UploadSchedule::where('identifier',$identifier)->get();
+        return view('upload_schedule.show',compact('scheduleload'));
     }
 
     /**

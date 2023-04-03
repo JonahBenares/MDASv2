@@ -56,10 +56,13 @@ Route::post('/uploadschedules/insertpowerplant', [UploadScheduleController::clas
 Route::post('/uploadschedules/cancelschedule', [UploadScheduleController::class, 'cancelschedule']);
 Route::post('/uploadschedules/store-data', [UploadScheduleController::class, 'store']);
 Route::post('/uploadschedules/uploadindex', [UploadScheduleController::class, 'index']);
+Route::get('/uploadschedules/show/{$identfier}', [UploadScheduleController::class, 'show']);
 Route::resource('uploadhap', UploadHAPController::class);
 Route::post('/uploadhap/store-hap', [UploadHAPController::class, 'store']);
+Route::get('/uploadhap/show/{$identfier}', [UploadHAPController::class, 'show']);
 Route::resource('uploadregional', UploadRegionalController::class);
 Route::post('/uploadregional/store-regional', [UploadRegionalController::class, 'store']);
+Route::get('/uploadregional/show/{$identfier}', [UploadRegionalController::class, 'show']);
 
 Route::resource('reportactualoutages', ReportActualOutagesController::class);
 Route::resource('reportoutagestype', ReportOutagesTypeController::class);

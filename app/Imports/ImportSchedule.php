@@ -56,4 +56,14 @@ class ImportSchedule implements ToModel,WithHeadingRow
             // }
         }
     }
+
+    public function batchSize(): int
+    {
+        return 500;
+    }
+    
+    public function chunkSize(): int
+    {
+        return 500;
+    }
 }

@@ -27,6 +27,7 @@ class UploadScheduleTemp extends Model
         'lmp_smp',
         'lmp_loss',
         'congestion',
+        'identifier',
         'upload_by'
     ];
 }

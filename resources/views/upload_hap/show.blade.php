@@ -40,93 +40,37 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($hap AS $h)
                     <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                            Apple MacBook Pro 17"
+                            {{$h->run_time}}
                         </td>
                         <td class="px-6 py-4">
-                            Silver
+                            {{$h->interval_end}}
                         </td>
                         <td class="px-6 py-4">
-                            Laptop
+                            {{$h->price_node}}
                         </td>
                         <td class="px-6 py-4">
-                            $2999
+                            {{number_format($h->mw,4)}}
                         </td>
                         <td class="px-6 py-4">
-                            Silver
+                            {{number_format($h->lmp,4)}}
                         </td>
                         <td class="px-6 py-4">
-                            Laptop
+                            {{number_format($h->loss_factor,4)}}
                         </td>
                         <td class="px-6 py-4">
-                            $2999
+                            {{number_format($h->energy,4)}}
                         </td>
                         <td class="px-6 py-4">
-                            Silver
+                            {{number_format($h->loss,4)}}
                         </td>
                         <td class="px-6 py-4">
-                            Laptop
+                            {{number_format($h->congestion,4)}}
                         </td>
                     </tr>
-                    <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                            Apple MacBook Pro 17"
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                    </tr>
-                    <tr class="bg-white white:bg-gray-800 hover:bg-gray-50 white:hover:bg-gray-600">
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                            Apple MacBook Pro 17"
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

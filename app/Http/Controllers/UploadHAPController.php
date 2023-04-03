@@ -34,18 +34,22 @@ class UploadHAPController extends Controller
      */
     public function store(Request $request)
     {
+        $identifiers=generateRandomString();
         $data=[
+            'identifier'=>$identifiers,
             'upload_by'=>$request->user_id
         ];
         Excel::import(new ImportHap($data), request()->file('hap'));
+        echo $identifiers;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(UploadHAP $id)
+    public function show($identifier)
     {
-        return view('upload_hap.show',$id);
+        $hap=UploadHAP::where('identifier',$identifier)->orderBy('interval_end','ASC')->get();
+        return view('upload_hap.show',compact('hap'));
     }
 
     /**

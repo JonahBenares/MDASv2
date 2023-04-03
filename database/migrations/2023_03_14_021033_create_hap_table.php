@@ -23,6 +23,7 @@ return new class extends Migration
             $table->float('energy', 10,4)->default(0);
             $table->float('loss', 10,4)->default(0);
             $table->float('congestion', 10,4)->default(0);
+            $table->string('identifier')->nullable();
             $table->integer('upload_by')->default(0);
             $table->timestamps();
         });

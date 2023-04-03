@@ -25,6 +25,7 @@ class UploadRegional extends Model
         'export',
         'load_bid',
         'load_curtailed',
+        'identifier',
         'upload_by'
     ];
 }

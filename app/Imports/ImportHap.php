@@ -25,7 +25,7 @@ class ImportHap implements ToModel,WithHeadingRow
     {
         return 2;
     }
-
+    
     public function model(array $row)
     {
         if($row['run_time']!=''){
