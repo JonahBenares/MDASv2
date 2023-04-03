@@ -48,45 +48,47 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $__currentLoopData = $hap; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $h): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                            <?php echo e($h->run_time); ?>
+                    <?php $__currentLoopData = $hap->chunk(100); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chunkhap): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $chunkhap; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $h): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                <?php echo e($h->run_time); ?>
 
-                        </td>
-                        <td class="px-6 py-4">
-                            <?php echo e($h->interval_end); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e($h->interval_end); ?>
 
-                        </td>
-                        <td class="px-6 py-4">
-                            <?php echo e($h->price_node); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e($h->price_node); ?>
 
-                        </td>
-                        <td class="px-6 py-4">
-                            <?php echo e(number_format($h->mw,4)); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($h->mw,4)); ?>
 
-                        </td>
-                        <td class="px-6 py-4">
-                            <?php echo e(number_format($h->lmp,4)); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($h->lmp,4)); ?>
 
-                        </td>
-                        <td class="px-6 py-4">
-                            <?php echo e(number_format($h->loss_factor,4)); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($h->loss_factor,4)); ?>
 
-                        </td>
-                        <td class="px-6 py-4">
-                            <?php echo e(number_format($h->energy,4)); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($h->energy,4)); ?>
 
-                        </td>
-                        <td class="px-6 py-4">
-                            <?php echo e(number_format($h->loss,4)); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($h->loss,4)); ?>
 
-                        </td>
-                        <td class="px-6 py-4">
-                            <?php echo e(number_format($h->congestion,4)); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($h->congestion,4)); ?>
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>

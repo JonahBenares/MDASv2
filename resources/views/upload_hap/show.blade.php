@@ -40,36 +40,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($hap AS $h)
-                    <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                            {{$h->run_time}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$h->interval_end}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$h->price_node}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{number_format($h->mw,4)}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{number_format($h->lmp,4)}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{number_format($h->loss_factor,4)}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{number_format($h->energy,4)}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{number_format($h->loss,4)}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{number_format($h->congestion,4)}}
-                        </td>
-                    </tr>
+                    @foreach($hap->chunk(100) AS $chunkhap)
+                        @foreach($chunkhap AS $h)
+                        <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                {{$h->run_time}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{$h->interval_end}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{$h->price_node}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{number_format($h->mw,4)}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{number_format($h->lmp,4)}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{number_format($h->loss_factor,4)}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{number_format($h->energy,4)}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{number_format($h->loss,4)}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{number_format($h->congestion,4)}}
+                            </td>
+                        </tr>
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>
