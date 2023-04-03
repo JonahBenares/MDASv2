@@ -40,18 +40,22 @@ class UploadRegionalController extends Controller
      */
     public function store(Request $request)
     {
+        $identifiers=generateRandomString();
         $data=[
+            'identifier'=>$identifiers,
             'upload_by'=>$request->user_id
         ];
         Excel::import(new ImportRegional($data), request()->file('reg_sum'));
+        echo $identifiers;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(UploadRegional $id)
+    public function show($identifier)
     {
-        return view('upload_regional.show',$id);
+        $regional=UploadRegional::where('identifier',$identifier)->get();
+        return view('upload_regional.show',compact('regional'));
     }
 
     /**

@@ -57,120 +57,60 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                            Apple MacBook Pro 17"
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                            Apple MacBook Pro 17"
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                    </tr>
-                    <tr class="bg-white white:bg-gray-800 hover:bg-gray-50 white:hover:bg-gray-600">
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                            Apple MacBook Pro 17"
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                    </tr>
+                    <?php $__currentLoopData = $regional->chunk(100); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chunkreg): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $chunkreg; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                <?php echo e($r->run_time); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e($r->mkt_type); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e($r->time_interval); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e($r->region_name); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e($r->commodity_type); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($r->demand,4)); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($r->load_bid,4)); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($r->load_curtailed,4)); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($r->losses,4)); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($r->generation,4)); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($r->import,4)); ?>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e(number_format($r->export,4)); ?>
+
+                            </td>
+                        </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
         </div>
