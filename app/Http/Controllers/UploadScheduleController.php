@@ -25,8 +25,9 @@ class UploadScheduleController extends Controller
         $powerplant=Powerplant::all()->sortBy('facility_name');
         $check_exist = PowerplantResource::pluck('resource_id')->all();
         $check_user=UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->count();
+        $check_user_exist=UploadScheduleTemp::where('upload_by',Auth::id())->count();
         $checker = UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->select('resource_name')->distinct('resource_name')->orderBy('resource_name','ASC')->get();
-        return view('upload_schedule.index',compact('checker','check_resource','check_user','powerplant'));
+        return view('upload_schedule.index',compact('checker','check_resource','check_user','check_user_exist','powerplant'));
     }
 
     /**
@@ -49,6 +50,51 @@ class UploadScheduleController extends Controller
             'upload_by'=>$request->user_id
         ];
         Excel::import(new ImportSchedule($data), request()->file('mpsl'));
+        $check_exist = PowerplantResource::pluck('resource_id')->all();
+        $count=UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->count();
+        if($count==0){
+            $data=UploadScheduleTemp::where('upload_by',Auth::id())->chunk(500, function($saveall) use(&$save) {
+                $x=0;
+                $data_insert=[];
+                $id=[];
+                foreach($saveall AS $sa){
+                    $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
+                    $resource_name=$sa->resource_name;
+                    $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
+                    $data_insert[] =[
+                        'run_time'=>$sa->run_time,
+                        'run_hour'=>$sa->run_hour,
+                        'mkt_type'=>$sa->mkt_type,
+                        'time_interval'=>$sa->time_interval,
+                        'region_name'=>$sa->region_name,
+                        'grid_id'=> $sa->grid_id,
+                        'resource_name'=>$resource_name,
+                        'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
+                        'resource_type'=>$sa->resource_type,
+                        'resource_type_id'=> $resource_type_id,
+                        'schedule_mw'=>$sa->schedule_mw,
+                        'lmp'=>$sa->lmp,
+                        'loss_factor'=>$sa->loss_factor,
+                        'lmp_smp'=>$sa->lmp_smp,
+                        'lmp_loss'=>$sa->lmp_loss,
+                        'congestion'=>$sa->congestion,
+                        'upload_by'=>$sa->upload_by,
+                        'identifier'=>$sa->identifier,
+                        'created_at'=>date('Y-m-d h:i:s'),
+                        'updated_at'=>date('Y-m-d h:i:s')
+                    ];
+                    $x++;
+                }   
+                $save=UploadSchedule::insert($data_insert);
+            });
+            if($save){
+                $sched = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->get();
+                $identifier_url = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->value('identifier');
+                UploadScheduleTemp::whereIn('identifier', $sched->pluck('identifier'))->delete();
+                echo $identifier_url;
+                //return redirect()->route('uploadschedules.show',$identifier_url);
+            }
+        }
         //return redirect()->route('uploadschedules.index');
     }
 
@@ -62,9 +108,8 @@ class UploadScheduleController extends Controller
     }
 
     public function saveall(Request $request){
-        $check_exist = PowerplantResource::all();
         //$identifier=generateRandomString();
-        $data=UploadScheduleTemp::where('upload_by',Auth::id())->chunk(500, function($saveall) use($request,&$save,&$identifier) {
+        $data=UploadScheduleTemp::where('upload_by',Auth::id())->chunk(500, function($saveall) use($request,&$save) {
             $x=0;
             $data_insert=[];
             $id=[];

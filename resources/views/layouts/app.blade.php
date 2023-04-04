@@ -295,6 +295,9 @@
                     document.getElementById("hexagon-spinner").style.display = "none";
                     document.getElementById("mpsl").value='';
                     document.getElementById("run_hour").value='';
+                    if(output!=''){
+                        window.location=base_url+'/uploadschedules/'+output;
+                    }
                 }
             });
         }
