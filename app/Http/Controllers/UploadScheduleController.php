@@ -89,9 +89,9 @@ class UploadScheduleController extends Controller
             });
             if($save){
                 $sched = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->get();
-                $identifier_url = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->latest('identifier')->value('identifier');
+                $identifier_url = UploadSchedule::where('upload_by',Auth::id())->latest('id')->first();
                 UploadScheduleTemp::whereIn('identifier', $sched->pluck('identifier'))->delete();
-                echo $identifier_url;
+                echo $identifier_url->identifier;
                 //return redirect()->route('uploadschedules.show',$identifier_url);
             }
         }
@@ -171,9 +171,10 @@ class UploadScheduleController extends Controller
         });
         if($save){
             $sched = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->get();
-            $identifier_url = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->latest('identifier')->value('identifier');
+            $identifier_url = UploadSchedule::where('upload_by',Auth::id())->latest('id')->first();
+            //$identifier_url = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->latest('identifier')->value('identifier');
             UploadScheduleTemp::whereIn('identifier', $sched->pluck('identifier'))->delete();
-            return redirect()->route('uploadschedules.show',$identifier_url);
+            return redirect()->route('uploadschedules.show',$identifier_url->identifier);
         }
     }
 

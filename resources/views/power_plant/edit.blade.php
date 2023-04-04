@@ -37,7 +37,14 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Short Name</label>
                         <input name="short_name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light" value="{{$powerplant->short_name}}">
                     </div>
-                    
+                    <div class="mb-2 w-3/12">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 white:text-white">Connection Type</label>
+                        <select name="connection_type" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500 white:shadow-sm-light">
+                            <option value="">--Select Type--</option>
+                            <option value="Grid Connected" {{ ($powerplant->connection_type=='Grid Connected') ? 'selected' : '' }}>Grid Connected</option>
+                            <option value="Embedded" {{ ($powerplant->connection_type=='Embedded') ? 'selected' : '' }}>Embedded</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="flex justify-between space-x-2">
                     <div class="mb-2 w-3/12">

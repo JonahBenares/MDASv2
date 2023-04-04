@@ -27,6 +27,7 @@ class PowerPlant extends Model
         'fit_approved',
         'owner_type',
         'type_of_contract',
+        'connection_type',
         'status'
     ];
 }

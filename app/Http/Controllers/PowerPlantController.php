@@ -74,6 +74,7 @@ class PowerPlantController extends Controller
             'fit_approved'=> $request->fit_approved,
             'owner_type'=> $request->owner_type,
             'type_of_contract'=> $request->type_of_contract,
+            'connection_type'=> $request->connection_type,
             'status'=> $request->status
         ]);
         if($res){
@@ -151,6 +152,7 @@ class PowerPlantController extends Controller
             'fit_approved'=> $request->fit_approved,
             'owner_type'=> $request->owner_type,
             'type_of_contract'=> $request->type_of_contract,
+            'connection_type'=> $request->connection_type,
             'status'=> $request->status
         ]);
         if($powerplant){
