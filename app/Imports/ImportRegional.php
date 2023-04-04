@@ -33,7 +33,7 @@ class ImportRegional implements ToModel,WithHeadingRow
             $commodity_id=Commodity::where('commodity_code',$row['commodity_type'])->value('id');
             $grid_id=Grid::where('grid_code',$row['region_name'])->value('id');
             return new UploadRegional(array_merge([
-                'run_time'=>date('Y-m-d',strtotime($row['run_time'])),
+                'run_time'=>date('Y-m-d H:i',strtotime($row['run_time'])),
                 'mkt_type'=>$row['mkt_type'],
                 'time_interval'=>date('Y-m-d H:i',strtotime($row['time_interval'])),
                 'region_name'=>$row['region_name'],

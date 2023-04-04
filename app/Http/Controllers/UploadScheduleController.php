@@ -122,22 +122,27 @@ class UploadScheduleController extends Controller
                         'resource_name'=>''
                     ]);
                 }
-                $isExist = PowerplantResource::where('resource_id',$request->main_resource[$x])->doesntExist();
-                if($isExist){
-                    if($request->powerplant[$x]!=''){
-                        PowerplantResource::create([
-                            'powerplant_id'=>$request->powerplant[$x],
-                            'resource_id'=>$request->main_resource[$x],
-                        ]);
+
+                if(!empty($request->main_resource[$x])){
+                    $isExist = PowerplantResource::where('resource_id',$request->main_resource[$x])->doesntExist();
+                    if($isExist){
+                        if($request->powerplant[$x]!=''){
+                            PowerplantResource::create([
+                                'powerplant_id'=>$request->powerplant[$x],
+                                'resource_id'=>$request->main_resource[$x],
+                            ]);
+                        }
                     }
                 }
                 $resource_id=0;
-                if($request->resource_name[$x]!=''){
-                    $resource_id=$request->resource_name[$x];
-                    $resource_name=PowerplantResource::where('id',$resource_id)->value('resource_id');
-                }else{
-                    $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
-                    $resource_name=$sa->resource_name;
+                if(!empty($request->main_resource[$x])){
+                    if($request->resource_name[$x]!=''){
+                        $resource_id=$request->resource_name[$x];
+                        $resource_name=PowerplantResource::where('id',$resource_id)->value('resource_id');
+                    }else{
+                        $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
+                        $resource_name=$sa->resource_name;
+                    }
                 }
 
                
