@@ -37,8 +37,8 @@ class ImportHap implements ToModel,WithHeadingRow
             }
             $price_node=PriceNodes::where('description',$row['price_node'])->value('id');
             return new UploadHAP(array_merge([
-                'run_time'=>date('Y-m-d h:i',strtotime($row['run_time'])),
-                'interval_end'=>date('Y-m-d h:i',strtotime($row['interval_end'])),
+                'run_time'=>date('Y-m-d H:i',strtotime($row['run_time'])),
+                'interval_end'=>date('Y-m-d H:i',strtotime($row['interval_end'])),
                 'price_node'=>$row['price_node'],
                 'price_node_id'=> $price_node,
                 'mw'=>$row['mw'],

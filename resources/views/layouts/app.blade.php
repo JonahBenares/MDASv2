@@ -359,7 +359,7 @@
                     document.getElementById("hexagon-spinner").style.display = "none";
                     document.getElementById("reg_sum").value='';
                     alert('Data Successfully Saved!');
-                    window.location=base_url+'/uploadregional/show/'+output;
+                    window.location=base_url+'/uploadregional/'+output;
                 }
             });
         }

@@ -34,7 +34,7 @@ class ImportSchedule implements ToModel,WithHeadingRow
             return new UploadScheduleTemp(array_merge([
                 'run_time'=>date('Y-m-d',strtotime($row['run_time'])),
                 'mkt_type'=>$row['mkt_type'],
-                'time_interval'=>date('Y-m-d h:i',strtotime($row['time_interval'])),
+                'time_interval'=>date('Y-m-d H:i',strtotime($row['time_interval'])),
                 'region_name'=>$row['region_name'],
                 'grid_id'=> (!empty($grid_id)) ? $grid_id : 0,
                 'resource_name'=>$row['resource_name'],
