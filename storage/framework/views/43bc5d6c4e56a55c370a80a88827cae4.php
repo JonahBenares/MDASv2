@@ -12,14 +12,9 @@
             <div class="text-lg font-medium uppercase align-baseline inline-block leading-none py-3">Prices & Schedule & Load</div>
             <div class="flex justify-center space-x-4 ">
                 <span class="flex items-center text-sm font-medium text-gray-500 white:text-white">Legend:</span>
-                <div class="flex items-center text-sm font-medium text-gray-500 white:text-white"><span class="flex w-2.5 h-2.5 rounded-full mr-1 flex-shrink-0" style="background:#5521B5"></span>Biomass</div>
-                <div class="flex items-center text-sm font-medium text-gray-500 white:text-white"><span class="flex w-2.5 h-2.5 rounded-full mr-1 flex-shrink-0" style="background:#723B13"></span>Coal</div>
-                <div class="flex items-center text-sm font-medium text-gray-500 white:text-white"><span class="flex w-2.5 h-2.5 rounded-full mr-1 flex-shrink-0" style="background:#374151"></span>Geothermal</div>
-                <div class="flex items-center text-sm font-medium text-gray-500 white:text-white"><span class="flex w-2.5 h-2.5 rounded-full mr-1 flex-shrink-0" style="background:#1E429F"></span>Hydro Electric</div>
-                <div class="flex items-center text-sm font-medium text-gray-500 white:text-white"><span class="flex w-2.5 h-2.5 rounded-full mr-1 flex-shrink-0" style="background:#FACA15"></span>Natural Gas</div>
-                <div class="flex items-center text-sm font-medium text-gray-500 white:text-white"><span class="flex w-2.5 h-2.5 rounded-full mr-1 flex-shrink-0" style="background:#9B1C1C"></span>Oil-Based</div>
-                <div class="flex items-center text-sm font-medium text-gray-500 white:text-white"><span class="flex w-2.5 h-2.5 rounded-full mr-1 flex-shrink-0" style="background:#ff6c0a"></span>Solar</div>
-                <div class="flex items-center text-sm font-medium text-gray-500 white:text-white"><span class="flex w-2.5 h-2.5 rounded-full mr-1 flex-shrink-0" style="background:#0ebeb0"></span>Wind</div>
+                <?php $__currentLoopData = $powerplant_type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="flex items-center text-sm font-medium text-gray-500 white:text-white"><span class="flex w-2.5 h-2.5 rounded-full mr-1 flex-shrink-0" style="background:<?php echo e($pt->legend); ?>"></span><?php echo e($pt->type_name); ?></div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </div>
         <div class="flex justify-center pb-4  mt-4 space-x-2">
@@ -87,8 +82,9 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400 sticky top-0 z-10">
                     <tr>
                         <th scope="col" class="px-1 py-1 border align-bottom sticky left-0 bg-gray-50" colspan="4" align="right">Interval</th>
-                        <th scope="col" class="px-1 py-1 border align-bottom" colspan="24" align="center">1</th>
-                        <th scope="col" class="px-1 py-1 border align-bottom" colspan="24" align="center">2</th>
+                        <?php $__currentLoopData = range(intval('00:00:00'),intval('23:00:00')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $time): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+                        <th scope="col" class="px-1 py-1 border align-bottom" colspan="24" align="center"><?php echo e(((date("H", mktime($time+1))!='00') ? date("H", mktime($time+1)) : '24')); ?></th>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tr>
                     <tr>
                         <th scope="col" class="px-1 py-1 border align-bottom sticky left-0 bg-gray-50" colspan="4" align="right">Minute</th>

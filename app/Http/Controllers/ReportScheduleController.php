@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReportSchedule;
+use App\Models\PowerplantType;
 use Illuminate\Http\Request;
 
 class ReportScheduleController extends Controller
@@ -12,7 +13,8 @@ class ReportScheduleController extends Controller
      */
     public function index()
     {
-        return view('report_schedule.index');
+        $powerplant_type=PowerplantType::all()->sortBy('type_name');
+        return view('report_schedule.index',compact('powerplant_type'));
     }
 
     /**

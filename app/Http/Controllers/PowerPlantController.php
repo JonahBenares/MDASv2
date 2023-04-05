@@ -75,6 +75,7 @@ class PowerPlantController extends Controller
             'owner_type'=> $request->owner_type,
             'type_of_contract'=> $request->type_of_contract,
             'connection_type'=> $request->connection_type,
+            'actual_units'=> $request->actual_units,
             'status'=> $request->status
         ]);
         if($res){
@@ -153,6 +154,7 @@ class PowerPlantController extends Controller
             'owner_type'=> $request->owner_type,
             'type_of_contract'=> $request->type_of_contract,
             'connection_type'=> $request->connection_type,
+            'actual_units'=> $request->actual_units,
             'status'=> $request->status
         ]);
         if($powerplant){
