@@ -101,7 +101,7 @@ class UploadScheduleController extends Controller
     public function insertpowerplant(Request $request){
         $operator = $request->operator;
         $powerplant_id=Powerplant::insertGetId([
-           'operator'=>$operator,
+           'facility_name'=>$operator,
            'status'=>'Active'
         ]);
         echo $powerplant_id;

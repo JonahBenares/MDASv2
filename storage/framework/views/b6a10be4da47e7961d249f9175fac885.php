@@ -25,7 +25,7 @@
             <form method="POST">
                <!-- Modal body -->
                <div class="px-6">
-                  <input type="text" name="operator" id='operators' class="block text-sm w-full px-3 py-2 mt-2 mb-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" placeholder="Operator Name">
+                  <input type="text" name="operator" id='operators' class="block text-sm w-full px-3 py-2 mt-2 mb-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" placeholder="Facility Name">
                </div>
                <!-- Modal footer -->
                <div class="flex items-center p-6 space-x-2">
@@ -151,7 +151,7 @@
                                  <select name="powerplant[]" id="powerplant<?php echo e($x); ?>" class="text-sm powerplant" onchange="hideSelectPowerplant()">
                                     <option value="">--Select Powerplant--</option>
                                     <?php $__currentLoopData = $powerplant; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                       <option value="<?php echo e($p->id); ?>"><?php echo e($p->operator); ?></option>
+                                       <option value="<?php echo e($p->id); ?>"><?php echo e($p->facility_name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                  </select>
                                  <!-- <input type="text" id='operators<?php echo e($x); ?>' name='operator' class='addtext' style='display:none;' onblur='addPowerplantT(<?php echo e($x); ?>)'>

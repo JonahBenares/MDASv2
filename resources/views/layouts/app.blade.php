@@ -307,7 +307,6 @@
                     document.getElementById("hexagon-spinner").style.display = "block";
                 },
                 success: function(output){
-                    console.log(output);
                     //$('#loadData').empty().load(window.location.href + '#loadTable');
                     $("#loadData").load(window.location.href+" #loadTable");
                     document.getElementById("hexagon-spinner").style.display = "none";
