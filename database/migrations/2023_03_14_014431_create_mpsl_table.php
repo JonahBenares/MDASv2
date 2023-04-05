@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('mpsl', function (Blueprint $table) {
             $table->id();
             $table->string('mkt_type')->nullable();
-            $table->date('run_time')->nullable();
+            $table->dateTime('run_time')->nullable();
             $table->integer('run_hour')->default(0);
             $table->dateTime('time_interval')->nullable();
             $table->string('region_name')->nullable();

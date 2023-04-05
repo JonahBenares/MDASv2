@@ -32,7 +32,7 @@ class ImportSchedule implements ToModel,WithHeadingRow
             $grid_id=Grid::where('grid_code',$row['region_name'])->value('id');
             $grid_count=Grid::where('grid_code',$row['region_name'])->count();
             return new UploadScheduleTemp(array_merge([
-                'run_time'=>date('Y-m-d',strtotime($row['run_time'])),
+                'run_time'=>date('Y-m-d H:i',strtotime($row['run_time'])),
                 'mkt_type'=>$row['mkt_type'],
                 'time_interval'=>date('Y-m-d H:i',strtotime($row['time_interval'])),
                 'region_name'=>$row['region_name'],
