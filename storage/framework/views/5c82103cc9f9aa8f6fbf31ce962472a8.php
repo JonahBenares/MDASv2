@@ -199,15 +199,37 @@
         }
 
         function hideSelectResource(){
+            var base_url = '<?php echo e(URL::to("/")); ?>';
+            var redirect = base_url+'/uploadschedules/updateresource';
             var btn=document.getElementsByClassName("resource_name");
-            for(var i=0;i<btn.length;i++){
-                var resource=document.getElementsByClassName("resource_name")[i].value;
-                if(resource!=''){
-                    document.getElementsByClassName("powerplant")[i].style.display = "none";
-                }else{
-                    document.getElementsByClassName("powerplant")[i].style.display = "block";
-                }
+            var counter =document.getElementById("counter").value;
+            var formData = new FormData();
+            for (let i = 0; i < btn.length; i++) {
+                formData.append('resource_name['+i+']', $('#resource_name'+i).val());
+                formData.append('id['+i+']', $('#id'+i).val());
+                formData.append('main_resource['+i+']', $('#main_resource'+i).val());
             }
+            formData.append('counter', counter);
+            $.ajax({
+                type: "POST",
+                url: redirect,
+                data: formData,
+                contentType : false,
+                processData : false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(output){
+                    for(var i=0;i<btn.length;i++){
+                        var resource_name=document.getElementsByClassName("resource_name")[i].value;
+                        if(resource_name!=''){
+                            document.getElementsByClassName("powerplant")[i].style.display = "none";
+                        }else{
+                            document.getElementsByClassName("powerplant")[i].style.display = "block";
+                        }
+                    }
+                }
+            });
         }
 
         function addPowerplant() {
@@ -244,6 +266,10 @@
                 //if(parseInt(checkuser)!=0){
                     let modal = new Modal(document.getElementById('checkUser'),{placement:'center'});
                     $('#loadData').hide();
+                    $('.hidebtn').hide();
+                    document.getElementById("mpsl").disabled = true; 
+                    document.getElementById("run_hour").disabled = true; 
+                    document.getElementById("savecsv").disabled = true; 
                     modal.show();
                 //}
             });
@@ -309,6 +335,10 @@
                 },
                 success: function(output){
                     //$('#loadData').empty().load(window.location.href + '#loadTable');
+                    document.getElementById("mpsl").disabled = true; 
+                    document.getElementById("run_hour").disabled = true; 
+                    document.getElementById("savecsv").disabled = true; 
+                    $(".hidebtn").show();
                     $("#loadData").load(window.location.href+" #loadTable");
                     document.getElementById("hexagon-spinner").style.display = "none";
                     document.getElementById("mpsl").value='';

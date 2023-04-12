@@ -96,6 +96,9 @@
             </div>
          </div>
       </form>
+      <button data-modal-target="addType" data-modal-toggle="addType" style='display:none' class="hidebtn block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5" type="button">
+         Add New Powerplant
+      </button>
       <div id="loadData">
          <?php if(sizeof($checker)): ?>
             <div  id="loadTable">
@@ -126,41 +129,44 @@
                                  
                               </th>
                               <th scope="col" class="px-6 py-3">
-                                 <button data-modal-target="addType" data-modal-toggle="addType" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5" type="button">
-                                    Add New Powerplant
-                                 </button>
+                                 
                               </th>
                            </tr>
                         </thead>
                         <tbody>
-                           <?php $x=0; ?>
-                           <?php $__currentLoopData = $checker; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                           <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700">
-                              <td scope="row" class="font-medium text-gray-900 whitespace-nowrap white:text-white">
-                                 <input type="text" name="main_resource[]" id='main_resource' style='border:transparent' value='<?php echo e($c->resource_name); ?>'>
-                              </td>
-                              <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap white:text-white">
-                                 <select name="resource_name[]" id="resource_name" class="text-sm resource_name" onchange="hideSelectResource()">
-                                    <option value="">--Select Like Resource Name--</option>
-                                    <?php $__currentLoopData = $check_resource; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                       <option value="<?php echo e($cr->id); ?>"><?php echo e($cr->resource_id); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                 </select>
-                              </td>
-                              <td scope="row" class="flex justify-start space-x-2 font-medium text-gray-900 whitespace-nowrap white:text-white ">
-                                 <select name="powerplant[]" id="powerplant<?php echo e($x); ?>" class="text-sm powerplant" onchange="hideSelectPowerplant()">
-                                    <option value="">--Select Powerplant--</option>
-                                    <?php $__currentLoopData = $powerplant; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                       <option value="<?php echo e($p->id); ?>"><?php echo e($p->facility_name); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                 </select>
-                                 <!-- <input type="text" id='operators<?php echo e($x); ?>' name='operator' class='addtext' style='display:none;' onblur='addPowerplantT(<?php echo e($x); ?>)'>
-                                 <button id="btn_change<?php echo e($x); ?>" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5 btn_change more" onclick="btnChange(<?php echo e($x); ?>)" type="button">
-                                    Add New Powerplant
-                                 </button> -->
-                              </td>
-                           </tr>
-                           <?php $x++; ?>
+                        <?php $x=0; ?>
+                           <?php $__currentLoopData = $checker->chunk(100); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chunk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              
+                              <?php $__currentLoopData = $chunk; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700">
+                                 <td scope="row" class="font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                    <input type="text" name="main_resource[]" id='main_resource<?php echo e($x); ?>' class='main_resource' style='border:transparent' value='<?php echo e($c->resource_name); ?>' readonly>
+                                    <input type="hidden" name="id[]" id='id<?php echo e($x); ?>' class='id' style='border:transparent' value='<?php echo e($c->id); ?>' readonly>
+                                 </td>
+                                 <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                    <select name="resource_name[]" id="resource_name<?php echo e($x); ?>" class="text-sm resource_name" onchange="hideSelectResource()">
+                                       <option value="">--Select Like Resource Name--</option>
+                                       <?php $__currentLoopData = $check_resource; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                          <option value="<?php echo e($cr->id); ?>"><?php echo e($cr->resource_id); ?></option>
+                                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                 </td>
+                                 <td scope="row" class="flex justify-start space-x-2 font-medium text-gray-900 whitespace-nowrap white:text-white ">
+                                    <select name="powerplant[]" id="powerplant<?php echo e($x); ?>" class="text-sm powerplant" onchange="hideSelectPowerplant()">
+                                       <option value="">--Select Powerplant--</option>
+                                       <?php $__currentLoopData = $powerplant; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                          <option value="<?php echo e($p->id); ?>"><?php echo e($p->facility_name); ?></option>
+                                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <!-- <input type="text" id='operators<?php echo e($x); ?>' name='operator' class='addtext' style='display:none;' onblur='addPowerplantT(<?php echo e($x); ?>)'>
+                                    <button id="btn_change<?php echo e($x); ?>" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5 btn_change more" onclick="btnChange(<?php echo e($x); ?>)" type="button">
+                                       Add New Powerplant
+                                    </button> -->
+                                 </td>
+                              </tr>
+                              <?php $x++; ?>
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              <input type="hidden" id='counter' name='counter' value='<?php echo e($x); ?>'>
                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                      </table>
@@ -175,7 +181,6 @@
                </form>
             </div>
          <?php endif; ?>
-         <input type="hidden" id='counter' name='counter' value='<?php echo e($x); ?>'>
          <input type="hidden" id='check_user' name='check_user' value='<?php echo e($check_user); ?>'>
       </div>
    </div>

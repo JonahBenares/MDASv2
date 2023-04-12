@@ -88,6 +88,9 @@
             </div>
          </div>
       </form>
+      <button data-modal-target="addType" data-modal-toggle="addType" style='display:none' class="hidebtn block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5" type="button">
+         Add New Powerplant
+      </button>
       <div id="loadData">
          @if(sizeof($checker))
             <div  id="loadTable">
@@ -118,41 +121,44 @@
                                  
                               </th>
                               <th scope="col" class="px-6 py-3">
-                                 <button data-modal-target="addType" data-modal-toggle="addType" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5" type="button">
-                                    Add New Powerplant
-                                 </button>
+                                 
                               </th>
                            </tr>
                         </thead>
                         <tbody>
-                           @php $x=0; @endphp
-                           @foreach($checker AS $c)
-                           <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700">
-                              <td scope="row" class="font-medium text-gray-900 whitespace-nowrap white:text-white">
-                                 <input type="text" name="main_resource[]" id='main_resource' style='border:transparent' value='{{$c->resource_name}}'>
-                              </td>
-                              <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap white:text-white">
-                                 <select name="resource_name[]" id="resource_name" class="text-sm resource_name" onchange="hideSelectResource()">
-                                    <option value="">--Select Like Resource Name--</option>
-                                    @foreach($check_resource AS $cr)
-                                       <option value="{{$cr->id}}">{{$cr->resource_id}}</option>
-                                    @endforeach
-                                 </select>
-                              </td>
-                              <td scope="row" class="flex justify-start space-x-2 font-medium text-gray-900 whitespace-nowrap white:text-white ">
-                                 <select name="powerplant[]" id="powerplant{{$x}}" class="text-sm powerplant" onchange="hideSelectPowerplant()">
-                                    <option value="">--Select Powerplant--</option>
-                                    @foreach($powerplant AS $p)
-                                       <option value="{{$p->id}}">{{$p->facility_name}}</option>
-                                    @endforeach
-                                 </select>
-                                 <!-- <input type="text" id='operators{{$x}}' name='operator' class='addtext' style='display:none;' onblur='addPowerplantT({{$x}})'>
-                                 <button id="btn_change{{$x}}" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5 btn_change more" onclick="btnChange({{$x}})" type="button">
-                                    Add New Powerplant
-                                 </button> -->
-                              </td>
-                           </tr>
-                           @php $x++; @endphp
+                        @php $x=0; @endphp
+                           @foreach($checker->chunk(100) AS $chunk)
+                              
+                              @foreach($chunk AS $c)
+                              <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700">
+                                 <td scope="row" class="font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                    <input type="text" name="main_resource[]" id='main_resource{{$x}}' class='main_resource' style='border:transparent' value='{{$c->resource_name}}' readonly>
+                                    <input type="hidden" name="id[]" id='id{{$x}}' class='id' style='border:transparent' value='{{$c->id}}' readonly>
+                                 </td>
+                                 <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                    <select name="resource_name[]" id="resource_name{{$x}}" class="text-sm resource_name" onchange="hideSelectResource()">
+                                       <option value="">--Select Like Resource Name--</option>
+                                       @foreach($check_resource AS $cr)
+                                          <option value="{{$cr->id}}">{{$cr->resource_id}}</option>
+                                       @endforeach
+                                    </select>
+                                 </td>
+                                 <td scope="row" class="flex justify-start space-x-2 font-medium text-gray-900 whitespace-nowrap white:text-white ">
+                                    <select name="powerplant[]" id="powerplant{{$x}}" class="text-sm powerplant" onchange="hideSelectPowerplant()">
+                                       <option value="">--Select Powerplant--</option>
+                                       @foreach($powerplant AS $p)
+                                          <option value="{{$p->id}}">{{$p->facility_name}}</option>
+                                       @endforeach
+                                    </select>
+                                    <!-- <input type="text" id='operators{{$x}}' name='operator' class='addtext' style='display:none;' onblur='addPowerplantT({{$x}})'>
+                                    <button id="btn_change{{$x}}" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5 btn_change more" onclick="btnChange({{$x}})" type="button">
+                                       Add New Powerplant
+                                    </button> -->
+                                 </td>
+                              </tr>
+                              @php $x++; @endphp
+                              @endforeach
+                              <input type="hidden" id='counter' name='counter' value='{{$x}}'>
                            @endforeach
                         </tbody>
                      </table>
@@ -167,7 +173,6 @@
                </form>
             </div>
          @endif
-         <input type="hidden" id='counter' name='counter' value='{{$x}}'>
          <input type="hidden" id='check_user' name='check_user' value='{{$check_user}}'>
       </div>
    </div>

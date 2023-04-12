@@ -55,6 +55,7 @@ Route::post('/uploadschedules/saveall', [UploadScheduleController::class, 'savea
 Route::post('/uploadschedules/insertpowerplant', [UploadScheduleController::class, 'insertpowerplant']);
 Route::post('/uploadschedules/cancelschedule', [UploadScheduleController::class, 'cancelschedule']);
 Route::post('/uploadschedules/store-data', [UploadScheduleController::class, 'store']);
+Route::post('/uploadschedules/updateresource', [UploadScheduleController::class, 'update']);
 Route::post('/uploadschedules/uploadindex', [UploadScheduleController::class, 'index']);
 Route::get('/uploadschedules/show/{$identfier}', [UploadScheduleController::class, 'show']);
 Route::resource('uploadhap', UploadHAPController::class);

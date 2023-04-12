@@ -21,12 +21,12 @@ class UploadScheduleController extends Controller
      */
     public function index()
     {
-        $check_resource=PowerplantResource::all();
+        $check_resource=PowerplantResource::all()->unique('resource_id');
         $powerplant=Powerplant::all()->sortBy('facility_name');
         $check_exist = PowerplantResource::pluck('resource_id')->all();
         $check_user=UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->count();
         $check_user_exist=UploadScheduleTemp::where('upload_by',Auth::id())->count();
-        $checker = UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->select('resource_name')->distinct('resource_name')->orderBy('resource_name','ASC')->get();
+        $checker = UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->select('resource_name','id')->groupBy('resource_name')->get();
         return view('upload_schedule.index',compact('checker','check_resource','check_user','check_user_exist','powerplant'));
     }
 
@@ -134,18 +134,29 @@ class UploadScheduleController extends Controller
                         }
                     }
                 }
-                //$resource_id=0;
-                if(!empty($request->resource_name[$x])){
-                    $resource_id=$request->resource_name[$x];
-                    $resource_name=PowerplantResource::where('id',$resource_id)->value('resource_id');
-                }else{
-                    $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
-                    $resource_name=$sa->resource_name;
-                }
-
-               
-                $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
+                // if(!empty($request->resource_name[$x])){
+                //     $resource_update=PowerplantResource::where('id',$request->resource_name[$x])->value('resource_id');
+                //     $schedload = UploadScheduleTemp::find($request->id[$x]);
+                //     $schedload->update(
+                //         [
+                //             'resource_id' => (!empty($request->resource_name[$x])) ? $request->resource_name[$x] : 0,
+                //             'resource_name' => $resource_update
+                //         ]
+                //     );
+                //     $newSched = $schedload->fresh();
+                //     $resource_name=$newSched->resource_name; 
+                //     $resource_id=PowerplantResource::where('resource_id',$resource_name)->value('id');
+                // }
                 
+                // $resource_id=0;
+                // if(!empty($request->resource_name[$x])){
+                //     $resource_id=$request->resource_name[$x];
+                //     $resource_name=PowerplantResource::where('id',$resource_id)->value('resource_id');
+                // }else{
+                    // $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
+                    // $resource_name=$sa->resource_name;
+                //}
+                $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
                 $data_insert[] =[
                     'run_time'=>$sa->run_time,
                     'run_hour'=>$sa->run_hour,
@@ -153,8 +164,9 @@ class UploadScheduleController extends Controller
                     'time_interval'=>$sa->time_interval,
                     'region_name'=>$sa->region_name,
                     'grid_id'=> $sa->grid_id,
-                    'resource_name'=>$resource_name,
-                    'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
+                    'resource_name'=>$sa->resource_name,
+                    'resource_id'=> $sa->resource_id,
+                    //'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
                     'resource_type'=>$sa->resource_type,
                     'resource_type_id'=> $resource_type_id,
                     'schedule_mw'=>$sa->schedule_mw,
@@ -206,9 +218,24 @@ class UploadScheduleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UploadSchedule $uploadSchedule)
+    public function update(Request $request)
     {
-        //
+        for($x=0;$x<$request->counter;$x++){
+            if(!empty($request->resource_name[$x])){
+                $resource_id=$request->resource_name[$x];
+                $resource_name=PowerplantResource::where('id',$resource_id)->value('resource_id');
+            }else{
+                $resource_id=0;
+                $resource_name=$request->main_resource[$x];
+            }
+            $schedload = UploadScheduleTemp::find($request->id[$x]);
+            $schedload->update(
+                [
+                    'resource_id' => $resource_id,
+                    'resource_name' => $resource_name
+                ]
+            );
+        }
     }
 
     /**
