@@ -80,8 +80,10 @@
                     </tr>
                     <tr>
                         <th scope="col" class="px-1 py-1 border align-bottom sticky left-0 bg-gray-50" colspan="4" align="right">Minute</th>
-                        <th scope="col" class="px-1 py-1 border" colspan="2" align="center">5</th>
-                        <th scope="col" class="px-1 py-1 border" colspan="2" align="center">10</th>
+                        @for($time=5;$time<=60;$time+=5)
+                            <th scope="col" class="px-1 py-1 border" colspan="2" align="center">{{ ($time!='60') ? $time : '00' }}</th>
+                        @endfor
+                        <!-- <th scope="col" class="px-1 py-1 border" colspan="2" align="center">10</th>
                         <th scope="col" class="px-1 py-1 border" colspan="2" align="center">15</th>
                         <th scope="col" class="px-1 py-1 border" colspan="2" align="center">20</th>
                         <th scope="col" class="px-1 py-1 border" colspan="2" align="center">25</th>
@@ -103,7 +105,7 @@
                         <th scope="col" class="px-1 py-1 border" colspan="2" align="center">45</th>
                         <th scope="col" class="px-1 py-1 border" colspan="2" align="center">50</th>
                         <th scope="col" class="px-1 py-1 border" colspan="2" align="center">55</th>
-                        <th scope="col" class="px-1 py-1 border" colspan="2" align="center">00</th>
+                        <th scope="col" class="px-1 py-1 border" colspan="2" align="center">00</th> -->
                     </tr>
                     <tr>
                         <th scope="col" class="px-1 py-1 border align-bottom sticky left-[0px] bg-white" align="center">Delivery_Hour</th>
