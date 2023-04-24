@@ -169,6 +169,7 @@ class UploadScheduleController extends Controller
                     //'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
                     'resource_type'=>$sa->resource_type,
                     'resource_type_id'=> $resource_type_id,
+                    'pp_type_id'=> $sa->pp_type_id,
                     'schedule_mw'=>$sa->schedule_mw,
                     'lmp'=>$sa->lmp,
                     'loss_factor'=>$sa->loss_factor,

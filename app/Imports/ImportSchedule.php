@@ -5,6 +5,8 @@ use App\Models\UploadScheduleTemp;
 use App\Models\Grid;
 use App\Models\Region;
 use App\Models\PowerplantResource;
+use App\Models\Powerplant;
+use App\Models\PowerplantType;
 use App\Models\ResourceType;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -31,6 +33,10 @@ class ImportSchedule implements ToModel,WithHeadingRow
             $resource_count=PowerplantResource::where('resource_id',$row['resource_name'])->count();
             $grid_id=Grid::where('grid_code',$row['region_name'])->value('id');
             $grid_count=Grid::where('grid_code',$row['region_name'])->count();
+
+            $powerplant_id= PowerplantResource::where("resource_id",$row['resource_name'])->value('powerplant_id');
+            $pp_type_id= Powerplant::where("id",$powerplant_id)->value('pp_type_id');
+            $id= PowerplantType::where("id",$pp_type_id)->value('id');
             return new UploadScheduleTemp(array_merge([
                 'run_time'=>date('Y-m-d H:i',strtotime($row['run_time'])),
                 'mkt_type'=>$row['mkt_type'],
@@ -41,6 +47,7 @@ class ImportSchedule implements ToModel,WithHeadingRow
                 'resource_id'=> (!empty($resource_id)) ? $resource_id : 0,
                 'resource_type'=>$row['resource_type'],
                 'resource_type_id'=> (!empty($resource_type_id)) ? $resource_type_id : 0,
+                'pp_type_id'=> (!empty($id)) ? $id : 0,
                 'schedule_mw'=>$row['sched_mw'],
                 'lmp'=>$row['lmp'],
                 'loss_factor'=>$row['loss_factor'],

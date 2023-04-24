@@ -68,7 +68,9 @@ Route::get('/uploadregional/show/{$identfier}', [UploadRegionalController::class
 Route::resource('reportactualoutages', ReportActualOutagesController::class);
 Route::resource('reportoutagestype', ReportOutagesTypeController::class);
 Route::resource('reportschedules', ReportScheduleController::class);
+Route::post('/reportschedules/filter_scheduleload', [ReportScheduleController::class, 'filter_scheduleload'])->name('filter_scheduleload');
 Route::resource('reportschedaverage', ReportSchedAverageController::class);
+Route::post('/reportschedaverage/filter_scheduleloadavg', [ReportSchedAverageController::class, 'filter_scheduleloadavg'])->name('filter_scheduleloadavg');
 Route::resource('reportregional', ReportRegionalController::class);
 Route::resource('reportregionalaverage', ReportRegionalAverageController::class);
 Route::resource('reportregionalweekly', ReportRegionalWeeklyController::class);

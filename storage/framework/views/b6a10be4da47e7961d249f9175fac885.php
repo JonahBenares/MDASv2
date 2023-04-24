@@ -78,7 +78,7 @@
             <div class="w-40">
                <select name="run_hour" id="run_hour" class="block py-2.5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400" required> 
                   <option value="">--Select Interval--</option>
-                  <?php for($x=0;$x<24;$x++): ?>
+                  <?php for($x=1;$x<=24;$x++): ?>
                   <option value="<?php echo e($x); ?>"><?php echo e($x); ?></option>
                   <?php endfor; ?>
                </select>

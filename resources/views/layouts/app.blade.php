@@ -410,6 +410,23 @@
                 }
             });
         }
+        function selectValidation() {
+            var count = $('.filter').filter(function(){return $(this).val() != ''}).length;
+            if (count<=2) {
+                let confirmAction = confirm("It may take time to load this report. Please add more filter to generate a more specific report.");
+                if(confirmAction){
+                    document.getElementById("hexagon-spinner").style.display = "block"; 
+                    return true;
+                }else{
+                    document.getElementById("hexagon-spinner").style.display = "none"; 
+                    return false;
+                }
+            }
+            document.getElementById("hexagon-spinner").style.display = "block";
+            window.addEventListener("load", () => { 
+                document.getElementById("hexagon-spinner").style.display = "none"; 
+            }); 
+        }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </html>

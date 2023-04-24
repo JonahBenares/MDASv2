@@ -21,6 +21,7 @@ class UploadSchedule extends Model
         'resource_id',
         'resource_type',
         'resource_type_id',
+        'pp_type_id',
         'schedule_mw',
         'lmp',
         'loss_factor',
