@@ -8,9 +8,9 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
     <div class='flex justify-center mt-42'>
-    <div id="hexagon-spinner" style="display:block">
-        <div class="hexagon-loader"></div>
-    </div>
+        <div id="hexagon-spinner" style="display:block">
+            <div class="hexagon-loader"></div>
+        </div>
     </div>
     <div class="p-4 ">
         <div class="pb-2 flex justify-between border-b ">
