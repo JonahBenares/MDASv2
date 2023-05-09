@@ -7,6 +7,7 @@ use App\Models\PowerplantType;
 use App\Models\PowerplantSub;
 use App\Models\UploadSchedule;
 use App\Models\ResourceType;
+use App\Models\UploadRegional;
 if (!function_exists('getGridName')) {
     function getGridName($id){
         $emp= Grid::select('grid_name')
@@ -130,4 +131,97 @@ if(!function_exists('getAvgSchedule')){
         return $avg;
     }
 }
+
+if (!function_exists('getDemandEN')) {
+    function getDemandEN($time,$region_name,$commodity_type){
+        $en_emand= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('demand');
+        return $en_emand;
+    }
+}
+
+if (!function_exists('getGenerationEN')) {
+    function getGenerationEN($time,$region_name,$commodity_type){
+        $en_generation= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('generation');
+        return $en_generation;
+    }
+}
+
+if (!function_exists('getLossesEN')) {
+    function getLossesEN($time,$region_name,$commodity_type){
+        $en_losses= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('losses');
+        return $en_losses;
+    }
+}
+
+if (!function_exists('getExportEN')) {
+    function getExportEN($time,$region_name,$commodity_type){
+        $en_export= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('export');
+        return $en_export;
+    }
+}
+
+if (!function_exists('getImportEN')) {
+    function getImportEN($time,$region_name,$commodity_type){
+        $en_import= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('import');
+        return $en_import;
+    }
+}
+
+if (!function_exists('getDemandDR')) {
+    function getDemandDR($time,$region_name,$commodity_type){
+        $dr_emand= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('demand');
+        return $dr_emand;
+    }
+}
+
+if (!function_exists('getGenerationDR')) {
+    function getGenerationDR($time,$region_name,$commodity_type){
+        $dr_generation= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('generation');
+        return $dr_generation;
+    }
+}
+
+if (!function_exists('getDemandFR')) {
+    function getDemandFR($time,$region_name,$commodity_type){
+        $fr_emand= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('demand');
+        return $fr_emand;
+    }
+}
+
+if (!function_exists('getGenerationFR')) {
+    function getGenerationFR($time,$region_name,$commodity_type){
+        $fr_generation= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('generation');
+        return $fr_generation;
+    }
+}
+
+if (!function_exists('getDemandRU')) {
+    function getDemandRU($time,$region_name,$commodity_type){
+        $ru_emand= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('demand');
+        return $ru_emand;
+    }
+}
+
+if (!function_exists('getGenerationRU')) {
+    function getGenerationRU($time,$region_name,$commodity_type){
+        $ru_generation= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('generation');
+        return $ru_generation;
+    }
+}
+
+if (!function_exists('getDemandRD')) {
+    function getDemandRD($time,$region_name,$commodity_type){
+        $rd_emand= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('demand');
+        return $rd_emand;
+    }
+}
+
+if (!function_exists('getGenerationRD')) {
+    function getGenerationRD($time,$region_name,$commodity_type){
+        $rd_generation= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('generation');
+        return $rd_generation;
+    }
+}
+
+
 ?>
