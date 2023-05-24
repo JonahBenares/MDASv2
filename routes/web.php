@@ -73,6 +73,7 @@ Route::post('/reportschedules/filter_scheduleload', [ReportScheduleController::c
 Route::resource('reportschedaverage', ReportSchedAverageController::class);
 Route::post('/reportschedaverage/filter_scheduleloadavg', [ReportSchedAverageController::class, 'filter_scheduleloadavg'])->name('filter_scheduleloadavg');
 Route::resource('reportregional', ReportRegionalController::class);
+Route::post('/reportregional/filter_regionalload', [ReportRegionalController::class, 'filter_regionalload'])->name('filter_regionalload');
 Route::resource('reportregionalaverage', ReportRegionalAverageController::class);
 Route::post('/reportregionalaverage/filter_regionalavgload', [ReportRegionalAverageController::class, 'filter_regionalavgload'])->name('filter_regionalavgload');
 Route::resource('reportregionalweekly', ReportRegionalWeeklyController::class);
