@@ -67,13 +67,16 @@ Route::get('/uploadregional/show/{$identfier}', [UploadRegionalController::class
 
 Route::resource('reportactualoutages', ReportActualOutagesController::class);
 Route::resource('reportoutagestype', ReportOutagesTypeController::class);
+Route::post('/reportoutagestype/filter_outagetype', [ReportOutagesTypeController::class, 'filter_outagetype'])->name('filter_outagetype');
 Route::resource('reportschedules', ReportScheduleController::class);
 Route::post('/reportschedules/filter_scheduleload', [ReportScheduleController::class, 'filter_scheduleload'])->name('filter_scheduleload');
 Route::resource('reportschedaverage', ReportSchedAverageController::class);
 Route::post('/reportschedaverage/filter_scheduleloadavg', [ReportSchedAverageController::class, 'filter_scheduleloadavg'])->name('filter_scheduleloadavg');
 Route::resource('reportregional', ReportRegionalController::class);
 Route::resource('reportregionalaverage', ReportRegionalAverageController::class);
+Route::post('/reportregionalaverage/filter_regionalavgload', [ReportRegionalAverageController::class, 'filter_regionalavgload'])->name('filter_regionalavgload');
 Route::resource('reportregionalweekly', ReportRegionalWeeklyController::class);
+Route::post('/reportregionalweekly/filter_regionalweekly', [ReportRegionalWeeklyController::class, 'filter_regionalweekly'])->name('filter_regionalweekly');
 Route::resource('region', RegionController::class);
 Route::resource('powerplant', PowerPlantController::class);
 Route::post('/powerplant/fetchsub', [PowerPlantController::class, 'fetchSub']);

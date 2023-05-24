@@ -6,7 +6,9 @@ use App\Models\Powerplant;
 use App\Models\PowerplantType;
 use App\Models\PowerplantSub;
 use App\Models\UploadSchedule;
+use App\Models\UploadRegional;
 use App\Models\ResourceType;
+use Illuminate\Support\Facades\DB;
 if (!function_exists('getGridName')) {
     function getGridName($id){
         $emp= Grid::select('grid_name')
@@ -127,6 +129,66 @@ if(!function_exists('getAvgSchedule')){
         $minute_first= UploadSchedule::select('time_interval')->where("resource_name",$resource_name)->where("run_hour",$hour)->orderBy('time_interval','asc')->first();
         $minute_last= UploadSchedule::select('time_interval')->where("resource_name",$resource_name)->where("run_hour",$hour)->orderBy('time_interval','desc')->first();
         $avg= UploadSchedule::where("resource_name",$resource_name)->where("run_hour",$hour)->whereBetween('time_interval',[$minute_first->time_interval,$minute_last->time_interval])->avg('schedule_mw');
+        return $avg;
+    }
+}
+
+if(!function_exists('getAvgRegionalAvg')){
+    function getAvgRegionalAvg($hour,$region_name,$commodity_type,$type) {
+        // if($minute=="60:00"){
+        //     $minutes='01:00:00';
+        // }else{
+        //     $minutes=$minute;
+        // }
+        // $minute_first= UploadRegional::select('time_interval')->where("grid_id",$region_name)->where("commodity_type",$commodity_type)->whereTime("time_interval",$hour)->orderBy('time_interval','asc')->first();
+        // $minute_last= UploadRegional::select('time_interval')->where("grid_id",$region_name)->where("commodity_type",$commodity_type)->whereTime("time_interval",$hour)->orderBy('time_interval','desc')->first();
+        //$minute_first= UploadRegional::select('time_interval')->where("grid_id",$region_name)->where("commodity_type",$commodity_type)->orderBy('time_interval','asc')->get();
+       //foreach($minute_first AS $mf){
+            //$avg= UploadRegional::where("grid_id",$region_name)->where("commodity_type",$commodity_type)->groupBy(DB::raw('hour(time_interval)'))->avg('demand');
+            //$avg= UploadRegional::where("grid_id",$region_name)->where("commodity_type",$commodity_type)->whereBetween('time_interval',[$mf->time_interval,$hour])->avg('demand');
+           // echo $hour;
+        if(date('H:i',strtotime($hour))=='01:00'){
+            $hours=date('Y-m-d 00:05',strtotime($hour));
+        }else if(date('H:i',strtotime($hour))<='2:00'){
+            $hours=date('Y-m-d H:05',strtotime($hour.'-1 hour'));
+        }
+
+        if(date('H:i',strtotime($hour))!='00:00'){
+            if(date('H:i',strtotime($hour))=='01:00'){
+                $hours2=date('Y-m-d H:i',strtotime($hour));
+            }else if(date('H:i',strtotime($hour))<='2:00'){
+                $hours2=date('Y-m-d H:i',strtotime($hour));
+            }else{
+                $hours2=date('Y-m-d H:i',strtotime($hour.'+1 hour'));
+            }
+        }else{
+            $hours2=date('Y-m-d H:i',strtotime($hour));
+        }
+        if(empty($region_name)){
+            $grid='';
+        }else{
+            $grid=" AND grid_id='$region_name'";
+        }
+        $avg=DB::select("SELECT AVG($type) AS average FROM regional_summary WHERE commodity_type='$commodity_type' $grid AND time_interval>='$hours' AND time_interval<='$hours2'  GROUP BY MINUTE(time_interval) div 5 * 5 ORDER BY hour(time_interval) ASC");
+        $average=array();
+        foreach($avg AS $v){
+            $average[]=$v->average;
+        }
+        $sum=array_sum($average)/12;
+        return $sum;
+        //}
+         
+    }
+}
+
+if(!function_exists('getweeklyRegionalAvg')){
+    function getweeklyRegionalAvg($time_interval,$region_name,$type) {
+        $date=date('Y-m-d',strtotime($time_interval));
+        $avg= UploadRegional::when((!empty($time_interval)), function ($q) use ($date) {
+            return $q->whereDate('run_time',$date);
+        })->when(($region_name!=0), function ($q) use ($region_name) {
+            return $q->where('grid_id',$region_name);
+        })->groupBy(DB::raw('date(run_time)'))->avg($type);
         return $avg;
     }
 }

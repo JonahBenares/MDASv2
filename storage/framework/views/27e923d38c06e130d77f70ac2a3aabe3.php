@@ -1,4 +1,12 @@
-<x-app-layout>
+<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
+<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('app-layout'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(App\View\Components\AppLayout::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
     <div class='flex justify-center mt-42'>
         <div id="hexagon-spinner" style="display:block">
             <div class="hexagon-loader"></div>
@@ -7,8 +15,8 @@
     <div class="p-4 ">
         <div class="pb-2 flex justify-between border-b ">
             <div class="text-lg font-medium uppercase align-baseline inline-block leading-none py-3">Regional Summary <b>(WEEKLY)</b> </div>
-            <form method="POST" action="{{ route('filter_regionalweekly') }}" onSubmit="return regweekValidation();">
-                @csrf
+            <form method="POST" action="<?php echo e(route('filter_regionalweekly')); ?>" onSubmit="return regweekValidation();">
+                <?php echo csrf_field(); ?>
                 <div class="flex justify-center space-x-2 ">
                     <div class="w-36">
                         <input name="date_from" type="text" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" placeholder="Date From" class="filterregweek block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500">
@@ -19,9 +27,9 @@
                     <div class="w-48">
                         <select name='grid' class="filterregweek block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500">
                             <option value="">Select Grid</option>
-                            @foreach($grid AS $r)
-                            <option value="{{$r->id}}">{{$r->grid_name}}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $grid; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($r->id); ?>"><?php echo e($r->grid_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <button type="submit" class=" text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs px-5 py-2.5 mb-1  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex justify-between space-x-2">
@@ -33,7 +41,7 @@
                 </div>
             </form>
         </div>
-        @if(!empty($_POST))
+        <?php if(!empty($_POST)): ?>
         <div class="">
             <div id="alert-border-5" class="flex p-4 border-t-4 shadow-md border-gray-300 bg-gray-50 white:bg-gray-800 white:border-gray-600" role="alert">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-5">
@@ -41,15 +49,15 @@
                   </svg>
                   
                 <div class="ml-3 text-sm font-medium text-gray-800 white:text-gray-300 space-x-5">
-                    @if(!empty($_POST['date_from']))
-                        <span><b>Date From:</b> {{date('F d,Y',strtotime($_POST['date_from']))}}</span>      
-                    @endif
-                    @if(!empty($_POST['date_to']))
-                        <span><b>Date To:</b> {{date('F d,Y',strtotime($_POST['date_to']))}}</span>      
-                    @endif
-                    @if(!empty($_POST['grid']))
-                        <span><b>Grid:</b> <span class="text-blue-500"> {{getGridName($_POST['grid'])}}</span> </span>      
-                    @endif 
+                    <?php if(!empty($_POST['date_from'])): ?>
+                        <span><b>Date From:</b> <?php echo e(date('F d,Y',strtotime($_POST['date_from']))); ?></span>      
+                    <?php endif; ?>
+                    <?php if(!empty($_POST['date_to'])): ?>
+                        <span><b>Date To:</b> <?php echo e(date('F d,Y',strtotime($_POST['date_to']))); ?></span>      
+                    <?php endif; ?>
+                    <?php if(!empty($_POST['grid'])): ?>
+                        <span><b>Grid:</b> <span class="text-blue-500"> <?php echo e(getGridName($_POST['grid'])); ?></span> </span>      
+                    <?php endif; ?> 
                 </div>
                 <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-gray-50 text-gray-500 rounded-lg focus:ring-2 focus:ring-gray-400 p-1.5 hover:bg-gray-200 inline-flex h-8 w-8 white:bg-gray-800 white:text-gray-300 white:hover:bg-gray-700 white:hover:text-white" data-dismiss-target="#alert-border-5" aria-label="Close">
                   <span class="sr-only">Dismiss</span>
@@ -71,23 +79,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($weeklyregionalArray AS $wra)
-                        @php 
+                        <?php $__currentLoopData = $weeklyregionalArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $wra): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php 
                             if(empty($_POST['grid'])){
                                 $grid_id=0;
                             }else{
                                 $grid_id=$wra->grid_id;
                             }
-                        @endphp
+                        ?>
                         <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
-                            <td class="px-1 py-1 border align-bottom " align="center"> {{date('m/d/Y',strtotime($wra->run_time))}}</td>
-                            <td class="px-1 py-1 border" align="center">{{number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'demand'),2)}}</td>
-                            <td class="px-1 py-1 border" align="center">{{number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'generation'),2)}}</td>
-                            <td class="px-1 py-1 border" align="center">{{number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'losses'),2)}}</td>
-                            <td class="px-1 py-1 border" align="center">{{number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'import'),2)}}</td>
-                            <td class="px-1 py-1 border" align="center">{{number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'export'),2)}}</td>
+                            <td class="px-1 py-1 border align-bottom " align="center"> <?php echo e(date('m/d/Y',strtotime($wra->run_time))); ?></td>
+                            <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'demand'),2)); ?></td>
+                            <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'generation'),2)); ?></td>
+                            <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'losses'),2)); ?></td>
+                            <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'import'),2)); ?></td>
+                            <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getweeklyRegionalAvg($wra->run_time,$grid_id,'export'),2)); ?></td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
@@ -98,7 +106,7 @@
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                   
                 <script>
-                    var cData = JSON.parse('@php echo $data['chart_data']@endphp');
+                    var cData = JSON.parse('<?php echo $data['chart_data']?>');
                     const ctx = document.getElementById('myChart');
                     new Chart(ctx, {
                     type: 'bar',
@@ -160,12 +168,17 @@
                    
             </div>
         </div>
-        @endif
+        <?php endif; ?>
     </div>
     <script>
         window.addEventListener("load", () => { 
             document.getElementById("hexagon-spinner").style.display = "none"; 
         });
     </script>
- </x-app-layout>
- 
+  <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+ <?php /**PATH C:\xampp\htdocs\mdasv2\resources\views/report_regional_weekly/index.blade.php ENDPATH**/ ?>

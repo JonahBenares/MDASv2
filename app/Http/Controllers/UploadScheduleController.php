@@ -126,7 +126,7 @@ class UploadScheduleController extends Controller
                 if(!empty($request->main_resource[$x])){
                     $isExist = PowerplantResource::where('resource_id',$request->main_resource[$x])->doesntExist();
                     if($isExist){
-                        if($request->powerplant[$x]!=''){
+                        if(!empty($request->powerplant[$x])){
                             PowerplantResource::create([
                                 'powerplant_id'=>$request->powerplant[$x],
                                 'resource_id'=>$request->main_resource[$x],
