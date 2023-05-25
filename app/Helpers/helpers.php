@@ -184,7 +184,7 @@ if(!function_exists('getAvgRegionalAvg')){
 if(!function_exists('getweeklyRegionalAvg')){
     function getweeklyRegionalAvg($time_interval,$region_name,$type) {
         $date=date('Y-m-d',strtotime($time_interval));
-        $avg= UploadRegional::when((!empty($time_interval)), function ($q) use ($date) {
+        $avg= UploadRegional::where('commodity_type','EN')->when((!empty($time_interval)), function ($q) use ($date) {
             return $q->whereDate('run_time',$date);
         })->when(($region_name!=0), function ($q) use ($region_name) {
             return $q->where('grid_id',$region_name);

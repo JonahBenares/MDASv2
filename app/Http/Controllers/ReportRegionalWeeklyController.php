@@ -55,19 +55,19 @@ class ReportRegionalWeeklyController extends Controller
         $data = [];
         foreach($graph AS $g){
             $data['label'][] = date('m/d/Y',strtotime($g->run_time));
-            $data['demand'][] = UploadRegional::whereDate("run_time",date('Y-m-d',strtotime($g->run_time)))->when(($grid_disp), function ($q) use ($grid_disp) {
+            $data['demand'][] = UploadRegional::where('commodity_type','En')->whereDate("run_time",date('Y-m-d',strtotime($g->run_time)))->when(($grid_disp), function ($q) use ($grid_disp) {
                 return $q->where('grid_id',$grid_disp);
             })->groupBy(DB::raw('date(run_time)'))->avg('demand');
-            $data['generation'][] = UploadRegional::whereDate("run_time",$g->run_time)->when(($grid_disp), function ($q) use ($grid_disp) {
+            $data['generation'][] = UploadRegional::where('commodity_type','En')->whereDate("run_time",$g->run_time)->when(($grid_disp), function ($q) use ($grid_disp) {
                 return $q->where('grid_id',$grid_disp);
             })->groupBy(DB::raw('date(run_time)'))->avg('generation');
-            $data['losses'][] = UploadRegional::whereDate("run_time",$g->run_time)->when(($grid_disp), function ($q) use ($grid_disp) {
+            $data['losses'][] = UploadRegional::where('commodity_type','En')->whereDate("run_time",$g->run_time)->when(($grid_disp), function ($q) use ($grid_disp) {
                 return $q->where('grid_id',$grid_disp);
             })->groupBy(DB::raw('date(run_time)'))->avg('losses');
-            $data['import'][] = UploadRegional::whereDate("run_time",$g->run_time)->when(($grid_disp), function ($q) use ($grid_disp) {
+            $data['import'][] = UploadRegional::where('commodity_type','En')->whereDate("run_time",$g->run_time)->when(($grid_disp), function ($q) use ($grid_disp) {
                 return $q->where('grid_id',$grid_disp);
             })->groupBy(DB::raw('date(run_time)'))->avg('import');
-            $data['export'][] = UploadRegional::whereDate("run_time",$g->run_time)->when(($grid_disp), function ($q) use ($grid_disp) {
+            $data['export'][] = UploadRegional::where('commodity_type','En')->whereDate("run_time",$g->run_time)->when(($grid_disp), function ($q) use ($grid_disp) {
                 return $q->where('grid_id',$grid_disp);
             })->groupBy(DB::raw('date(run_time)'))->avg('export');
         }
