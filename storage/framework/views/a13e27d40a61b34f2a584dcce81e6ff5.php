@@ -7,17 +7,22 @@
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
+    <div class='flex justify-center mt-42'>
+        <div id="hexagon-spinner" style="display:block">
+            <div class="hexagon-loader"></div>
+        </div>
+    </div>
     <div class="p-4 ">
         <div class="pb-2 flex justify-between border-b ">
             <div class="text-lg font-medium uppercase align-baseline inline-block leading-none py-3">Regional Summary</b> </div>
-            <form method="POST" action="<?php echo e(route('filter_regionalload')); ?>" onSubmit="return selectValidation();">
+            <form method="POST" action="<?php echo e(route('filter_regionalload')); ?>" onSubmit="return selectValidationReg();">
             <?php echo csrf_field(); ?>
             <div class="flex justify-center space-x-2 ">
                 <div class="w-40">
-                    <input type="date" name='date' id='date' class="filter block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500">
+                    <input type="date" name='date' id='date' class="filter_reg block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500">
                 </div>
                 <div class="w-60">
-                <select name='grid' id='grid' class="filter block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500">
+                <select name='grid' id='grid' class="filter_reg block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500">
                         <option value="">Select Grid</option>
                         <?php $__currentLoopData = $grid; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($r->id); ?>"><?php echo e($r->grid_name); ?></option>
@@ -146,6 +151,11 @@
             <center>No available data.</center>
         <?php endif; ?>
     </div>
+    <script>
+        window.addEventListener("load", () => { 
+            document.getElementById("hexagon-spinner").style.display = "none"; 
+        });
+    </script>
   <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

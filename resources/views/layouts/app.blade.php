@@ -427,6 +427,83 @@
                 document.getElementById("hexagon-spinner").style.display = "none"; 
             }); 
         }
+
+        function selectValidationReg() {
+            var count = $('.filter_reg').filter(function(){return $(this).val() != ''}).length;
+            if (count<=1) {
+                let confirmAction = confirm("It may take time to load this report. Please add more filter to generate a more specific report.");
+                if(confirmAction){
+                    document.getElementById("hexagon-spinner").style.display = "block"; 
+                    return true;
+                }else{
+                    document.getElementById("hexagon-spinner").style.display = "none"; 
+                    return false;
+                }
+            }
+            document.getElementById("hexagon-spinner").style.display = "block";
+            window.addEventListener("load", () => { 
+                document.getElementById("hexagon-spinner").style.display = "none"; 
+            }); 
+        }
+
+        function selectValidationOutages() {
+            var count = $('.filter_outages').filter(function(){return $(this).val() != ''}).length;
+            if (count<=2) {
+                let confirmAction = confirm("It may take time to load this report. Please add more filter to generate a more specific report.");
+                if(confirmAction){
+                    document.getElementById("hexagon-spinner").style.display = "block"; 
+                    return true;
+                }else{
+                    document.getElementById("hexagon-spinner").style.display = "none"; 
+                    return false;
+                }
+            }
+            document.getElementById("hexagon-spinner").style.display = "block";
+            window.addEventListener("load", () => { 
+                document.getElementById("hexagon-spinner").style.display = "none"; 
+            }); 
+        }
+
+        function OutagesUpdate(count) {
+            var outages_id = document.getElementById("outages_id"+count).value;
+            var type = document.getElementById("outages_type"+count).value;
+            var remarks = document.getElementById("remarks"+count).value;
+            var base_url = '{{URL::to("/")}}';
+            $.ajax({
+                type: 'POST',
+                url: base_url+"/reportactualoutages/updateoutages",
+                data: {
+                    outages_id: outages_id, 
+                    type: type, 
+                    remarks: remarks,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function(output){
+                    //alert(output);
+                    // document.getElementById("outages_id").value  = response.id;
+                    // document.getElementById("type").value  = response.type;
+                    // document.getElementById("remarks").value  = response.remarks;
+                }
+            });
+        }
+
+            function OutagesAdd() {
+                var powerplant_id = document.getElementById("resourceid-dropdown").value;
+                var base_url = '{{URL::to("/")}}';
+                $.ajax({
+                    type: "POST",
+                    url: base_url+"/reportactualoutages/fetchAdd",
+                    data: {
+                        powerplant_id: powerplant_id,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function (output) {
+                        const exp = output.split("|");
+                        document.getElementById("capacity").value  = exp[0];
+                        document.getElementById("type_name").value  = exp[1];
+                    }
+                });
+            }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </html>

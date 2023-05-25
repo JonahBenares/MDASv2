@@ -223,5 +223,21 @@ if (!function_exists('getGenerationRD')) {
     }
 }
 
+if (!function_exists('getCapacity')) {
+    function getCapacity($id){
+        $capacity= PowerPlant::where("pp_type_id","=",$id)->value('capacity_dependable');
+        //$capacity_dependable= $capacity[0]['capacity_dependable'];
+        return $capacity;
+    }
+}
+
+if (!function_exists('getMaxOutage')) {
+    function getMaxOutage($time,$resource_name,$pp_type_id){
+        $max_outage= UploadSchedule::where("schedule_mw","=",'0')->where("resource_name","=",$resource_name)->where("pp_type_id","=",$pp_type_id)->whereDate('time_interval',date('Y-m-d',strtotime($time)))->max('time_interval');
+        $min_outage= UploadSchedule::where("schedule_mw","=",'0')->where("resource_name","=",$resource_name)->where("pp_type_id","=",$pp_type_id)->whereDate('time_interval',date('Y-m-d',strtotime($time)))->min('time_interval');
+        return date('H:i',strtotime($min_outage))."-".date('H:i',strtotime($max_outage));
+    }
+}
+
 
 ?>
