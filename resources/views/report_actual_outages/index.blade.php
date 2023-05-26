@@ -27,7 +27,7 @@
                             <select type="text" name="grid" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" onchange='OutagesAdd()'> 
                             <option value="">Select Grid</option>
                             @foreach($grid AS $g)
-                            <option value="{{$g->grid_id."-".$g->grid_code}}">{{$g->grid_name}}</option>
+                            <option value="{{$g->id."-".$g->grid_code}}">{{$g->grid_name}}</option>
                             @endforeach
                             </select>
                         </div>

@@ -35,7 +35,7 @@
                             <select type="text" name="grid" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" onchange='OutagesAdd()'> 
                             <option value="">Select Grid</option>
                             <?php $__currentLoopData = $grid; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $g): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($g->grid_id."-".$g->grid_code); ?>"><?php echo e($g->grid_name); ?></option>
+                            <option value="<?php echo e($g->id."-".$g->grid_code); ?>"><?php echo e($g->grid_name); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>

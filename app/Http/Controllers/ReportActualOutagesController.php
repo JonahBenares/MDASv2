@@ -35,10 +35,10 @@ class ReportActualOutagesController extends Controller
             $grid_disp='';
         }
 
-        if(!empty($request->powerplant_type)){
-            $powerplant_type_disp=$request->powerplant_type;
+        if(!empty($request->resource_id)){
+            $resource_id=$request->resource_id;
         }else{
-            $powerplant_type_disp='';
+            $resource_id='';
         }
         
         $grid=Grid::all()->sortBy('grid_name');
@@ -49,8 +49,8 @@ class ReportActualOutagesController extends Controller
             return $q->whereDate('run_time',$date);
         })->when((!empty($grid_disp)), function ($q) use ($grid_disp) {
             return $q->where('grid_id',$grid_disp);
-        })->when((!empty($powerplant_type_disp)), function ($q) use ($powerplant_type_disp) {
-            return $q->where('pp_type_id',$powerplant_type_disp);
+        })->when((!empty($resource_id)), function ($q) use ($resource_id) {
+            return $q->where('resource_id',$resource_id);
         })->groupBy(['run_hour','resource_name', 'pp_type_id'])->where('resource_type','G')->where('schedule_mw','0')->orWhere('outage', '=', 1)->chunk(100, function($loadsched) use(&$loadArray) {
             foreach ($loadsched as $ls) {
                 $loadArray[] = $ls;
@@ -93,7 +93,7 @@ class ReportActualOutagesController extends Controller
         $resource_name=$reource[1];
         $res=UploadSchedule::create([
             'grid_id'=> $grid_id,
-            'grid_name'=> $grid_code,
+            'region_name'=> $grid_code,
             'time_interval'=> $request->outage_date,
             'resource_id'=> $resource_id,
             'resource_name'=> $resource_name,
@@ -102,11 +102,7 @@ class ReportActualOutagesController extends Controller
             'remarks'=> $request->remarks,
             'outage'=> 1,
         ]);
-        // if($res){
-        //     return redirect()->route('showResource',['id'=>$res,'count'=>$request->number_of_units]);
-        // }else{
-        //     return redirect()->route('showResource',['id'=>$res,'count'=>$request->number_of_units]);
-        // }
+        return redirect()->route('reportactualoutages.index')->with('success',"Actual Outages Added Successfully");
     }
     
     /**
