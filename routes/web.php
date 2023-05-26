@@ -66,6 +66,10 @@ Route::post('/uploadregional/store-regional', [UploadRegionalController::class, 
 Route::get('/uploadregional/show/{$identfier}', [UploadRegionalController::class, 'show']);
 
 Route::resource('reportactualoutages', ReportActualOutagesController::class);
+Route::post('/reportactualoutages/filter_actualoutagesload', [ReportActualOutagesController::class, 'filter_actualoutagesload'])->name('filter_actualoutagesload');
+Route::post('/reportactualoutages/updateoutages', [ReportActualOutagesController::class, 'updateoutages']);
+Route::post('/reportactualoutages/fetchAdd', [ReportActualOutagesController::class, 'fetchAdd']);
+Route::post('/reportactualoutages/insertNewOutage', [ReportActualOutagesController::class, 'insertNewOutage'])->name('insertNewOutage');
 Route::resource('reportoutagestype', ReportOutagesTypeController::class);
 Route::post('/reportoutagestype/filter_outagetype', [ReportOutagesTypeController::class, 'filter_outagetype'])->name('filter_outagetype');
 Route::resource('reportschedules', ReportScheduleController::class);

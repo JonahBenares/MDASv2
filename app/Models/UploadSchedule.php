@@ -29,6 +29,9 @@ class UploadSchedule extends Model
         'lmp_loss',
         'congestion',
         'identifier',
+        'outages_type',
+        'remarks',
+        'outage',
         'upload_by'
     ];
 }
