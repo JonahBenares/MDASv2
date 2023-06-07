@@ -38,11 +38,71 @@
                         <div class="flex justify-between space-x-2 mb-2">
                             <div class="w-full">
                                 <label class="py-1 text-sm">Interval Start</label>
-                                <input type="text" name="interval_start" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" >
+                                <div class="flex justify-between space-x-2">
+                                    <div class="w-full">
+                                    <select name="interval_start_hr" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" >
+                                        <option value="00">00</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                    @for($sh=10; $sh<=23; $sh++)
+                                        <option value="{{ $sh }}">{{ $sh }}</option>
+                                    @endfor
+                                    </select>
+                                        <!-- <input type="text" name="interval_start_hr" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" > -->
+                                    </div>   
+                                    <span class="mt-2">:</span>
+                                    <div class="w-full">
+                                    <select name="interval_start_min" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" >
+                                        <option value="00">00</option>
+                                        <option value="05">05</option>
+                                    @for($sm=10; $sm<=55; $sm = $sm + 5)
+                                        <option value="{{ $sm }}">{{ $sm }}</option>
+                                    @endfor
+                                    </select>
+                                        <!-- <input type="text" name="interval_start_min" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" > -->
+                                    </div> 
+                                </div>
                             </div>
                             <div class="w-full">
                                 <label class="py-1 text-sm">Interval End</label>
-                                <input type="text" name="interval_end" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" >
+                                <div class="flex justify-between space-x-2">
+                                    <div class="w-full">
+                                    <select name="interval_end_hr" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" >
+                                        <option value="00">00</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                    @for($eh=10; $eh<=23; $eh++)
+                                        <option value="{{ $eh }}">{{ $eh }}</option>
+                                    @endfor
+                                    </select>
+                                        <!-- <input type="text" name="interval_end_hr" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" > -->
+                                    </div>   
+                                    <span class="mt-2">:</span>
+                                    <div class="w-full">
+                                    <select name="interval_end_min" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" >
+                                        <option value="00">00</option>
+                                        <option value="05">05</option>
+                                    @for($em=10; $em<=55; $em = $em + 5)
+                                        <option value="{{ $em }}">{{ $em }}</option>
+                                    @endfor
+                                    </select>
+                                        <!-- <input type="text" name="interval_end_min" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" > -->
+                                    </div> 
+                                </div>
                             </div>
                         </div>
                         <div class="mb-2">
@@ -72,10 +132,10 @@
                         </div>
                         <div class="mb-2">
                             <label class="py-1 text-sm">Remarks</label>
-                            <textarea type="text" name="remarks" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40" rows="3">
-                            </textarea>
+                            <textarea name="remarks" class="block text-sm w-full px-3 py-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40"></textarea>
                         </div>
                     </div>
+                    <input type="hidden" name="added_by" id='added_by' value="{{Auth::id()}}">
                     <!-- Modal footer -->
                     <div class="flex items-center px-5 py-3 border-t">
                         <button type="submit" data-modal-hide="addType" class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-500 rounded-3xl w-full white:bg-blue-600 white:hover:bg-blue-700 white:focus:bg-blue-700 hover:bg-blue-600 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50">Add</button>
@@ -85,6 +145,7 @@
         </div>
     </div>
     <div class="p-4 ">
+        
     <form method="POST" action="{{ route('filter_actualoutagesload') }}" onSubmit="return selectValidationOutages();">
             @csrf
         <div class="pb-2 flex justify-between border-b ">
@@ -128,6 +189,15 @@
                 </div>
             </div>
         </div>
+        <!-- @php
+            $start=strtotime('1:00');
+            $end=strtotime('02:00');
+
+            for ($i=$start;$i<=$end;$i = $i + 5*60)
+            {
+                echo date('H:i A',$i).'<br>';
+            }
+        @endphp -->
         @if(!empty($_POST))
         <div class="">
             <div id="alert-border-5" class="flex p-4 border-t-4 shadow-md border-gray-300 bg-gray-50 white:bg-gray-800 white:border-gray-600" role="alert">
@@ -171,22 +241,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                @php $total=0; $previousdate = ''; $x=1;@endphp
+                @php $total=0; $previousdate = ''; $x=1; @endphp
                 @foreach($loadArray AS $sl)
                 @php
                 $date= date('F-d', strtotime("$sl->time_interval"));
+                $outage_date= date('Y-m-d', strtotime("$sl->time_interval"));
                 $time= date('H:i', strtotime("$sl->time_interval"));
-                $total += getCapacity($sl->pp_type_id);
                 @endphp
                     <tr class="{{ ($previousdate !== '' && $previousdate !== $date ) ? 'border-t-2 border-red-500' : '' }}">
                         <td class="border" align="center">
                             <input type="hidden" name="outages_id[]" id='outages_id{{$x}}' value="{{ $sl->id }}">
+                            <input type="hidden" name="resource_name[]" id='resource_name{{$x}}' value="{{ $sl->resource_name }}">
+                            <input type="hidden" name="region_name[]" id='region_name{{$x}}' value="{{ $sl->region_name }}">
+                            <input type="hidden" name="outage_date[]" id='outage_date{{$x}}' value="{{ $outage_date }}">
                             {{ $date }}
                         </td>
                         <td class="border" align="center">{{ getMaxOutage($sl->time_interval,$sl->resource_name,$sl->pp_type_id) }}</td>
-                        <td class="border" align="center">{{ getTypename($sl->pp_type_id) }}</td>
+                        <td class="border" align="center">{{ ($sl->pp_type_id!=0) ? getTypename($sl->pp_type_id) : '' }}</td>
                         <td class="border" align="center">{{ $sl->resource_name }}</td>
-                        <td class="border" align="center">{{ number_format(getCapacity($sl->pp_type_id),2) }}</td>
+                        <td class="border" align="center">{{ number_format(getCapacity($sl->time_interval,$sl->resource_name,$sl->pp_type_id,$sl->resource_type),2) }}</td>
                         <td class="border" align="center">
                             <select type="text" class="w-full h-full text-xs py-1 border-0" name="outages_type[]" id="outages_type{{$x}}" onchange="OutagesUpdate({{$x}})">
                                 <option value="">Select Outages Type</option>
@@ -197,7 +270,7 @@
                         <td class="pb-0 border" align="center">
                             <textarea class="w-full h-full m-0 py-1 text-xs border-0" rows="1" name="remarks[]" id="remarks{{$x}}" onblur="OutagesUpdate({{$x}})">{{ $sl->remarks }}</textarea>
                         </td>
-                        <td class="border" align="center">{{ number_format($total,2) }}</td>
+                        <td class="border" align="center">{{ ($previousdate !== $date ) ? number_format(getTotalCapacity($sl->time_interval,$sl->resource_type,$sl->region_name),2) : '' }}</td>
                     </tr>
                     @php $x++; $previousdate = $date; @endphp
                 @endforeach

@@ -9,6 +9,7 @@ use App\Models\PowerplantResource;
 use App\Models\PowerPlant;
 use App\Models\PowerPlantType;
 use Illuminate\Http\Request;
+use Auth;
 
 class ReportActualOutagesController extends Controller
 {
@@ -45,7 +46,7 @@ class ReportActualOutagesController extends Controller
         $powerplant_resource=PowerplantResource::all()->unique('resource_id')->sortBy('resource_id');
         $loadArray = [];
         
-        $actualoutages_load=UploadSchedule::select(['id','time_interval','region_name','resource_name','schedule_mw','pp_type_id','outages_type','remarks','outage'])->when((!empty($date)), function ($q) use ($date) {
+        $actualoutages_load=UploadSchedule::select(['id','time_interval','region_name','resource_name','resource_type','schedule_mw','pp_type_id','outages_type','remarks','outage'])->when((!empty($date)), function ($q) use ($date) {
             return $q->whereDate('run_time',$date);
         })->when((!empty($grid_disp)), function ($q) use ($grid_disp) {
             return $q->where('grid_id',$grid_disp);
@@ -62,8 +63,14 @@ class ReportActualOutagesController extends Controller
 
     public function updateoutages(Request $request)
     {
+        //$id = $request->outages_id;
+        $resource_name = $request->resource_name;
         $id = $request->outages_id;
-        $outages = UploadSchedule::find($id);
+        $region_name = $request->region_name;
+        $outage_date = $request->outage_date;
+        //$outages = UploadSchedule::find($id);
+        //$outages = UploadSchedule::where('region_name',$region_name)->where('resource_name',$resource_name)->where('resource_type','G')->where('schedule_mw','0')->whereDate('time_interval',$time_interval)->orWhere('resource_type','')->get();
+        $outages = UploadSchedule::where('region_name',$region_name)->where('resource_name',$resource_name)->where('schedule_mw','0')->whereDate('time_interval',$outage_date);
         $outages->update(
             [
                 'outages_type' => $request->type,
@@ -88,21 +95,36 @@ class ReportActualOutagesController extends Controller
         $grid=explode('-',$request->grid);
         $grid_id = $grid[0];
         $grid_code = $grid[1];
-        $reource=explode('-',$request->resource_id);
-        $resource_id=$reource[0];
-        $resource_name=$reource[1];
+        $resource=explode('-',$request->resource_id);
+        $resource_id=$resource[0];
+        $resource_name=$resource[1];
+        $powerplant_id=$resource[2];
+        $added_by = Auth::user()->id;
+        $pp_type_id = PowerPlant::where('id',$powerplant_id)->value('pp_type_id');
+
+        $date=$request->outage_date;
+        $start=$request->interval_start_hr.":".$request->interval_start_min;
+        $end=$request->interval_end_hr.":".$request->interval_end_min;
+        $start_time=strtotime($start);
+        $end_time=strtotime($end);
+    for($i=$start_time;$i<=$end_time;$i = $i + 5*60){
         $res=UploadSchedule::create([
             'grid_id'=> $grid_id,
             'region_name'=> $grid_code,
-            'time_interval'=> $request->outage_date,
+            'time_interval'=> $date." ".date('H:i:s',$i),
             'resource_id'=> $resource_id,
             'resource_name'=> $resource_name,
-            'time_interval'=> $request->outage_date,
+            'pp_type_id'=> $pp_type_id,
             'outages_type'=> $request->outage_type,
             'remarks'=> $request->remarks,
+            'added_by'=> $added_by,
             'outage'=> 1,
+            
         ]);
+    }
         return redirect()->route('reportactualoutages.index')->with('success',"Actual Outages Added Successfully");
+        //return back()->with('success',"Actual Outages Added Successfully");
+        //return redirect()->back();
     }
     
     /**

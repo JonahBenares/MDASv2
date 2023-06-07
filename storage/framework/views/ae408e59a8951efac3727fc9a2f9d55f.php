@@ -466,7 +466,10 @@
         }
 
         function OutagesUpdate(count) {
-            var outages_id = document.getElementById("outages_id"+count).value;
+            //var outages_id = document.getElementById("outages_id"+count).value;
+            var resource_name = document.getElementById("resource_name"+count).value;
+            var region_name = document.getElementById("region_name"+count).value;
+            var outage_date = document.getElementById("outage_date"+count).value;
             var type = document.getElementById("outages_type"+count).value;
             var remarks = document.getElementById("remarks"+count).value;
             var base_url = '<?php echo e(URL::to("/")); ?>';
@@ -474,7 +477,10 @@
                 type: 'POST',
                 url: base_url+"/reportactualoutages/updateoutages",
                 data: {
-                    outages_id: outages_id, 
+                    //outages_id: outages_id, 
+                    resource_name: resource_name, 
+                    region_name: region_name,
+                    outage_date: outage_date,
                     type: type, 
                     remarks: remarks,
                     _token: '<?php echo e(csrf_token()); ?>'

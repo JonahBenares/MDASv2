@@ -32,6 +32,7 @@ class UploadSchedule extends Model
         'outages_type',
         'remarks',
         'outage',
+        'addded_by',
         'upload_by'
     ];
 }
