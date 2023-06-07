@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('mpsl', function (Blueprint $table) {
-            $table->integer('outages')->default(0)->after("identifier");
-            $table->integer('outages_type')->default(0)->after("outages");
+            $table->integer('outages_type')->default(0)->after("identifier");
             $table->text('remarks')->nullable()->after("outages_type");
+            $table->integer('outage')->default(0)->after("remarks");
+            $table->integer('addded_by')->default(0)->after("outage");
         });
     }
 
