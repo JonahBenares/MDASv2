@@ -10,14 +10,20 @@ use App\Models\PowerplantType;
 use App\Models\ResourceType;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\Importable;
 ini_set('max_execution_time', 180);
-class ImportSchedule implements ToModel,WithHeadingRow
+class ImportSchedule implements ToModel,WithHeadingRow, WithChunkReading
 {
+    use Importable;
     private $data; 
 
     public function __construct(array $data = [])
     {
         $this->data = $data; 
+        $this->resource_type_id=ResourceType::all(['id','resource_code'])->pluck('id','resource_code');
+        $this->grid_id=Grid::all(['id','grid_code'])->pluck('id','grid_code');
+        $this->resource_id=PowerplantResource::all(['id','resource_id'])->pluck('id','resource_id');
     }
     /**
     * @param array $row
@@ -27,12 +33,12 @@ class ImportSchedule implements ToModel,WithHeadingRow
     public function model(array $row)
     {   
         if($row['run_time']!='EOF'){
-            $resource_type_id=ResourceType::where('resource_code',$row['resource_type'])->value('id');
-            $resource_type_count=ResourceType::where('resource_code',$row['resource_type'])->count();
-            $resource_id=PowerplantResource::where('resource_id',$row['resource_name'])->value('id');
-            $resource_count=PowerplantResource::where('resource_id',$row['resource_name'])->count();
-            $grid_id=Grid::where('grid_code',$row['region_name'])->value('id');
-            $grid_count=Grid::where('grid_code',$row['region_name'])->count();
+            // $resource_type_id=ResourceType::where('resource_code',$row['resource_type'])->value('id');
+            // $resource_type_count=ResourceType::where('resource_code',$row['resource_type'])->count();
+            //$resource_id=PowerplantResource::where('resource_id',$row['resource_name'])->value('id');
+            // $resource_count=PowerplantResource::where('resource_id',$row['resource_name'])->count();
+            // $grid_id=Grid::where('grid_code',$row['region_name'])->value('id');
+            // $grid_count=Grid::where('grid_code',$row['region_name'])->count();
 
             $powerplant_id= PowerplantResource::where("resource_id",$row['resource_name'])->value('powerplant_id');
             $pp_type_id= Powerplant::where("id",$powerplant_id)->value('pp_type_id');
@@ -42,11 +48,11 @@ class ImportSchedule implements ToModel,WithHeadingRow
                 'mkt_type'=>$row['mkt_type'],
                 'time_interval'=>date('Y-m-d H:i',strtotime($row['time_interval'])),
                 'region_name'=>$row['region_name'],
-                'grid_id'=> (!empty($grid_id)) ? $grid_id : 0,
+                'grid_id'=>$this->grid_id[$row['region_name']],
                 'resource_name'=>$row['resource_name'],
-                'resource_id'=> (!empty($resource_id)) ? $resource_id : 0,
+                'resource_id'=>  (!empty($this->resource_id[$row['resource_name']])) ? $this->resource_id[$row['resource_name']] : 0,
                 'resource_type'=>$row['resource_type'],
-                'resource_type_id'=> (!empty($resource_type_id)) ? $resource_type_id : 0,
+                'resource_type_id'=> $this->resource_type_id[$row['resource_type']],
                 'pp_type_id'=> (!empty($id)) ? $id : 0,
                 'schedule_mw'=>$row['sched_mw'],
                 'lmp'=>$row['lmp'],
@@ -64,13 +70,13 @@ class ImportSchedule implements ToModel,WithHeadingRow
         }
     }
 
-    public function batchSize(): int
-    {
-        return 500;
-    }
+    // public function batchSize(): int
+    // {
+    //     return 1000;
+    // }
     
     public function chunkSize(): int
     {
-        return 500;
+        return 6000;
     }
 }

@@ -49,7 +49,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($scheduleload->chunk(100) AS $schedchunk)
+                    @foreach($scheduleload->chunk(300) AS $schedchunk)
                         @foreach($schedchunk AS $sl)
                             <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">

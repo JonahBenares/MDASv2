@@ -276,6 +276,7 @@
 
         function loadSchedule() {
             $('#loadData').show();
+            $(".hidebtn").show();
             let modal = new Modal(document.getElementById('checkUser'),{placement:'center'});
             modal.hide();
         }
@@ -325,6 +326,7 @@
                 data: formData,
                 contentType : false,
                 processData : false,
+                cache:false, 
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

@@ -7,6 +7,8 @@ use App\Models\UploadScheduleTemp;
 use App\Models\ResourceType;
 use App\Models\PowerplantResource;
 use App\Models\Powerplant;
+use App\Models\PowerplantType;
+use App\Models\Grid;
 use Illuminate\Http\Request;
 use App\Imports\ImportSchedule;
 use Maatwebsite\Excel\Excel as ExcelExcel;
@@ -24,9 +26,9 @@ class UploadScheduleController extends Controller
         $check_resource=PowerplantResource::all()->unique('resource_id');
         $powerplant=Powerplant::all()->sortBy('facility_name');
         $check_exist = PowerplantResource::pluck('resource_id')->all();
-        $check_user=UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->count();
-        $check_user_exist=UploadScheduleTemp::where('upload_by',Auth::id())->count();
-        $checker = UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->select('resource_name','id')->groupBy('resource_name')->get();
+        $check_user=UploadScheduleTemp::where('resource_type','G')->where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->count();
+        $check_user_exist=UploadScheduleTemp::where('resource_type','G')->where('upload_by',Auth::id())->count();
+        $checker = UploadScheduleTemp::where('resource_type','G')->where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->select('resource_name','id')->groupBy('resource_name')->get();
         return view('upload_schedule.index',compact('checker','check_resource','check_user','check_user_exist','powerplant'));
     }
 
@@ -43,17 +45,56 @@ class UploadScheduleController extends Controller
      */
     public function store(Request $request)
     {
+        $rows = array_map('str_getcsv',file($request->mpsl));
+        $header = array_shift($rows);
         $identifier=generateRandomString();
-        $data=[
-            'run_hour'=>$request->run_hour,
-            'identifier'=>$identifier,
-            'upload_by'=>$request->user_id
-        ];
-        Excel::import(new ImportSchedule($data), request()->file('mpsl'));
+        foreach ($rows as $row) {
+            if($row[0]!='EOF'){
+                $row = array_combine($header, $row);
+                $resource_type_id_temp=ResourceType::where('resource_code',$row['RESOURCE_TYPE'])->value('id');
+                $resource_type_count=ResourceType::where('resource_code',$row['RESOURCE_TYPE'])->count();
+                $resource_id_temp=PowerplantResource::where('resource_id',$row['RESOURCE_NAME'])->value('id');
+                $resource_count=PowerplantResource::where('resource_id',$row['RESOURCE_NAME'])->count();
+                $grid_id=Grid::where('grid_code',$row['REGION_NAME'])->value('id');
+                $grid_count=Grid::where('grid_code',$row['REGION_NAME'])->count();
+                $powerplant_id= PowerplantResource::where("resource_id",$row['RESOURCE_NAME'])->value('powerplant_id');
+                $pp_type_id= Powerplant::join('pp_type','pp_type.id','=','powerplants.pp_type_id')->where("powerplants.id",$powerplant_id)->value('powerplants.pp_type_id');
+                //$id= PowerplantType::where("id",$pp_type_id)->value('id');
+                $data=[
+                    'run_time'=>date('Y-m-d H:i',strtotime($row['RUN_TIME'])),
+                    'run_hour'=>$request->run_hour,
+                    'mkt_type'=>$row['MKT_TYPE'],
+                    'time_interval'=>date('Y-m-d H:i',strtotime($row['TIME_INTERVAL'])),
+                    'region_name'=>$row['REGION_NAME'],
+                    'grid_id'=>(!empty($grid_id)) ? $grid_id : 0,
+                    'resource_name'=>$row['RESOURCE_NAME'],
+                    'resource_id'=>  (!empty($resource_id_temp)) ? $resource_id_temp : 0,
+                    'resource_type'=>$row['RESOURCE_TYPE'],
+                    'resource_type_id'=> (!empty($resource_type_id_temp)) ? $resource_type_id_temp : 0,
+                    'pp_type_id'=> (!empty($pp_type_id)) ? $pp_type_id : 0,
+                    'schedule_mw'=>$row['SCHED_MW'],
+                    'lmp'=>$row['LMP'],
+                    'loss_factor'=>$row['LOSS_FACTOR'],
+                    'lmp_smp'=>$row['LMP_SMP'],
+                    'lmp_loss'=>$row['LMP_LOSS'],
+                    'congestion'=>$row['LMP_CONGESTION'],
+                    'identifier'=>$identifier,
+                    'upload_by'=>$request->user_id,
+                    'created_at'=>date('Y-m-d h:i:s'),
+                    'updated_at'=>date('Y-m-d h:i:s')
+                ];
+                $insert_data[] = $data;
+            }
+        }
+        $insert_data = collect($insert_data);
+        $chunks = $insert_data->chunk(2000);
+        foreach ($chunks as $chunk){
+            UploadScheduleTemp::insert($chunk->toArray());
+        }
         $check_exist = PowerplantResource::pluck('resource_id')->all();
         $count=UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->count();
         if($count==0){
-            $data=UploadScheduleTemp::where('upload_by',Auth::id())->chunk(500, function($saveall) use(&$save) {
+            $data=UploadScheduleTemp::where('upload_by',Auth::id())->chunk(1000, function($saveall) use(&$save) {
                 $x=0;
                 $data_insert=[];
                 $id=[];
@@ -71,7 +112,7 @@ class UploadScheduleController extends Controller
                         'resource_name'=>$resource_name,
                         'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
                         'resource_type'=>$sa->resource_type,
-                        'resource_type_id'=> $resource_type_id,
+                        'resource_type_id'=> ($resource_type_id!=0) ? $resource_type_id : 0,
                         'schedule_mw'=>$sa->schedule_mw,
                         'lmp'=>$sa->lmp,
                         'loss_factor'=>$sa->loss_factor,
@@ -95,7 +136,6 @@ class UploadScheduleController extends Controller
                 //return redirect()->route('uploadschedules.show',$identifier_url);
             }
         }
-        //return redirect()->route('uploadschedules.index');
     }
 
     public function insertpowerplant(Request $request){
