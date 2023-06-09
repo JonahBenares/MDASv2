@@ -283,5 +283,40 @@ if (!function_exists('getGenerationRD')) {
     }
 }
 
+if (!function_exists('getCapacity')) {
+    function getCapacity($time,$resource_name,$pp_type_id,$resource_type){
+        $resource_id= UploadSchedule::where("schedule_mw","=",'0')->where("resource_type","=",$resource_type)->where("resource_name","=",$resource_name)->where("pp_type_id","=",$pp_type_id)->whereDate('time_interval',date('Y-m-d',strtotime($time)))->value('resource_name');
+        $powerplant_id= PowerplantResource::where("resource_id","=",$resource_id)->value('powerplant_id');
+        $capacity_dependable= PowerPlant::where("id","=",$powerplant_id)->value('capacity_dependable');
+        //$capacity_dependable= $capacity[0]['capacity_dependable'];
+        return $capacity_dependable;
+        //return $capacity_dependable;
+    }
+}
+
+if (!function_exists('getTotalCapacity')) {
+    function getTotalCapacity($time,$resource_type,$region_name){
+        $test= UploadSchedule::join('pp_resource','pp_resource.resource_id','=','mpsl.resource_name')->where("schedule_mw","=",'0')->where("resource_type","=",$resource_type)->whereDate('time_interval',date('Y-m-d',strtotime($time)))->where("region_name","=",$region_name)->groupBy('resource_name')->get();
+        $test_data=array();
+        foreach($test AS $t){
+            $powerplant_id= PowerplantResource::where("resource_id","=",$t->resource_name)->value('powerplant_id');
+            $capacity_dependable= PowerPlant::where("id","=",$powerplant_id)->value('capacity_dependable');
+            $test_data[]=$capacity_dependable;
+        }
+        // $resource_id= UploadSchedule::where("schedule_mw","=",'0')->where("resource_name","=",$resource_name)->where("pp_type_id","=",$pp_type_id)->whereDate('time_interval',date('Y-m-d',strtotime($time)))->value('resource_name');
+        // $powerplant_id= PowerplantResource::where("resource_id","=",$resource_id)->value('powerplant_id');
+        // $total_capacity= PowerPlant::where("id","=",$powerplant_id)->where("pp_type_id","=",$pp_type_id)->sum('capacity_dependable');
+       return array_sum($test_data);
+    }
+}
+
+if (!function_exists('getMaxOutage')) {
+    function getMaxOutage($time,$resource_name,$pp_type_id){
+        $max_outage= UploadSchedule::where("schedule_mw","=",'0')->where("resource_name","=",$resource_name)->where("pp_type_id","=",$pp_type_id)->whereDate('time_interval',date('Y-m-d',strtotime($time)))->max('time_interval');
+        $min_outage= UploadSchedule::where("schedule_mw","=",'0')->where("resource_name","=",$resource_name)->where("pp_type_id","=",$pp_type_id)->whereDate('time_interval',date('Y-m-d',strtotime($time)))->min('time_interval');
+        return date('H:i',strtotime($min_outage))."-".date('H:i',strtotime($max_outage));
+    }
+}
+
 
 ?>

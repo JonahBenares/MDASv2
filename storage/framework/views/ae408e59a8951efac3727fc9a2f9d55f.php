@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-        <title>{{ config('app.name', 'MDASv2') }}</title>
+        <title><?php echo e(config('app.name', 'MDASv2')); ?></title>
 
         <link rel="stylesheet" href="../../css/jquery.dataTables.min.css">
         <!-- Fonts -->
@@ -15,7 +15,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     </head>
     <style>
         #hexagon-spinner {
@@ -65,9 +65,10 @@
     </style>
     <body class="font-sans antialiased bg-gray-100">
         <div class="bg-white mt-24 mx-4 shadow-md rounded-lg">
-            @include('layouts.navigation')
+            <?php echo $__env->make('layouts.navigation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <main class="">
-                {{ $slot }}
+                <?php echo e($slot); ?>
+
             </main>
         </div>
     </body>
@@ -113,13 +114,13 @@
             $('#type-dropdown').on('change', function () {
                 var type_id = this.value;
                 $("#subtype-dropdown").html('');
-                var base_url = '{{URL::to("/")}}';
+                var base_url = '<?php echo e(URL::to("/")); ?>';
                 $.ajax({
                     type: "POST",
                     url: base_url+"/powerplant/fetchsub",
                     data: {
                         type_id: type_id,
-                        _token: '{{csrf_token()}}'
+                        _token: '<?php echo e(csrf_token()); ?>'
                     },
                     dataType: 'json',
                     cache: false,
@@ -136,13 +137,13 @@
                 var grid_id = this.value;
                 $("#region-dropdown").html('');
                 $("#region_id").val('');
-                var base_url = '{{URL::to("/")}}';
+                var base_url = '<?php echo e(URL::to("/")); ?>';
                 $.ajax({
                     type: "POST",
                     url: base_url+"/powerplant/fetchregion",
                     data: {
                         grid_id: grid_id,
-                        _token: '{{csrf_token()}}'
+                        _token: '<?php echo e(csrf_token()); ?>'
                     },
                     dataType: 'json',
                     cache: false,
@@ -156,13 +157,13 @@
             });
             $('#region-dropdown').on('change', function () {
                 var region_id = this.value;
-                var base_url = '{{URL::to("/")}}';
+                var base_url = '<?php echo e(URL::to("/")); ?>';
                 $.ajax({
                     type: "POST",
                     url: base_url+"/powerplant/fetchregionid",
                     data: {
                         region_id: region_id,
-                        _token: '{{csrf_token()}}'
+                        _token: '<?php echo e(csrf_token()); ?>'
                     },
                     dataType: 'json',
                     cache: false,
@@ -198,7 +199,7 @@
         }
 
         function hideSelectResource(){
-            var base_url = '{{URL::to("/")}}';
+            var base_url = '<?php echo e(URL::to("/")); ?>';
             var redirect = base_url+'/uploadschedules/updateresource';
             var btn=document.getElementsByClassName("resource_name");
             var counter =document.getElementById("counter").value;
@@ -232,7 +233,7 @@
         }
 
         function addPowerplant() {
-            var base_url = '{{URL::to("/")}}';
+            var base_url = '<?php echo e(URL::to("/")); ?>';
             var redirect = base_url+'/uploadschedules/insertpowerplant';
             var operator =document.getElementById("operators").value;
             var counter =document.getElementById("counter").value;
@@ -241,7 +242,7 @@
                 url: redirect,
                 data: {
                     operator: operator,
-                    _token: '{{csrf_token()}}'
+                    _token: '<?php echo e(csrf_token()); ?>'
                 },
                 async:true,
                 success: function(output){
@@ -276,13 +277,12 @@
 
         function loadSchedule() {
             $('#loadData').show();
-            $(".hidebtn").show();
             let modal = new Modal(document.getElementById('checkUser'),{placement:'center'});
             modal.hide();
         }
 
         function cancelSchedule() {
-            var base_url = '{{URL::to("/")}}';
+            var base_url = '<?php echo e(URL::to("/")); ?>';
             var redirect = base_url+'/uploadschedules/cancelschedule';
             let confirmAction = confirm("Are you sure you want to cancel this data?");
             if (confirmAction) {
@@ -290,7 +290,7 @@
                     type: "POST",
                     url: redirect,
                     data: {
-                        _token: '{{csrf_token()}}'
+                        _token: '<?php echo e(csrf_token()); ?>'
                     },
                     beforeSend: function(){
                         let modal = new Modal(document.getElementById('checkUser'),{placement:'center'});
@@ -313,7 +313,7 @@
         //     document.getElementById("hexagon-spinner").style.display = "block";
         // }
         function importSchedule() {
-            var base_url = '{{URL::to("/")}}';
+            var base_url = '<?php echo e(URL::to("/")); ?>';
             var redirect = base_url+'/uploadschedules/store-data';
             var formData = new FormData();
             var file = $('#mpsl').prop('files')[0];
@@ -326,7 +326,6 @@
                 data: formData,
                 contentType : false,
                 processData : false,
-                cache:false, 
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -358,7 +357,7 @@
         }
 
         function importHap() {
-            var base_url = '{{URL::to("/")}}';
+            var base_url = '<?php echo e(URL::to("/")); ?>';
             var redirect = base_url+'/uploadhap/store-hap';
             var formData = new FormData();
             var file = $('#hap').prop('files')[0];
@@ -386,7 +385,7 @@
         }
 
         function importRegional() {
-            var base_url = '{{URL::to("/")}}';
+            var base_url = '<?php echo e(URL::to("/")); ?>';
             var redirect = base_url+'/uploadregional/store-regional';
             var formData = new FormData();
             var file = $('#reg_sum').prop('files')[0];
@@ -528,7 +527,7 @@
             var outage_date = document.getElementById("outage_date"+count).value;
             var type = document.getElementById("outages_type"+count).value;
             var remarks = document.getElementById("remarks"+count).value;
-            var base_url = '{{URL::to("/")}}';
+            var base_url = '<?php echo e(URL::to("/")); ?>';
             $.ajax({
                 type: 'POST',
                 url: base_url+"/reportactualoutages/updateoutages",
@@ -539,7 +538,7 @@
                     outage_date: outage_date,
                     type: type, 
                     remarks: remarks,
-                    _token: '{{csrf_token()}}'
+                    _token: '<?php echo e(csrf_token()); ?>'
                 },
                 success: function(output){
                     //alert(output);
@@ -552,13 +551,13 @@
 
             function OutagesAdd() {
                 var powerplant_id = document.getElementById("resourceid-dropdown").value;
-                var base_url = '{{URL::to("/")}}';
+                var base_url = '<?php echo e(URL::to("/")); ?>';
                 $.ajax({
                     type: "POST",
                     url: base_url+"/reportactualoutages/fetchAdd",
                     data: {
                         powerplant_id: powerplant_id,
-                        _token: '{{csrf_token()}}'
+                        _token: '<?php echo e(csrf_token()); ?>'
                     },
                     success: function (output) {
                         const exp = output.split("|");
@@ -570,3 +569,4 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </html>
+<?php /**PATH C:\xampp\htdocs\MDASv2\resources\views/layouts/app.blade.php ENDPATH**/ ?>
