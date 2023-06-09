@@ -91,8 +91,8 @@ class UploadScheduleController extends Controller
         foreach ($chunks as $chunk){
             UploadScheduleTemp::insert($chunk->toArray());
         }
-        $check_exist = PowerplantResource::pluck('resource_id')->all();
-        $count=UploadScheduleTemp::where('upload_by',Auth::id())->whereNotIn('resource_name', $check_exist)->count();
+        $check_exist = PowerplantResource::pluck('resource_id')->toArray();
+        $count=UploadScheduleTemp::where('upload_by',Auth::id())->where('resource_type','G')->whereNotIn('resource_name', $check_exist)->count();
         if($count==0){
             $data=UploadScheduleTemp::where('upload_by',Auth::id())->chunk(1000, function($saveall) use(&$save) {
                 $x=0;

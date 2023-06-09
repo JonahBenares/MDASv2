@@ -347,6 +347,7 @@
                     if(output!=''){
                         window.location=base_url+'/uploadschedules/'+output;
                     }
+                    // alert(output);
                 }
             });
         }
