@@ -21,6 +21,20 @@ if (!function_exists('getGridName')) {
     }
 }
 
+if (!function_exists('getGridNameMultiple')) {
+    function getGridNameMultiple($id){
+        $emp= Grid::select('grid_name')
+        ->whereIn("id",$id)
+        ->get();
+        foreach ($id as $key => $value) {
+            $name[]= $emp[$key]['grid_name'];
+        }
+        $imp_grid=implode(',',$name);
+
+        return $imp_grid;
+    }
+}
+
 if (!function_exists('getReosurceid')) {
     function getReosurceid($id){
         $resource= PowerplantResource::select('resource_id')->where("powerplant_id","=",$id)->get();
@@ -119,6 +133,40 @@ if (!function_exists('getRegionname')) {
     }
 }
 
+if(!function_exists('getSumSchedule')){
+    function getSumSchedule($run_hour,$date,$grid,$resourcetype,$resource_name,$powerplant_type) {
+
+        $loadArray = [];
+        $all= UploadSchedule::when((!empty($run_hour)), function ($q) use ($run_hour) {
+            return $q->where('run_hour',$run_hour);
+        })->when((!empty($date)), function ($q) use ($date) {
+            $dates=date('Y-m-d',strtotime($date));
+            return $q->whereDate('run_time',$dates);
+        })->when((!empty($grid) || $grid!=0), function ($q) use ($grid) {
+            return $q->where('grid_id',$grid);
+        })->when((!empty($resourcetype)), function ($q) use ($resourcetype) {
+            return $q->where('resource_type',$resourcetype);
+        })->when((!empty($resource_name)), function ($q) use ($resource_name) {
+            return $q->where('resource_id',$resource_name);
+        })->when((!empty($powerplant_type) || $powerplant_type!=0), function ($q) use ($powerplant_type) {
+            return $q->where('pp_type_id',$powerplant_type);
+        })->groupBy('resource_name')->chunk(100, function($loadsched) use(&$loadArray) {
+            foreach ($loadsched as $ls) {
+                $loadArray[] = $ls;
+            }
+        });
+        // echo $run_hour."-".$date."-".$grid."-".$resourcetype."-".$powerplant_type."<br>";
+        $sum=array();
+        foreach($loadArray AS $a){
+            //echo $a->resource_name."<br>";
+            $minute_first= UploadSchedule::select('time_interval')->where("resource_name",$a->resource_name)->where("run_hour",$run_hour)->orderBy('time_interval','asc')->first();
+            $minute_last= UploadSchedule::select('time_interval')->where("resource_name",$a->resource_name)->where("run_hour",$run_hour)->orderBy('time_interval','desc')->first();
+            $sum[]= UploadSchedule::where("run_hour",$run_hour)->where("resource_name",$a->resource_name)->whereBetween('time_interval',[$minute_first->time_interval,$minute_last->time_interval])->orderBy('run_hour','ASC')->avg('schedule_mw');
+        }
+        return array_sum($sum);
+    }
+}
+
 if(!function_exists('getAvgSchedule')){
     function getAvgSchedule($resource_name,$hour) {
         // if($minute=="60:00"){
@@ -130,6 +178,13 @@ if(!function_exists('getAvgSchedule')){
         $minute_last= UploadSchedule::select('time_interval')->where("resource_name",$resource_name)->where("run_hour",$hour)->orderBy('time_interval','desc')->first();
         $avg= UploadSchedule::where("resource_name",$resource_name)->where("run_hour",$hour)->whereBetween('time_interval',[$minute_first->time_interval,$minute_last->time_interval])->avg('schedule_mw');
         return $avg;
+    }
+}
+
+if(!function_exists('getAvgpriceSchedule')){
+    function getAvgpriceSchedule($resource_name,$hour) {
+        $lmp= UploadSchedule::where("resource_name",$resource_name)->where("run_hour",$hour)->value('lmp');
+        return $lmp;
     }
 }
 
@@ -203,6 +258,20 @@ if (!function_exists('getGenerationEN')) {
     function getGenerationEN($time,$region_name,$commodity_type){
         $en_generation= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('generation');
         return $en_generation;
+    }
+}
+
+if (!function_exists('getLoadbidEN')) {
+    function getLoadbidEN($time,$region_name,$commodity_type){
+        $en_load_bid= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('load_bid');
+        return $en_load_bid;
+    }
+}
+
+if (!function_exists('getLoadCurtailedEN')) {
+    function getLoadCurtailedEN($time,$region_name,$commodity_type){
+        $en_load_curtailed= UploadRegional::where("grid_id","=",$region_name)->where("commodity_type","=",$commodity_type)->whereTime('time_interval',$time)->orderBy('time_interval','ASC')->value('load_curtailed');
+        return $en_load_curtailed;
     }
 }
 

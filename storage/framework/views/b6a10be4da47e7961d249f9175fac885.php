@@ -72,7 +72,7 @@
          <?php echo csrf_field(); ?>
          <div class="w-full flex justify-between space-x-2 border-b pb-4">
             <div class="w-full">
-               <input name="mpsl" id="mpsl" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
+               <input name="mpsl" id="mpsl" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400" aria-describedby="file_input_help" type="file">
                <p class="mt-1 text-sm text-gray-500 white:text-gray-300" id="file_input_help">Please follow the format before uploading to avoid error.</p>
             </div>
             <div class="w-40">

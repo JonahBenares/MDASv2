@@ -138,6 +138,12 @@
                                 <a href="{{ route('reportschedaverage.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Prices & Schedule & Load <b>(Average)</b></a>
                             </li>
                             <li>
+                                <a href="{{ route('reportschedulesdaily.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Prices & Schedule & Load <b>(Daily)</b></a>
+                            </li>
+                            <li>
+                                <a href="{{ route('reportschedulesweekly.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Prices & Schedule & Load <b>(Weekly)</b></a>
+                            </li>
+                            <li>
                               <a href="{{ route('reportregional.index') }}" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Regional Summary</a>
                             </li>
                             <li>
