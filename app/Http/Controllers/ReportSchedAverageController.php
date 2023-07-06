@@ -84,7 +84,7 @@ class ReportSchedAverageController extends Controller
             return $q->where('resource_id',$resource_id);
         })->when((!empty($powerplant_type_disp)), function ($q) use ($powerplant_type_disp) {
             return $q->where('pp_type_id',$powerplant_type_disp);
-        })->groupBy('run_hour')->chunk(100, function($loadinterval) use(&$loadintervalArray) {
+        })->groupBy('run_hour')->orderBy('run_hour','ASC')->chunk(100, function($loadinterval) use(&$loadintervalArray) {
             foreach ($loadinterval as $li) {
                 $loadintervalArray[] = $li;
             }
@@ -102,7 +102,7 @@ class ReportSchedAverageController extends Controller
             return $q->where('resource_id',$resource_id);
         })->when((!empty($powerplant_type_disp)), function ($q) use ($powerplant_type_disp) {
             return $q->where('pp_type_id',$powerplant_type_disp);
-        })->groupBy('resource_name')->chunk(100, function($loadsched) use(&$loadArray) {
+        })->groupBy('resource_name')->orderBy('resource_name','ASC')->chunk(100, function($loadsched) use(&$loadArray) {
             foreach ($loadsched as $ls) {
                 $loadArray[] = $ls;
             }
