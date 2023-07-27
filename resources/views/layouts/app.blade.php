@@ -312,7 +312,7 @@
         //     $('#savecsv').hide();
         //     document.getElementById("hexagon-spinner").style.display = "block";
         // }
-        function importSchedule() {
+        function importScheduleold() {
             var base_url = '{{URL::to("/")}}';
             var redirect = base_url+'/uploadschedules/store-data';
             var formData = new FormData();
@@ -348,6 +348,85 @@
                         window.location=base_url+'/uploadschedules/'+output;
                     }
                     // alert(output);
+                }
+            });
+        }
+
+        function importSchedule() {
+            var base_url = '{{URL::to("/")}}';
+            var redirect = base_url+'/uploadschedules/store-data';
+            var formData = new FormData();
+            formData.append('user_id', $('#user_id').val());
+            formData.append('run_hour[]', $('#run_hour').val());
+            files = document.getElementById("mpsl").files;
+            for (var i = 0; i < files.length; i++) {
+                formData.append("mpsl[]", files[i]);
+            }
+            
+            $.ajax({
+                type: "POST",
+                url: redirect,
+                data: formData,
+                contentType : false,
+                processData : false,
+                cache:false, 
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(){
+                    //$('#savecsv').hide();
+                    document.getElementById("hexagon-spinner").style.display = "block";
+                },
+                success: function(output){
+                    //$('#loadData').empty().load(window.location.href + '#loadTable');
+                    // document.getElementById("mpsl").disabled = true; 
+                    // document.getElementById("run_hour").disabled = true; 
+                    // document.getElementById("savecsv").disabled = true; 
+                    // $(".hidebtn").show();
+                    // $("#loadData").load(window.location.href+" #loadTable");
+                    // document.getElementById("hexagon-spinner").style.display = "none";
+                    // document.getElementById("mpsl").value='';
+                    // document.getElementById("run_hour").value='';
+                    if(output!=''){
+                        deleteTemp(output);
+                        //window.location=base_url+'/uploadschedules/'+output;
+                    }
+                    //alert(output);
+                }
+            });
+        }
+
+        function deleteTemp(identifier){
+            var base_url = '{{URL::to("/")}}';
+            var redirect = base_url+'/uploadschedules/delete_temp';
+            $.ajax({
+                type: "POST",
+                url: redirect,
+                data: {
+                    identifier: identifier,
+                    _token: '{{csrf_token()}}'
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(){
+                    //$('#savecsv').hide();
+                    document.getElementById("hexagon-spinner").style.display = "block";
+                },
+                success: function(output){
+                    //$('#loadData').empty().load(window.location.href + '#loadTable');
+                    document.getElementById("mpsl").disabled = true; 
+                    document.getElementById("run_hour").disabled = true; 
+                    document.getElementById("savecsv").disabled = true; 
+                    $(".hidebtn").show();
+                    $("#loadData").load(window.location.href+" #loadTable");
+                    document.getElementById("hexagon-spinner").style.display = "none";
+                    document.getElementById("mpsl").value='';
+                    document.getElementById("run_hour").value='';
+                    if(output!=''){
+                        //window.location=base_url+'/uploadschedules/'+identifier;
+                    }
+                    //alert(output);
                 }
             });
         }

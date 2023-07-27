@@ -57,7 +57,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $__currentLoopData = $scheduleload->chunk(300); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $schedchunk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = $scheduleload->chunk(2000); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $schedchunk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php $__currentLoopData = $schedchunk; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
