@@ -139,7 +139,7 @@ class UploadScheduleController extends Controller
                     $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
                     $resource_name=$sa->resource_name;
                     $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
-                    $data_insert =[
+                    $data_insert[] =[
                         'run_time'=>$sa->run_time,
                         'run_hour'=>$sa->run_hour,
                         'mkt_type'=>$sa->mkt_type,
