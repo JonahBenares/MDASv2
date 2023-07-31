@@ -59,127 +59,130 @@ class UploadScheduleController extends Controller
             foreach ($rows as $row) {
                 if($row[0]!='EOF'){
                     $row = array_combine($header, $row);
+
+                    $res_name = str_replace(' ','',$row['RESOURCE_NAME']);
                     $resource_type_id_temp=ResourceType::where('resource_code',$row['RESOURCE_TYPE'])->value('id');
                     $grid_id=Grid::where('grid_code',$row['REGION_NAME'])->value('id');
-                    $resource_id_temp=PowerplantResource::where('resource_id',$row['RESOURCE_NAME'])->value('id');
-                    $powerplant_id= PowerplantResource::where("resource_id",$row['RESOURCE_NAME'])->value('powerplant_id');
+                    $resource_id_temp=PowerplantResource::where('resource_id',$res_name)->value('id');
+                    $powerplant_id= PowerplantResource::where("resource_id",$res_name)->value('powerplant_id');
                     $pp_type_id= Powerplant::join('pp_type','pp_type.id','=','powerplants.pp_type_id')->where("powerplants.id",$powerplant_id)->value('powerplants.pp_type_id');
                     //$id= PowerplantType::where("id",$pp_type_id)->value('id');
-                    $data[]=[
-                        'run_time'=>date('Y-m-d H:i',strtotime($row['RUN_TIME'])),
-                        'run_hour'=>$run_hour[$keys],
-                        'mkt_type'=>$row['MKT_TYPE'],
-                        'time_interval'=>date('Y-m-d H:i',strtotime($row['TIME_INTERVAL'])),
-                        'region_name'=>$row['REGION_NAME'],
-                        'grid_id'=>(!empty($grid_id)) ? $grid_id : 0,
-                        'resource_name'=>$row['RESOURCE_NAME'],
-                        'resource_id'=>  (!empty($resource_id_temp)) ? $resource_id_temp : 0,
-                        'resource_type'=>$row['RESOURCE_TYPE'],
-                        'resource_type_id'=> (!empty($resource_type_id_temp)) ? $resource_type_id_temp : 0,
-                        'pp_type_id'=> (!empty($pp_type_id)) ? $pp_type_id : 0,
-                        'schedule_mw'=>$row['SCHED_MW'],
-                        'lmp'=>$row['LMP'],
-                        'loss_factor'=>$row['LOSS_FACTOR'],
-                        'lmp_smp'=>$row['LMP_SMP'],
-                        'lmp_loss'=>$row['LMP_LOSS'],
-                        'congestion'=>$row['LMP_CONGESTION'],
-                        'identifier'=>$identifier,
-                        'upload_by'=>$request->user_id,
-                        'created_at'=>date('Y-m-d h:i:s'),
-                        'updated_at'=>date('Y-m-d h:i:s')
-                    ];
+
+                    //$check_exist = PowerplantResource::pluck('resource_id')->toArray();
+                    $count=PowerplantResource::where('resource_id', $res_name)->count();
+                    if($count==0){
+                        $data_temp[]=[
+                            'run_time'=>date('Y-m-d H:i',strtotime($row['RUN_TIME'])),
+                            'run_hour'=>$run_hour[$keys],
+                            'mkt_type'=>$row['MKT_TYPE'],
+                            'time_interval'=>date('Y-m-d H:i',strtotime($row['TIME_INTERVAL'])),
+                            'region_name'=>$row['REGION_NAME'],
+                            'grid_id'=>(!empty($grid_id)) ? $grid_id : 0,
+                            'resource_name'=>$res_name,
+                            'resource_id'=>  (!empty($resource_id_temp)) ? $resource_id_temp : 0,
+                            'resource_type'=>$row['RESOURCE_TYPE'],
+                            'resource_type_id'=> (!empty($resource_type_id_temp)) ? $resource_type_id_temp : 0,
+                            'pp_type_id'=> (!empty($pp_type_id)) ? $pp_type_id : 0,
+                            'schedule_mw'=>$row['SCHED_MW'],
+                            'lmp'=>$row['LMP'],
+                            'loss_factor'=>$row['LOSS_FACTOR'],
+                            'lmp_smp'=>$row['LMP_SMP'],
+                            'lmp_loss'=>$row['LMP_LOSS'],
+                            'congestion'=>$row['LMP_CONGESTION'],
+                            'identifier'=>$identifier,
+                            'upload_by'=>$request->user_id,
+                            'created_at'=>date('Y-m-d h:i:s'),
+                            'updated_at'=>date('Y-m-d h:i:s')
+                        ];
+                    } else{
+                        $data_final[]=[
+                            'run_time'=>date('Y-m-d H:i',strtotime($row['RUN_TIME'])),
+                            'run_hour'=>$run_hour[$keys],
+                            'mkt_type'=>$row['MKT_TYPE'],
+                            'time_interval'=>date('Y-m-d H:i',strtotime($row['TIME_INTERVAL'])),
+                            'region_name'=>$row['REGION_NAME'],
+                            'grid_id'=>(!empty($grid_id)) ? $grid_id : 0,
+                            'resource_name'=>$res_name,
+                            'resource_id'=>  (!empty($resource_id_temp)) ? $resource_id_temp : 0,
+                            'resource_type'=>$row['RESOURCE_TYPE'],
+                            'resource_type_id'=> (!empty($resource_type_id_temp)) ? $resource_type_id_temp : 0,
+                            'pp_type_id'=> (!empty($pp_type_id)) ? $pp_type_id : 0,
+                            'schedule_mw'=>$row['SCHED_MW'],
+                            'lmp'=>$row['LMP'],
+                            'loss_factor'=>$row['LOSS_FACTOR'],
+                            'lmp_smp'=>$row['LMP_SMP'],
+                            'lmp_loss'=>$row['LMP_LOSS'],
+                            'congestion'=>$row['LMP_CONGESTION'],
+                            'identifier'=>$identifier,
+                            'upload_by'=>$request->user_id,
+                            'created_at'=>date('Y-m-d h:i:s'),
+                            'updated_at'=>date('Y-m-d h:i:s')
+                        ];
+                    }
+                   
                     //$insert_data[] = $data;
                 }
             }
         }
         // $insert_data = collect($insert_data);
         // $chunks = $insert_data->chunk(2000);
-        $chunks=array_chunk($data,2000);
-        foreach ($chunks as $chunk){
-            UploadScheduleTemp::insert($chunk);
+        $chunks_final=array_chunk($data_final,2000);
+        foreach ($chunks_final as $chunk_final){
+            UploadSchedule::insert($chunk_final);
         }
+
+        $chunks_temp=array_chunk($data_temp,2000);
+        foreach ($chunks_temp as $chunk_temp){
+            UploadScheduleTemp::insert($chunk_temp);
+        }
+
+        echo "Hi";
     
-        $check_exist = PowerplantResource::pluck('resource_id')->toArray();
-        $count=UploadScheduleTemp::where('upload_by',Auth::id())->where('resource_type','G')->whereNotIn('resource_name', $check_exist)->count();
-        if($count==0){
-            // $data=UploadScheduleTemp::where('upload_by',Auth::id())->chunk(2000, function($saveall) use(&$save) {
-            //     $x=0;
-            //     $data_insert=[];
-            //     $id=[];
-            //     foreach($saveall AS $sa){
-            //         $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
-            //         $resource_name=$sa->resource_name;
-            //         $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
-            //         $data_insert[] =[
-            //             'run_time'=>$sa->run_time,
-            //             'run_hour'=>$sa->run_hour,
-            //             'mkt_type'=>$sa->mkt_type,
-            //             'time_interval'=>$sa->time_interval,
-            //             'region_name'=>$sa->region_name,
-            //             'grid_id'=> $sa->grid_id,
-            //             'resource_name'=>$resource_name,
-            //             'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
-            //             'resource_type'=>$sa->resource_type,
-            //             'resource_type_id'=> ($resource_type_id!=0) ? $resource_type_id : 0,
-            //             'schedule_mw'=>$sa->schedule_mw,
-            //             'lmp'=>$sa->lmp,
-            //             'loss_factor'=>$sa->loss_factor,
-            //             'lmp_smp'=>$sa->lmp_smp,
-            //             'lmp_loss'=>$sa->lmp_loss,
-            //             'congestion'=>$sa->congestion,
-            //             'upload_by'=>$sa->upload_by,
-            //             'identifier'=>$sa->identifier,
-            //             'created_at'=>date('Y-m-d h:i:s'),
-            //             'updated_at'=>date('Y-m-d h:i:s')
-            //         ];
-            //         $x++;
-            //     }   
-                $saveall=UploadScheduleTemp::where('upload_by',Auth::id())->get();
-                foreach($saveall AS $sa){
-                    $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
-                    $resource_name=$sa->resource_name;
-                    $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
-                    $data_insert[] =[
-                        'run_time'=>$sa->run_time,
-                        'run_hour'=>$sa->run_hour,
-                        'mkt_type'=>$sa->mkt_type,
-                        'time_interval'=>$sa->time_interval,
-                        'region_name'=>$sa->region_name,
-                        'grid_id'=> $sa->grid_id,
-                        'resource_name'=>$resource_name,
-                        'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
-                        'resource_type'=>$sa->resource_type,
-                        'resource_type_id'=> ($resource_type_id!=0) ? $resource_type_id : 0,
-                        'schedule_mw'=>$sa->schedule_mw,
-                        'lmp'=>$sa->lmp,
-                        'loss_factor'=>$sa->loss_factor,
-                        'lmp_smp'=>$sa->lmp_smp,
-                        'lmp_loss'=>$sa->lmp_loss,
-                        'congestion'=>$sa->congestion,
-                        'upload_by'=>$sa->upload_by,
-                        'identifier'=>$sa->identifier,
-                        'created_at'=>date('Y-m-d h:i:s'),
-                        'updated_at'=>date('Y-m-d h:i:s')
-                    ];
-                    //$data_ins[] = $data_insert;
-                }
-                // $data_ins = collect($data_ins);
-                // $chunky = $data_ins->chunk(2000);
-                $chunky=array_chunk($data_insert,2000);
-                foreach ($chunky as $chunkys){
-                    $save=UploadSchedule::insert($chunkys);
-                }
-                //$save=UploadSchedule::insert($data_insert);
-            //});
-            if($save){
-                //$sched = UploadSchedule::select('identifier')->where('upload_by',Auth::id())->get();
-                $identifier_url = UploadSchedule::where('upload_by',Auth::id())->latest('id')->first();
-                //UploadScheduleTemp::whereIn('identifier', $sched->pluck('identifier'))->delete();
-                //UploadScheduleTemp::where('identifier', $identifier_url->identifier)->delete();
-                echo $identifier_url->identifier;
-                //return redirect()->route('uploadschedules.show',$identifier_url);
-            }
-        }
+        // $check_exist = PowerplantResource::pluck('resource_id')->toArray();
+        // $count=UploadScheduleTemp::where('upload_by',Auth::id())->where('resource_type','G')->whereNotIn('resource_name', $check_exist)->count();
+        // if($count==0){
+       
+        //         $saveall=UploadScheduleTemp::where('upload_by',Auth::id())->get();
+        //         foreach($saveall AS $sa){
+        //             $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
+        //             $resource_name=$sa->resource_name;
+        //             $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
+        //             $data_insert[] =[
+        //                 'run_time'=>$sa->run_time,
+        //                 'run_hour'=>$sa->run_hour,
+        //                 'mkt_type'=>$sa->mkt_type,
+        //                 'time_interval'=>$sa->time_interval,
+        //                 'region_name'=>$sa->region_name,
+        //                 'grid_id'=> $sa->grid_id,
+        //                 'resource_name'=>$resource_name,
+        //                 'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
+        //                 'resource_type'=>$sa->resource_type,
+        //                 'resource_type_id'=> ($resource_type_id!=0) ? $resource_type_id : 0,
+        //                 'schedule_mw'=>$sa->schedule_mw,
+        //                 'lmp'=>$sa->lmp,
+        //                 'loss_factor'=>$sa->loss_factor,
+        //                 'lmp_smp'=>$sa->lmp_smp,
+        //                 'lmp_loss'=>$sa->lmp_loss,
+        //                 'congestion'=>$sa->congestion,
+        //                 'upload_by'=>$sa->upload_by,
+        //                 'identifier'=>$sa->identifier,
+        //                 'created_at'=>date('Y-m-d h:i:s'),
+        //                 'updated_at'=>date('Y-m-d h:i:s')
+        //             ];
+                   
+        //         }
+             
+        //         $chunky=array_chunk($data_insert,2000);
+        //         foreach ($chunky as $chunkys){
+        //             $save=UploadSchedule::insert($chunkys);
+        //         }
+             
+        //     if($save){
+        //         $identifier_url = UploadSchedule::where('upload_by',Auth::id())->latest('id')->first();
+        //         echo $identifier_url->identifier;
+               
+        //     }
+        // }
     }
 
     public function delete_temp(Request $request){

@@ -1,7 +1,7 @@
 <nav class="bg-white px-8 shadow-md sm:px-4 py-2.5 white:bg-gray-900 fixed w-full z-20 top-0 left-0 white:border-gray-600">
     <div class="flex flex-wrap items-center justify-between mx-auto">
-        <a href="<?php echo e(('/dashboard')); ?>" class="flex items-center">
-            <img src="../../images/mdasb1.png" class="h-6 mr-2 sm:h-9" alt="MDAS Logo">
+        <a href="<?php echo e(route('dashboard.index')); ?>" class="flex items-center">
+            <img src="images/mdasb1.png" class="h-6 mr-2 sm:h-9" alt="MDAS Logo">
             <span class="self-center text-2xl font-extrabold whitespace-nowrap white:text-white">MDAS<small>v2</small></span>
         </a>
         <div class="flex md:order-2">
@@ -80,7 +80,7 @@
         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
             <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-white md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white white:bg-gray-800 md:white:bg-gray-900 white:border-gray-700">
                 <li>
-                    <a href="<?php echo e(('/dashboard')); ?>" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 white:text-white" aria-current="page" title="Home" data-tooltip-target="tooltip-default">
+                    <a href="<?php echo e(route('dashboard.index')); ?>" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 white:text-white" aria-current="page" title="Home" data-tooltip-target="tooltip-default">
                         <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                             Home
                             <div class="tooltip-arrow" data-popper-arrow></div>
