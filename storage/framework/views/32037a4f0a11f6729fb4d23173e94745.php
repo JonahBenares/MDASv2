@@ -7,6 +7,12 @@
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+   span.select2.select2-container.select2-container--classic{
+      width: 100% !important;
+   }
+</style>
 
 <div id="addType" tabindex="-1"  aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full bg-[#000000b8] ">
    <div class="relative w-full h-full max-w-lg md:h-auto">
@@ -72,17 +78,17 @@
          <?php echo csrf_field(); ?>
          <div class="w-full flex justify-between space-x-2 border-b pb-4">
             <div class="w-full">
-               <input name="mpsl" id="mpsl" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
+               <input name="mpsl[]" id="mpsl" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400" aria-describedby="file_input_help" type="file" multiple>
                <p class="mt-1 text-sm text-gray-500 white:text-gray-300" id="file_input_help">Please follow the format before uploading to avoid error.</p>
             </div>
             <div class="w-40">
-               <select name="run_hour" id="run_hour" class="block py-2.5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400" required> 
+               <select name="run_hour[]" id="run_hour" class="block py-2.5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 select2" multiple required> 
                   <option value="">--Select Interval--</option>
-                  <?php for($x=1;$x<=24;$x++): ?>
-                  <option value="<?php echo e($x); ?>"><?php echo e($x); ?></option>
+                  <?php for($x=0;$x<=23;$x++): ?>
+                  <option value="<?php echo e(($x==0) ? '24' : $x); ?>"><?php echo e($x); ?></option>
                   <?php endfor; ?>
                </select>
-               <p class="mt-1 text-sm text-gray-500 white:text-gray-300" id="file_input_help">Select Interval</p>
+               <p class="mt-1 text-xs text-gray-500 white:text-gray-300" id="file_input_help">Select Multiple Interval</p>
             </div>
             <div class="">
                <input type="hidden" name="user_id" id='user_id' value="<?php echo e(Auth::id()); ?>">
@@ -184,8 +190,13 @@
          <input type="hidden" id='check_user' name='check_user' value='<?php echo e($check_user); ?>'>
       </div>
    </div>
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+   $('.select2').select2({
+      placeholder: '-Select Intervals-',
+   });
+</script>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
