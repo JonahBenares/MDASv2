@@ -25,9 +25,25 @@ class ImportRegional implements ToModel,WithHeadingRow
     {
         if($row['run_time']!='EOF'){
             $commodity_count=Commodity::where('commodity_code',$row['commodity_type'])->count();
+            if($row['commodity_type']=='Dr'){
+                $commodity_name='DR';
+            }
+            if($row['commodity_type']=='En'){
+                $commodity_name='ENERGY';
+            }
+            if($row['commodity_type']=='Fr'){
+                $commodity_name='FR-CONTINGENCY';
+            }
+            if($row['commodity_type']=='Rd'){
+                $commodity_name='RD-REGULATING';
+            }
+            if($row['commodity_type']=='Ru'){
+                $commodity_name='RU-REGULATING';
+            }
             if($commodity_count==0){
                 Commodity::create([
-                    'commodity_code'=>$row['commodity_type']
+                    'commodity_code'=>$row['commodity_type'],
+                    'commodity_name'=>$commodity_name,
                 ]);
             }
             $commodity_id=Commodity::where('commodity_code',$row['commodity_type'])->value('id');

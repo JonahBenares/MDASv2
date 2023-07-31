@@ -128,19 +128,40 @@
                     <tr>
                         <th scope="col" class="px-1 py-1 border align-bottom" width="10%">Resource_ID</th>
                         <?php $__currentLoopData = $loadintervalArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ih): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
-                        <th scope="col" class="px-1 py-1 border" align="center"><?php echo e($ih->run_hour); ?></th>
+                        <th scope="col" class="px-1 py-1 border" align="center" colspan='2'><?php echo e($ih->run_hour); ?></th>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tr>
                 </thead>
                 <tbody>
+                    <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600 sticky top-0 z-10">
+                        <td class="px-1 py-1 border align-bottom"></td>
+                        <?php $__currentLoopData = $loadintervalArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ih): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+                            <td class="px-1 py-1 border" align="center"><b>MW</b></td>
+                            <td class="px-1 py-1 border" align="center"><b>P</b></td>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </tr>
+                    <?php $sum=array(); $res_name=array(); ?>
                     <?php $__currentLoopData = $loadArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
                         <td class="px-1 py-1 border align-bottom <?php echo e((!empty(getResourcecolor($sl->resource_name))) ? 'text-white' : ''); ?>" style="background:<?php echo e(getResourcecolor($sl->resource_name)); ?>"><?php echo e($sl->resource_name); ?></td>
                         <?php $__currentLoopData = $loadintervalArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ihsad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+                        <?php 
+                            $sum[]=getAvgSchedule($sl->resource_name,$ihsad->run_hour);
+                            $res_name[]="'".$sl->resource_name."'";
+                            $res_imp=implode(',',$res_name);
+                        ?>
                         <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getAvgSchedule($sl->resource_name,$ihsad->run_hour),1)); ?></td>
+                        <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getAvgpriceSchedule($sl->resource_name,$ihsad->run_hour),2)); ?></td>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <tr class='text-xs text-gray-700 uppercase bg-gray-50 sticky bottom-0 z-10'>
+                        <td>TOTAL</td>
+                        <?php $__currentLoopData = $loadintervalArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ihsad2): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+                        <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getSumSchedule($ihsad2->run_hour,$ihsad2->run_time,$ihsad2->grid_id,$ihsad2->resource_type,$_POST['resource_id'],$ihsad2->pp_type_id),1)); ?></td>
+                        <td class="px-1 py-1 border" align="center"></td>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </tr>
                 </tbody>
             </table>
         </div>

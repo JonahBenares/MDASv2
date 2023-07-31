@@ -277,6 +277,7 @@
 
         function loadSchedule() {
             $('#loadData').show();
+            $(".hidebtn").show();
             let modal = new Modal(document.getElementById('checkUser'),{placement:'center'});
             modal.hide();
         }
@@ -312,7 +313,7 @@
         //     $('#savecsv').hide();
         //     document.getElementById("hexagon-spinner").style.display = "block";
         // }
-        function importSchedule() {
+        function importScheduleold() {
             var base_url = '<?php echo e(URL::to("/")); ?>';
             var redirect = base_url+'/uploadschedules/store-data';
             var formData = new FormData();
@@ -326,6 +327,7 @@
                 data: formData,
                 contentType : false,
                 processData : false,
+                cache:false, 
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -346,6 +348,86 @@
                     if(output!=''){
                         window.location=base_url+'/uploadschedules/'+output;
                     }
+                    // alert(output);
+                }
+            });
+        }
+
+        function importSchedule() {
+            var base_url = '<?php echo e(URL::to("/")); ?>';
+            var redirect = base_url+'/uploadschedules/store-data';
+            var formData = new FormData();
+            formData.append('user_id', $('#user_id').val());
+            formData.append('run_hour[]', $('#run_hour').val());
+            files = document.getElementById("mpsl").files;
+            for (var i = 0; i < files.length; i++) {
+                formData.append("mpsl[]", files[i]);
+            }
+            
+            $.ajax({
+                type: "POST",
+                url: redirect,
+                data: formData,
+                contentType : false,
+                processData : false,
+                cache:false, 
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(){
+                    //$('#savecsv').hide();
+                    document.getElementById("hexagon-spinner").style.display = "block";
+                },
+                success: function(output){
+                    //$('#loadData').empty().load(window.location.href + '#loadTable');
+                    // document.getElementById("mpsl").disabled = true; 
+                    // document.getElementById("run_hour").disabled = true; 
+                    // document.getElementById("savecsv").disabled = true; 
+                    // $(".hidebtn").show();
+                    // $("#loadData").load(window.location.href+" #loadTable");
+                    // document.getElementById("hexagon-spinner").style.display = "none";
+                    // document.getElementById("mpsl").value='';
+                    // document.getElementById("run_hour").value='';
+                    if(output!=''){
+                        deleteTemp(output);
+                        //window.location=base_url+'/uploadschedules/'+output;
+                    }
+                    //alert(output);
+                }
+            });
+        }
+
+        function deleteTemp(identifier){
+            var base_url = '<?php echo e(URL::to("/")); ?>';
+            var redirect = base_url+'/uploadschedules/delete_temp';
+            $.ajax({
+                type: "POST",
+                url: redirect,
+                data: {
+                    identifier: identifier,
+                    _token: '<?php echo e(csrf_token()); ?>'
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(){
+                    //$('#savecsv').hide();
+                    document.getElementById("hexagon-spinner").style.display = "block";
+                },
+                success: function(output){
+                    //$('#loadData').empty().load(window.location.href + '#loadTable');
+                    document.getElementById("mpsl").disabled = true; 
+                    document.getElementById("run_hour").disabled = true; 
+                    document.getElementById("savecsv").disabled = true; 
+                    $(".hidebtn").show();
+                    $("#loadData").load(window.location.href+" #loadTable");
+                    document.getElementById("hexagon-spinner").style.display = "none";
+                    document.getElementById("mpsl").value='';
+                    document.getElementById("run_hour").value='';
+                    if(output!=''){
+                        //window.location=base_url+'/uploadschedules/'+identifier;
+                    }
+                    //alert(output);
                 }
             });
         }
@@ -411,6 +493,7 @@
                 }
             });
         }
+
         function selectValidation() {
             var count = $('.filter').filter(function(){return $(this).val() != ''}).length;
             if (count<=2) {
@@ -428,6 +511,143 @@
                 document.getElementById("hexagon-spinner").style.display = "none"; 
             }); 
         }
+
+
+        function regavgValidation() {
+            var count = $('.filterregavg').filter(function(){return $(this).val() != ''}).length;
+            if (count<=1) {
+                let confirmAction = confirm("It may take time to load this report. Please add more filter to generate a more specific report.");
+                if(confirmAction){
+                    document.getElementById("hexagon-spinner").style.display = "block"; 
+                    return true;
+                }else{
+                    document.getElementById("hexagon-spinner").style.display = "none"; 
+                    return false;
+                }
+            }
+            document.getElementById("hexagon-spinner").style.display = "block";
+            window.addEventListener("load", () => { 
+                document.getElementById("hexagon-spinner").style.display = "none"; 
+            }); 
+        }
+        function selectValidationReg() {
+            var count = $('.filter_reg').filter(function(){return $(this).val() != ''}).length;
+            if (count<=1) {
+                let confirmAction = confirm("It may take time to load this report. Please add more filter to generate a more specific report.");
+                if(confirmAction){
+                    document.getElementById("hexagon-spinner").style.display = "block"; 
+                    return true;
+                }else{
+                    document.getElementById("hexagon-spinner").style.display = "none"; 
+                    return false;
+                }
+            }
+            document.getElementById("hexagon-spinner").style.display = "block";
+            window.addEventListener("load", () => { 
+                document.getElementById("hexagon-spinner").style.display = "none"; 
+            }); 
+        }
+
+        function regweekValidation() {
+            var count = $('.filterregweek').filter(function(){return $(this).val() != ''}).length;
+            if (count<=2) {
+                let confirmAction = confirm("It may take time to load this report. Please add more filter to generate a more specific report.");
+                if(confirmAction){
+                    document.getElementById("hexagon-spinner").style.display = "block"; 
+                    return true;
+                }else{
+                    document.getElementById("hexagon-spinner").style.display = "none"; 
+                    return false;
+                }
+            }
+            document.getElementById("hexagon-spinner").style.display = "block";
+            window.addEventListener("load", () => { 
+                document.getElementById("hexagon-spinner").style.display = "none"; 
+            }); 
+        }
+
+        function selectValidationOutages() {
+            var count = $('.filter_outages').filter(function(){return $(this).val() != ''}).length;
+            if (count<=2) {
+                let confirmAction = confirm("It may take time to load this report. Please add more filter to generate a more specific report.");
+                if(confirmAction){
+                    document.getElementById("hexagon-spinner").style.display = "block"; 
+                    return true;
+                }else{
+                    document.getElementById("hexagon-spinner").style.display = "none"; 
+                    return false;
+                }
+            }
+            document.getElementById("hexagon-spinner").style.display = "block";
+            window.addEventListener("load", () => { 
+                document.getElementById("hexagon-spinner").style.display = "none"; 
+            }); 
+        }
+
+        function outagetypeValidation() {
+            var count = $('.filteroutagetype').filter(function(){return $(this).val() != ''}).length;
+            if (count<=1) {
+                let confirmAction = confirm("It may take time to load this report. Please add more filter to generate a more specific report.");
+                if(confirmAction){
+                    document.getElementById("hexagon-spinner").style.display = "block"; 
+                    return true;
+                }else{
+                    document.getElementById("hexagon-spinner").style.display = "none"; 
+                    return false;
+                }
+            }
+            document.getElementById("hexagon-spinner").style.display = "block";
+            window.addEventListener("load", () => { 
+                document.getElementById("hexagon-spinner").style.display = "none"; 
+            }); 
+        }
+
+        function OutagesUpdate(count) {
+            //var outages_id = document.getElementById("outages_id"+count).value;
+            var resource_name = document.getElementById("resource_name"+count).value;
+            var region_name = document.getElementById("region_name"+count).value;
+            var outage_date = document.getElementById("outage_date"+count).value;
+            var type = document.getElementById("outages_type"+count).value;
+            var remarks = document.getElementById("remarks"+count).value;
+            var base_url = '<?php echo e(URL::to("/")); ?>';
+            $.ajax({
+                type: 'POST',
+                url: base_url+"/reportactualoutages/updateoutages",
+                data: {
+                    //outages_id: outages_id, 
+                    resource_name: resource_name, 
+                    region_name: region_name,
+                    outage_date: outage_date,
+                    type: type, 
+                    remarks: remarks,
+                    _token: '<?php echo e(csrf_token()); ?>'
+                },
+                success: function(output){
+                    //alert(output);
+                    // document.getElementById("outages_id").value  = response.id;
+                    // document.getElementById("type").value  = response.type;
+                    // document.getElementById("remarks").value  = response.remarks;
+                }
+            });
+        }
+
+            function OutagesAdd() {
+                var powerplant_id = document.getElementById("resourceid-dropdown").value;
+                var base_url = '<?php echo e(URL::to("/")); ?>';
+                $.ajax({
+                    type: "POST",
+                    url: base_url+"/reportactualoutages/fetchAdd",
+                    data: {
+                        powerplant_id: powerplant_id,
+                        _token: '<?php echo e(csrf_token()); ?>'
+                    },
+                    success: function (output) {
+                        const exp = output.split("|");
+                        document.getElementById("capacity").value  = exp[0];
+                        document.getElementById("type_name").value  = exp[1];
+                    }
+                });
+            }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </html>

@@ -9,7 +9,8 @@ use App\Models\PowerplantResource;
 use App\Models\ResourceType;
 use App\Models\Grid;
 use Illuminate\Http\Request;
-
+ini_set('max_execution_time', 10000);
+ini_set('max_input_vars', 100000);
 class ReportSchedAverageController extends Controller
 {
     /**
@@ -62,16 +63,6 @@ class ReportSchedAverageController extends Controller
         }else{
             $powerplant_type_disp='';
         }
-
-        if(!empty($request->inex)){
-            if($request->inex==0){
-                $inex=0;
-            }else{
-                $inex=1;
-            }
-        }else{
-            $inex='';
-        }
         
         $grid=Grid::all()->sortBy('grid_name');
         $resource_type=ResourceType::all()->sortBy('resource_code');
@@ -81,7 +72,7 @@ class ReportSchedAverageController extends Controller
         // $schedule_load=UploadSchedule::select(['run_hour','region_name','resource_type','resource_name'])->whereBetween('run_hour',[$interval_from,$interval_to])->groupBy('resource_name')->get();
         $loadArray = [];
         $loadintervalArray = [];
-        $interval_hours=UploadSchedule::select(['run_hour'])->when((!empty($interval_from) && !empty($interval_to)), function ($q) use ($interval_from,$interval_to) {
+        $interval_hours=UploadSchedule::select(['run_hour','run_time','pp_type_id','resource_name','resource_type','grid_id'])->when((!empty($interval_from) && !empty($interval_to)), function ($q) use ($interval_from,$interval_to) {
             return $q->whereBetween('run_hour',[$interval_from,$interval_to]);
         })->when((!empty($date)), function ($q) use ($date) {
             return $q->whereDate('run_time',$date);
@@ -93,13 +84,13 @@ class ReportSchedAverageController extends Controller
             return $q->where('resource_id',$resource_id);
         })->when((!empty($powerplant_type_disp)), function ($q) use ($powerplant_type_disp) {
             return $q->where('pp_type_id',$powerplant_type_disp);
-        })->groupBy('run_hour')->chunk(100, function($loadinterval) use(&$loadintervalArray) {
+        })->groupBy('run_hour')->orderBy('run_hour','ASC')->chunk(100, function($loadinterval) use(&$loadintervalArray) {
             foreach ($loadinterval as $li) {
                 $loadintervalArray[] = $li;
             }
         });
         
-        $schedule_load=UploadSchedule::select(['run_hour','region_name','resource_type','resource_name','time_interval'])->when((!empty($interval_from) && !empty($interval_to)), function ($q) use ($interval_from,$interval_to) {
+        $schedule_load=UploadSchedule::select(['run_hour','region_name','resource_type','resource_name','time_interval','schedule_mw'])->when((!empty($interval_from) && !empty($interval_to)), function ($q) use ($interval_from,$interval_to) {
             return $q->whereBetween('run_hour',[$interval_from,$interval_to]);
         })->when((!empty($date)), function ($q) use ($date) {
             return $q->whereDate('run_time',$date);
@@ -111,11 +102,12 @@ class ReportSchedAverageController extends Controller
             return $q->where('resource_id',$resource_id);
         })->when((!empty($powerplant_type_disp)), function ($q) use ($powerplant_type_disp) {
             return $q->where('pp_type_id',$powerplant_type_disp);
-        })->groupBy('resource_name')->chunk(100, function($loadsched) use(&$loadArray) {
+        })->groupBy('resource_name')->orderBy('resource_name','ASC')->chunk(100, function($loadsched) use(&$loadArray) {
             foreach ($loadsched as $ls) {
                 $loadArray[] = $ls;
             }
         });
+
         // $interval_hours=UploadSchedule::select(['run_hour'])->whereBetween('run_hour',[$interval_from,$interval_to])->orWhere('grid_id',$grid_disp)->orWhere('resource_type_id',$resourcetype)->orWhere('resource_id',$resource_id)->orWhere('schedule_mw',$where,$inex)->orWhere('run_time','LIKE',"%{$date}%")->groupBy('run_hour')->chunk(100, function($loadinterval) use(&$loadintervalArray) {
         //     foreach ($loadinterval as $li) {
         //         $loadintervalArray[] = $li;

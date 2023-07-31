@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\ReportSchedule;
 use App\Models\UploadSchedule;
 use App\Models\PowerplantType;
@@ -9,9 +8,10 @@ use App\Models\PowerplantResource;
 use App\Models\ResourceType;
 use App\Models\Grid;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 ini_set('max_execution_time', 10000);
 ini_set('max_input_vars', 100000);
-class ReportScheduleController extends Controller
+class ReportScheduleWeeklyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,22 +23,16 @@ class ReportScheduleController extends Controller
         $powerplant_resource=PowerplantResource::all()->unique('resource_id')->sortBy('resource_id');
         $powerplant_type=PowerplantType::all()->sortBy('type_name');
         $schedule_load=UploadSchedule::all()->unique('resource_name');
-        return view('report_schedule.index',compact('powerplant_type','schedule_load','grid','resource_type','powerplant_resource'));
+        return view('report_sched_weekly.index',compact('powerplant_type','schedule_load','grid','resource_type','powerplant_resource'));
     }
 
-    public function filter_scheduleload(Request $request){
-        if(!empty($request->interval_from) && !empty($request->interval_to)){
-            $interval_from=$request->interval_from;
-            $interval_to=$request->interval_to;
+    public function filter_scheduleloadweekly(Request $request){
+        if(!empty($request->date_from) && !empty($request->date_to)){
+            $date_from=$request->date_from;
+            $date_to=$request->date_to;
         }else{
-            $interval_from='';
-            $interval_to='';
-        }
-
-        if(!empty($request->date)){
-            $date=$request->date;
-        }else{
-            $date='';
+            $date_from='';
+            $date_to='';
         }
 
         if(!empty($request->grid)){
@@ -79,14 +73,10 @@ class ReportScheduleController extends Controller
         $resource_type=ResourceType::all()->sortBy('resource_code');
         $powerplant_resource=PowerplantResource::all()->unique('resource_id')->sortBy('resource_id');
         $powerplant_type=PowerplantType::all()->sortBy('type_name');
-        // $interval_hours=UploadSchedule::select(['run_hour'])->whereBetween('run_hour',[$interval_from,$interval_to])->groupBy('run_hour')->get();
-        // $schedule_load=UploadSchedule::select(['run_hour','region_name','resource_type','resource_name'])->whereBetween('run_hour',[$interval_from,$interval_to])->groupBy('resource_name')->get();
         $loadArray = [];
         $loadintervalArray = [];
-        $interval_hours=UploadSchedule::select(['run_hour'])->when((!empty($interval_from) && !empty($interval_to)), function ($q) use ($interval_from,$interval_to) {
-            return $q->whereBetween('run_hour',[$interval_from,$interval_to]);
-        })->when((!empty($date)), function ($q) use ($date) {
-            return $q->whereDate('run_time',$date);
+        $interval_hours=UploadSchedule::select(['run_hour'])->when((!empty($date_from) && !empty($date_to)), function ($q) use ($date_from,$date_to) {
+            return $q->whereBetween(DB::raw('DATE(run_time)'),[$date_from,$date_to]);
         })->when((!empty($grid_disp)), function ($q) use ($grid_disp) {
             return $q->where('grid_id',$grid_disp);
         })->when((!empty($resourcetype)), function ($q) use ($resourcetype) {
@@ -105,10 +95,8 @@ class ReportScheduleController extends Controller
             }
         });
         
-        $schedule_load=UploadSchedule::select(['run_hour','region_name','resource_type','resource_name','time_interval'])->when((!empty($interval_from) && !empty($interval_to)), function ($q) use ($interval_from,$interval_to) {
-            return $q->whereBetween('run_hour',[$interval_from,$interval_to]);
-        })->when((!empty($date)), function ($q) use ($date) {
-            return $q->whereDate('run_time',$date);
+        $schedule_load=UploadSchedule::select(['run_hour','region_name','resource_type','resource_name','time_interval'])->when((!empty($date_from) && !empty($date_to)), function ($q) use ($date_from,$date_to) {
+            return $q->whereBetween(DB::raw('DATE(run_time)'),[$date_from,$date_to]);
         })->when((!empty($grid_disp)), function ($q) use ($grid_disp) {
             return $q->where('grid_id',$grid_disp);
         })->when((!empty($resourcetype)), function ($q) use ($resourcetype) {
@@ -126,18 +114,7 @@ class ReportScheduleController extends Controller
                 $loadArray[] = $ls;
             }
         });
-        // $interval_hours=UploadSchedule::select(['run_hour'])->whereBetween('run_hour',[$interval_from,$interval_to])->orWhere('grid_id',$grid_disp)->orWhere('resource_type_id',$resourcetype)->orWhere('resource_id',$resource_id)->orWhere('schedule_mw',$where,$inex)->orWhere('run_time','LIKE',"%{$date}%")->groupBy('run_hour')->chunk(100, function($loadinterval) use(&$loadintervalArray) {
-        //     foreach ($loadinterval as $li) {
-        //         $loadintervalArray[] = $li;
-        //     }
-        // });
-        // $schedule_load=UploadSchedule::select(['run_hour','region_name','resource_type','resource_name','time_interval'])->whereBetween('run_hour',[$interval_from,$interval_to])->orWhere('grid_id',$grid_disp)->orWhere('resource_type_id',$resourcetype)->orWhere('resource_id',$resource_id)->orWhere('schedule_mw',$where,$inex)->orWhere('run_time','LIKE',"%{$date}%")->groupBy('resource_name')->chunk(100, function($loadsched) use(&$loadArray) {
-        //     foreach ($loadsched as $ls) {
-        //         $loadArray[] = $ls;
-        //     }
-        // });
-
-        return view('report_schedule.index',compact('powerplant_type','schedule_load','grid','resource_type','powerplant_resource','interval_hours','loadArray','loadintervalArray'));
+        return view('report_sched_weekly.index',compact('powerplant_type','schedule_load','grid','resource_type','powerplant_resource','interval_hours','loadArray','loadintervalArray'));
     }
 
     /**
@@ -159,7 +136,7 @@ class ReportScheduleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ReportSchedule $reportSchedule)
+    public function show(string $id)
     {
         //
     }
@@ -167,7 +144,7 @@ class ReportScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ReportSchedule $reportSchedule)
+    public function edit(string $id)
     {
         //
     }
@@ -175,7 +152,7 @@ class ReportScheduleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ReportSchedule $reportSchedule)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -183,7 +160,7 @@ class ReportScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ReportSchedule $reportSchedule)
+    public function destroy(string $id)
     {
         //
     }

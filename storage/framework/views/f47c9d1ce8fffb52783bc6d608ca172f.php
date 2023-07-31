@@ -177,9 +177,12 @@
                             </li>
                             <li>
                                 <a href="<?php echo e(route('reportschedaverage.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Prices & Schedule & Load <b>(Average)</b></a>
-                              </li>
+                            </li>
                             <li>
-                              <a href="<?php echo e(route('uploadhap.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Hour Ahead Projection</a>
+                                <a href="<?php echo e(route('reportschedulesdaily.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Prices & Schedule & Load <b>(Daily)</b></a>
+                            </li>
+                            <li>
+                                <a href="<?php echo e(route('reportschedulesweekly.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Prices & Schedule & Load <b>(Weekly)</b></a>
                             </li>
                             <li>
                               <a href="<?php echo e(route('reportregional.index')); ?>" class="block px-4 py-2 hover:bg-gray-100 white:hover:bg-gray-600 white:hover:text-white">Regional Summary</a>

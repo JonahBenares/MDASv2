@@ -209,8 +209,8 @@
                                                 $minutes=$min2.":00";
                                             }
                                         @endphp
-                                        <td class="px-1 py-1 border" align="center">{{number_format(getSchedmw($sl->resource_name,$ihsad->run_hour,$minutes),4)}}</td>
-                                        <td class="px-1 py-1 border" align="center">{{number_format(getSchedprice($sl->resource_name,$ihsad->run_hour,$minutes),4)}}</td>
+                                        <td class="px-1 py-1 border" align="center">{{number_format(getSchedmw($sl->resource_name,$ihsad->run_hour,$minutes),1)}}</td>
+                                        <td class="px-1 py-1 border" align="center">{{number_format(getSchedprice($sl->resource_name,$ihsad->run_hour,$minutes),2)}}</td>
                                         @endfor
                                     @endforeach
                                 <!-- <td class="px-1 py-1 border" align="center">0.00</td>

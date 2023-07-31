@@ -8,9 +8,9 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
     <div class='flex justify-center mt-42'>
-    <div id="hexagon-spinner" style="display:block">
-        <div class="hexagon-loader"></div>
-    </div>
+        <div id="hexagon-spinner" style="display:block">
+            <div class="hexagon-loader"></div>
+        </div>
     </div>
     <div class="p-4 ">
         <div class="pb-2 flex justify-between border-b ">
@@ -217,8 +217,8 @@
                                                 $minutes=$min2.":00";
                                             }
                                         ?>
-                                        <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getSchedmw($sl->resource_name,$ihsad->run_hour,$minutes),4)); ?></td>
-                                        <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getSchedprice($sl->resource_name,$ihsad->run_hour,$minutes),4)); ?></td>
+                                        <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getSchedmw($sl->resource_name,$ihsad->run_hour,$minutes),1)); ?></td>
+                                        <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getSchedprice($sl->resource_name,$ihsad->run_hour,$minutes),2)); ?></td>
                                         <?php endfor; ?>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <!-- <td class="px-1 py-1 border" align="center">0.00</td>

@@ -1,19 +1,5 @@
-<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
-<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
-<?php $component->withName('app-layout'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(App\View\Components\AppLayout::class))->getConstructor()): ?>
-<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<style>
-   span.select2.select2-container.select2-container--classic{
-      width: 100% !important;
-   }
-</style>
-
+<x-app-layout>
+{{-- modal --}}
 <div id="addType" tabindex="-1"  aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full bg-[#000000b8] ">
    <div class="relative w-full h-full max-w-lg md:h-auto">
       <!-- Modal content -->
@@ -73,26 +59,26 @@
 </div>
    <div class="p-4">
       <div class="text-lg pb-4 font-medium uppercase">Upload Prices & Schedule & Load</div>
-      <!-- <form method="POST" action="<?php echo e(route('uploadschedules.store')); ?>" enctype="multipart/form-data" id='uploadForm'> -->
+      <!-- <form method="POST" action="{{ route('uploadschedules.store') }}" enctype="multipart/form-data" id='uploadForm'> -->
       <form method="POST" enctype="multipart/form-data" id='uploadForm'>
-         <?php echo csrf_field(); ?>
+         @csrf
          <div class="w-full flex justify-between space-x-2 border-b pb-4">
             <div class="w-full">
-               <input name="mpsl[]" id="mpsl" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400" aria-describedby="file_input_help" type="file" multiple>
+               <input name="mpsl" id="mpsl" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400" aria-describedby="file_input_help" type="file">
                <p class="mt-1 text-sm text-gray-500 white:text-gray-300" id="file_input_help">Please follow the format before uploading to avoid error.</p>
             </div>
             <div class="w-40">
-               <select name="run_hour[]" id="run_hour" class="block py-2.5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 select2" multiple required> 
+               <select name="run_hour" id="run_hour" class="block py-2.5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 white:text-gray-400 focus:outline-none white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400" required> 
                   <option value="">--Select Interval--</option>
-                  <?php for($x=0;$x<=23;$x++): ?>
-                  <option value="<?php echo e(($x==0) ? '24' : $x); ?>"><?php echo e($x); ?></option>
-                  <?php endfor; ?>
+                  @for($x=1;$x<=24;$x++)
+                  <option value="{{$x}}">{{$x}}</option>
+                  @endfor
                </select>
-               <p class="mt-1 text-xs text-gray-500 white:text-gray-300" id="file_input_help">Select Multiple Interval</p>
+               <p class="mt-1 text-sm text-gray-500 white:text-gray-300" id="file_input_help">Select Interval</p>
             </div>
             <div class="">
-               <input type="hidden" name="user_id" id='user_id' value="<?php echo e(Auth::id()); ?>">
-               <input type="hidden" name="_token" id='_token' value="<?php echo e(csrf_token()); ?>">
+               <input type="hidden" name="user_id" id='user_id' value="{{Auth::id()}}">
+               <input type="hidden" name="_token" id='_token' value="{{ csrf_token() }}">
                <button type="button" id="savecsv" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 white:bg-green-600 white:hover:bg-green-700 white:focus:ring-green-800 flex justify-center space-x-2" onclick='importSchedule()'>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                      <path fill-rule="evenodd" d="M11.47 2.47a.75.75 0 011.06 0l4.5 4.5a.75.75 0 01-1.06 1.06l-3.22-3.22V16.5a.75.75 0 01-1.5 0V4.81L8.03 8.03a.75.75 0 01-1.06-1.06l4.5-4.5zM3 15.75a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
@@ -106,7 +92,7 @@
          Add New Powerplant
       </button>
       <div id="loadData">
-         <?php if(sizeof($checker)): ?>
+         @if(sizeof($checker))
             <div  id="loadTable">
                <div class="">
                   <div id="alert-4" class="flex p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 white:bg-gray-800 white:text-yellow-300" role="alert">
@@ -122,8 +108,8 @@
                      </button>
                   </div>
                </div>
-               <form method="POST" action="<?php echo e(route('saveall')); ?>">
-                  <?php echo csrf_field(); ?>
+               <form method="POST" action="{{ route('saveall') }}">
+                  @csrf
                   <div class="relative overflow-x-auto h-60 border rounded-md mb-4">
                      <table class="w-full text-sm text-left text-gray-500 white:text-gray-400">
                         <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400">
@@ -140,40 +126,40 @@
                            </tr>
                         </thead>
                         <tbody>
-                        <?php $x=0; ?>
-                           <?php $__currentLoopData = $checker->chunk(100); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chunk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        @php $x=0; @endphp
+                           @foreach($checker->chunk(100) AS $chunk)
                               
-                              <?php $__currentLoopData = $chunk; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              @foreach($chunk AS $c)
                               <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700">
                                  <td scope="row" class="font-medium text-gray-900 whitespace-nowrap white:text-white">
-                                    <input type="text" name="main_resource[]" id='main_resource<?php echo e($x); ?>' class='main_resource' style='border:transparent' value='<?php echo e($c->resource_name); ?>' readonly>
-                                    <input type="hidden" name="id[]" id='id<?php echo e($x); ?>' class='id' style='border:transparent' value='<?php echo e($c->id); ?>' readonly>
+                                    <input type="text" name="main_resource[]" id='main_resource{{$x}}' class='main_resource' style='border:transparent' value='{{$c->resource_name}}' readonly>
+                                    <input type="hidden" name="id[]" id='id{{$x}}' class='id' style='border:transparent' value='{{$c->id}}' readonly>
                                  </td>
                                  <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap white:text-white">
-                                    <select name="resource_name[]" id="resource_name<?php echo e($x); ?>" class="text-sm resource_name" onchange="hideSelectResource()">
+                                    <select name="resource_name[]" id="resource_name{{$x}}" class="text-sm resource_name" onchange="hideSelectResource()">
                                        <option value="">--Select Like Resource Name--</option>
-                                       <?php $__currentLoopData = $check_resource; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                          <option value="<?php echo e($cr->id); ?>"><?php echo e($cr->resource_id); ?></option>
-                                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                       @foreach($check_resource AS $cr)
+                                          <option value="{{$cr->id}}">{{$cr->resource_id}}</option>
+                                       @endforeach
                                     </select>
                                  </td>
                                  <td scope="row" class="flex justify-start space-x-2 font-medium text-gray-900 whitespace-nowrap white:text-white ">
-                                    <select name="powerplant[]" id="powerplant<?php echo e($x); ?>" class="text-sm powerplant" onchange="hideSelectPowerplant()">
+                                    <select name="powerplant[]" id="powerplant{{$x}}" class="text-sm powerplant" onchange="hideSelectPowerplant()">
                                        <option value="">--Select Powerplant--</option>
-                                       <?php $__currentLoopData = $powerplant; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                          <option value="<?php echo e($p->id); ?>"><?php echo e($p->facility_name); ?></option>
-                                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                       @foreach($powerplant AS $p)
+                                          <option value="{{$p->id}}">{{$p->facility_name}}</option>
+                                       @endforeach
                                     </select>
-                                    <!-- <input type="text" id='operators<?php echo e($x); ?>' name='operator' class='addtext' style='display:none;' onblur='addPowerplantT(<?php echo e($x); ?>)'>
-                                    <button id="btn_change<?php echo e($x); ?>" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5 btn_change more" onclick="btnChange(<?php echo e($x); ?>)" type="button">
+                                    <!-- <input type="text" id='operators{{$x}}' name='operator' class='addtext' style='display:none;' onblur='addPowerplantT({{$x}})'>
+                                    <button id="btn_change{{$x}}" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 text-center white:bg-blue-600 white:hover:bg-blue-700 white:focus:ring-blue-800 mb-2.5 btn_change more" onclick="btnChange({{$x}})" type="button">
                                        Add New Powerplant
                                     </button> -->
                                  </td>
                               </tr>
-                              <?php $x++; ?>
-                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                              <input type="hidden" id='counter' name='counter' value='<?php echo e($x); ?>'>
-                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              @php $x++; @endphp
+                              @endforeach
+                              <input type="hidden" id='counter' name='counter' value='{{$x}}'>
+                           @endforeach
                         </tbody>
                      </table>
                   </div>
@@ -182,25 +168,14 @@
                         <span id='altsaveall' class='font-medium text-lg'></span>
                      </div>
                      <button type="submit" class="text-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onclick='saveAllsched()' id='saveall'>Save File</button>
-                     <!-- <a href="<?php echo e(route('uploadschedules.show', '1')); ?>" type="button" class="text-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Save File</a> -->
+                     <!-- <a href="{{ route('uploadschedules.show', '1') }}" type="button" class="text-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Save File</a> -->
                   </div>
                </form>
             </div>
-         <?php endif; ?>
-         <input type="hidden" id='check_user' name='check_user' value='<?php echo e($check_user); ?>'>
+         @endif
+         <input type="hidden" id='check_user' name='check_user' value='{{$check_user}}'>
       </div>
    </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-   $('.select2').select2({
-      placeholder: '-Select Intervals-',
-   });
-</script>
- <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
-<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
-<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
-<?php endif; ?>
-<?php /**PATH C:\xampp\htdocs\mdasv2\resources\views/upload_schedule/index.blade.php ENDPATH**/ ?>
+
+
+</x-app-layout>
