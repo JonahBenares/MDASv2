@@ -20,6 +20,8 @@ use App\Http\Controllers\ResourceTypeController;
 use App\Http\Controllers\PriceNodesController;
 use App\Http\Controllers\ReportActualOutagesController;
 use App\Http\Controllers\ReportOutagesTypeController;
+use App\Http\Controllers\DashboardController;
+use App\Models\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +38,11 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::resource('dashboard', DashboardController::class);
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -7,7 +7,7 @@
 
         <title><?php echo e(config('app.name', 'MDASv2')); ?></title>
 
-        <link rel="stylesheet" href="../../css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="css/jquery.dataTables.min.css">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800,900&display=swap" rel="stylesheet" />

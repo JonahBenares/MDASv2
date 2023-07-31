@@ -67,7 +67,7 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400 sticky top-0 ">
                     <tr>
                         <th scope="col" class="px-1 py-1 border align-bottom" align="center"></th>
-                        <th scope="col" class="px-1 py-1 border" align="center" colspan="5">ENERGY</th>
+                        <th scope="col" class="px-1 py-1 border" align="center" colspan="7">ENERGY</th>
                         <th scope="col" class="px-1 py-1 border" align="center" colspan="2">DR</th>
                         <th scope="col" class="px-1 py-1 border" align="center" colspan="2">FR-CONTINGENCY</th>
                         <th scope="col" class="px-1 py-1 border" align="center" colspan="2">RU-REGULATING</th>
@@ -77,6 +77,8 @@
                         <th scope="col" class="px-1 py-1 border align-bottom" align="center">TIME</th>
                         <th scope="col" class="px-1 py-1 border" align="center">DEMAND</th>
                         <th scope="col" class="px-1 py-1 border" align="center">GENERATION</th>
+                        <th scope="col" class="px-1 py-1 border" align="center">LOAD BID</th>
+                        <th scope="col" class="px-1 py-1 border" align="center">LOAD CURTAILED</th>
                         <th scope="col" class="px-1 py-1 border" align="center">LOSSES</th>
                         <th scope="col" class="px-1 py-1 border" align="center">EXPORT</th>
                         <th scope="col" class="px-1 py-1 border" align="center">IMPORT</th>
@@ -96,6 +98,8 @@
                         $time= date('H:i', strtotime("$sl->time_interval"));
                         $en_demand='0.00';
                         $en_generation='0.00';
+                        $en_load_bid='0.00';
+                        $en_load_curtailed='0.00';
                         $en_losses='0.00';
                         $en_export='0.00';
                         $en_import='0.00';
@@ -110,6 +114,8 @@
                         if($sl->commodity_type == 'En'){
                             $en_demand = number_format($sl->demand, 2);
                             $en_generation = number_format($sl->generation, 2);
+                            $en_load_bid = number_format($sl->load_bid, 2);
+                            $en_load_curtailed = number_format($sl->load_curtailed, 2);
                             $en_losses = number_format($sl->losses, 2);
                             $en_export = number_format($sl->export, 2);
                             $en_import = number_format($sl->import, 2);
@@ -131,6 +137,8 @@
                         <td class="px-1 py-1 border align-bottom " align="center"><?php echo e($time); ?></td>
                         <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getDemandEN($sl->time_interval,$sl->grid_id,'En'),2)); ?></td>
                         <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getGenerationEN($sl->time_interval,$sl->grid_id,'En'),2)); ?></td>
+                        <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getLoadbidEN($sl->time_interval,$sl->grid_id,'En'),2)); ?></td>
+                        <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getLoadCurtailedEN($sl->time_interval,$sl->grid_id,'En'),2)); ?></td>
                         <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getLossesEN($sl->time_interval,$sl->grid_id,'En'),2)); ?></td>
                         <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getExportEN($sl->time_interval,$sl->grid_id,'En'),2)); ?></td>
                         <td class="px-1 py-1 border" align="center"><?php echo e(number_format(getImportEN($sl->time_interval,$sl->grid_id,'En'),2)); ?></td>
