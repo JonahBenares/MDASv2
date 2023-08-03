@@ -391,6 +391,7 @@
                     if(output!=''){
                         //deleteTemp(output);
                         window.location=base_url+'/uploadschedules/'+output;
+                        //console.log(output);
                     }
                     //alert(output);
                 }

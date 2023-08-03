@@ -51,6 +51,8 @@ class UploadScheduleController extends Controller
         $imp_runhour=implode(',',$request->run_hour);
         $run_hour=explode(',',$imp_runhour);
         $identifier=generateRandomString();
+        $data_temp=array();
+        $data_final=array();
         foreach ($request->mpsl as $keys => $values) {
             //echo $run_hour[$keys];
             //echo $keys;
@@ -61,6 +63,7 @@ class UploadScheduleController extends Controller
                     $row = array_combine($header, $row);
 
                     $res_name = str_replace(' ','',$row['RESOURCE_NAME']);
+                    $res_type = str_replace(' ','',$row['RESOURCE_TYPE']);
                     $resource_type_id_temp=ResourceType::where('resource_code',$row['RESOURCE_TYPE'])->value('id');
                     $grid_id=Grid::where('grid_code',$row['REGION_NAME'])->value('id');
                     $resource_id_temp=PowerplantResource::where('resource_id',$res_name)->value('id');
@@ -70,7 +73,10 @@ class UploadScheduleController extends Controller
 
                     //$check_exist = PowerplantResource::pluck('resource_id')->toArray();
                     $count=PowerplantResource::where('resource_id', $res_name)->count();
-                    if($count==0){
+                   // echo $count . " " . $res_type . "<br>";
+                    if($count==0 && $res_type == 'G'){
+
+                     
                         $data_temp[]=[
                             'run_time'=>date('Y-m-d H:i',strtotime($row['RUN_TIME'])),
                             'run_hour'=>$run_hour[$keys],
@@ -94,7 +100,8 @@ class UploadScheduleController extends Controller
                             'created_at'=>date('Y-m-d h:i:s'),
                             'updated_at'=>date('Y-m-d h:i:s')
                         ];
-                    } else{
+                    } 
+                    if(($count>0 && $res_type=='G') || $res_type != 'G'){
                         $data_final[]=[
                             'run_time'=>date('Y-m-d H:i',strtotime($row['RUN_TIME'])),
                             'run_hour'=>$run_hour[$keys],
@@ -126,106 +133,26 @@ class UploadScheduleController extends Controller
         }
         // $insert_data = collect($insert_data);
         // $chunks = $insert_data->chunk(2000);
-        $chunks_temp=array_chunk($data_temp,2000);
-        foreach ($chunks_temp as $chunk_temp){
-            UploadScheduleTemp::insert($chunk_temp);
+        if(!empty($data_temp)){
+            $chunks_temp=array_chunk($data_temp,2000);
+            foreach ($chunks_temp as $chunk_temp){
+                UploadScheduleTemp::insert($chunk_temp);
+            }
         }
 
-        $chunks_final=array_chunk($data_final,2000);
-        foreach ($chunks_final as $chunk_final){
-            UploadSchedule::insert($chunk_final);
+        if(!empty($data_final)){
+            $chunks_final=array_chunk($data_final,2000);
+            foreach ($chunks_final as $chunk_final){
+                UploadSchedule::insert($chunk_final);
+            }
         }
 
-        $count=UploadScheduleTemp::where('upload_by',Auth::id())->where('resource_type','G')->count();
-        if($count==0){
-            $saveall=UploadScheduleTemp::where('upload_by',Auth::id())->get();
-            foreach($saveall AS $sa){
-                $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
-                $resource_name=$sa->resource_name;
-                $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
-                $data_insert[] =[
-                    'run_time'=>$sa->run_time,
-                    'run_hour'=>$sa->run_hour,
-                    'mkt_type'=>$sa->mkt_type,
-                    'time_interval'=>$sa->time_interval,
-                    'region_name'=>$sa->region_name,
-                    'grid_id'=> $sa->grid_id,
-                    'resource_name'=>$resource_name,
-                    'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
-                    'resource_type'=>$sa->resource_type,
-                    'resource_type_id'=> ($resource_type_id!=0) ? $resource_type_id : 0,
-                    'schedule_mw'=>$sa->schedule_mw,
-                    'lmp'=>$sa->lmp,
-                    'loss_factor'=>$sa->loss_factor,
-                    'lmp_smp'=>$sa->lmp_smp,
-                    'lmp_loss'=>$sa->lmp_loss,
-                    'congestion'=>$sa->congestion,
-                    'upload_by'=>$sa->upload_by,
-                    'identifier'=>$sa->identifier,
-                    'created_at'=>date('Y-m-d h:i:s'),
-                    'updated_at'=>date('Y-m-d h:i:s')
-                ];
-                
-            }
-            
-            $chunky=array_chunk($data_insert,2000);
-            foreach ($chunky as $chunkys){
-                $save=UploadSchedule::insert($chunkys);
-            }
-            
-            if($save){
-                $identifier_url = UploadSchedule::where('upload_by',Auth::id())->latest('id')->first();
-                UploadScheduleTemp::where('upload_by',Auth::id())->where('identifier', $identifier_url->identifier)->delete();
-                echo $identifier_url->identifier;
-            }  
-        }
-        //echo "Hi";
-    
-        // $check_exist = PowerplantResource::pluck('resource_id')->toArray();
-        // $count=UploadScheduleTemp::where('upload_by',Auth::id())->where('resource_type','G')->whereNotIn('resource_name', $check_exist)->count();
-        // if($count==0){
-       
-        //         $saveall=UploadScheduleTemp::where('upload_by',Auth::id())->get();
-        //         foreach($saveall AS $sa){
-        //             $resource_id=PowerplantResource::where('resource_id',$sa->resource_name)->value('id');
-        //             $resource_name=$sa->resource_name;
-        //             $resource_type_id=ResourceType::where('resource_code',$sa->resource_type)->value('id');
-        //             $data_insert[] =[
-        //                 'run_time'=>$sa->run_time,
-        //                 'run_hour'=>$sa->run_hour,
-        //                 'mkt_type'=>$sa->mkt_type,
-        //                 'time_interval'=>$sa->time_interval,
-        //                 'region_name'=>$sa->region_name,
-        //                 'grid_id'=> $sa->grid_id,
-        //                 'resource_name'=>$resource_name,
-        //                 'resource_id'=> ($resource_id!=0) ? $resource_id : 0,
-        //                 'resource_type'=>$sa->resource_type,
-        //                 'resource_type_id'=> ($resource_type_id!=0) ? $resource_type_id : 0,
-        //                 'schedule_mw'=>$sa->schedule_mw,
-        //                 'lmp'=>$sa->lmp,
-        //                 'loss_factor'=>$sa->loss_factor,
-        //                 'lmp_smp'=>$sa->lmp_smp,
-        //                 'lmp_loss'=>$sa->lmp_loss,
-        //                 'congestion'=>$sa->congestion,
-        //                 'upload_by'=>$sa->upload_by,
-        //                 'identifier'=>$sa->identifier,
-        //                 'created_at'=>date('Y-m-d h:i:s'),
-        //                 'updated_at'=>date('Y-m-d h:i:s')
-        //             ];
-                   
-        //         }
-             
-        //         $chunky=array_chunk($data_insert,2000);
-        //         foreach ($chunky as $chunkys){
-        //             $save=UploadSchedule::insert($chunkys);
-        //         }
-             
-        //     if($save){
-        //         $identifier_url = UploadSchedule::where('upload_by',Auth::id())->latest('id')->first();
-        //         echo $identifier_url->identifier;
+        $identifier_url = UploadSchedule::where('upload_by',Auth::id())->latest('id')->first();
+        echo $identifier_url->identifier;
                
-        //     }
-        // }
+      
+
+       
     }
 
     public function delete_temp(Request $request){
