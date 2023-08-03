@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-500 white:text-gray-400 " id="table-01">
+            <table class="w-full text-sm text-left text-gray-500 white:text-gray-400 " id="">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
@@ -57,62 +57,62 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $__currentLoopData = $scheduleload->chunk(2000); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $schedchunk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php $__currentLoopData = $schedchunk; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                                    <?php echo e($sl->run_time); ?>
+                    <?php $__currentLoopData = $scheduleload; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                <?php echo e($sl->run_time); ?>
 
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <?php echo e($sl->mkt_type); ?>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <?php echo e($sl->mkt_type); ?>
 
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php echo e($sl->time_interval); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e($sl->time_interval); ?>
 
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <?php echo e($sl->region_name); ?>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <?php echo e($sl->region_name); ?>
 
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php echo e($sl->resource_name); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo e($sl->resource_name); ?>
 
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <?php echo e($sl->resource_type); ?>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <?php echo e($sl->resource_type); ?>
 
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <?php echo e(number_format($sl->schedule_mw,4)); ?>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <?php echo e(number_format($sl->schedule_mw,4)); ?>
 
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <?php echo e(number_format($sl->lmp,4)); ?>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <?php echo e(number_format($sl->lmp,4)); ?>
 
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <?php echo e(number_format($sl->loss_factor,4)); ?>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <?php echo e(number_format($sl->loss_factor,4)); ?>
 
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <?php echo e(number_format($sl->lmp_smp,4)); ?>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <?php echo e(number_format($sl->lmp_smp,4)); ?>
 
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <?php echo e(number_format($sl->lmp_loss,4)); ?>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <?php echo e(number_format($sl->lmp_loss,4)); ?>
 
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <?php echo e(number_format($sl->congestion,4)); ?>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <?php echo e(number_format($sl->congestion,4)); ?>
 
-                                </td>
-                            </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </td>
+                        </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </tbody>
-            </table>
+            </tbody>
+        </table>
+        <?php echo $scheduleload->links(); ?>
+
         </div>
 
 

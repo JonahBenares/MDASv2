@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-500 white:text-gray-400 " id="table-01">
+            <table class="w-full text-sm text-left text-gray-500 white:text-gray-400 " id="">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 white:bg-gray-700 white:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
@@ -49,50 +49,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($scheduleload->chunk(2000) AS $schedchunk)
-                        @foreach($schedchunk AS $sl)
-                            <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
-                                    {{ $sl->run_time }}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{$sl->mkt_type}}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{$sl->time_interval}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{ $sl->region_name}}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{$sl->resource_name}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{$sl->resource_type}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{number_format($sl->schedule_mw,4)}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{number_format($sl->lmp,4)}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{number_format($sl->loss_factor,4)}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{number_format($sl->lmp_smp,4)}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{number_format($sl->lmp_loss,4)}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{number_format($sl->congestion,4)}}
-                                </td>
-                            </tr>
-                        @endforeach
+                    @foreach($scheduleload AS $sl)
+                        <tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
+                                {{ $sl->run_time }}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{$sl->mkt_type}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{$sl->time_interval}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{ $sl->region_name}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{$sl->resource_name}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{$sl->resource_type}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{number_format($sl->schedule_mw,4)}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{number_format($sl->lmp,4)}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{number_format($sl->loss_factor,4)}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{number_format($sl->lmp_smp,4)}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{number_format($sl->lmp_loss,4)}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{number_format($sl->congestion,4)}}
+                            </td>
+                        </tr>
                     @endforeach
-                </tbody>
-            </table>
+            </tbody>
+        </table>
+        {!! $scheduleload->links() !!}
         </div>
 
 
