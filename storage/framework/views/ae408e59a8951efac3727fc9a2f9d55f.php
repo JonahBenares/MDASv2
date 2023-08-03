@@ -374,10 +374,10 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function(){
-                    //$('#savecsv').hide();
-                    document.getElementById("hexagon-spinner").style.display = "block";
-                },
+                // beforeSend: function(){
+                //     //$('#savecsv').hide();
+                //     document.getElementById("hexagon-spinner").style.display = "block";
+                // },
                 success: function(output){
                     //$('#loadData').empty().load(window.location.href + '#loadTable');
                     // document.getElementById("mpsl").disabled = true; 
@@ -410,10 +410,10 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function(){
-                    //$('#savecsv').hide();
-                    document.getElementById("hexagon-spinner").style.display = "block";
-                },
+                // beforeSend: function(){
+                //     //$('#savecsv').hide();
+                //     document.getElementById("hexagon-spinner").style.display = "block";
+                // },
                 success: function(output){
                     //$('#loadData').empty().load(window.location.href + '#loadTable');
                     document.getElementById("mpsl").disabled = true; 
