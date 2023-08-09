@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Imports\ImportSchedule;
 use Maatwebsite\Excel\Excel as ExcelExcel;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 use Auth;
 ini_set('max_execution_time', 10000);
 ini_set('max_input_vars', 100000);
@@ -344,9 +345,91 @@ class UploadScheduleController extends Controller
      */
     public function show($identifier)
     {
-        $scheduleload=UploadSchedule::where('identifier',$identifier)->paginate(10);
-        return view('upload_schedule.show',compact('scheduleload'));
+        $scheduleload=UploadSchedule::where('identifier',$identifier)->orderBy(DB::raw('HOUR(time_interval)'),'ASC')->paginate(10);
+        return view('upload_schedule.show',compact('scheduleload','identifier'));
     }
+
+    public function filter_datatable(Request $request)
+    {
+        $filter = $_GET['filter'];
+        $identifier = $_GET['identifier'];
+        if($filter != ''){
+            $scheduleload = UploadSchedule::where([
+                ['identifier',$identifier],
+                [function ($query) use ($request) {
+                    if (($filter = $request->filter)) {
+                        $query->orWhere('run_time', 'LIKE', '%' . $filter. '%')
+                            ->orWhere('mkt_type', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('time_interval', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('region_name', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('resource_name', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('resource_type', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('schedule_mw', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('lmp', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('loss_factor', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('lmp_smp', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('lmp_loss', 'LIKE', '%' . $filter . '%')
+                            ->orWhere('congestion', 'LIKE', '%' . $filter . '%')
+                            ->get();
+                    }
+                }]
+            ])->orderBy(DB::raw('HOUR(time_interval)'),'ASC')->paginate(10);
+            $scheduleload->appends($request->all());
+            return view('upload_schedule.show',compact('scheduleload','identifier'));
+            //if(count($scheduleload )>0){
+            //    return view('upload_schedule.show',compact('scheduleload','identifier'));
+            // }else{
+            //     return view('upload_schedule.show',compact('scheduleload','identifier'));
+            // }
+        }
+    }
+
+    // public function filter_datatable(Request $request){
+    //     $scheduleload=UploadSchedule::where('identifier',$request->identifier)->where('region_name', 'LIKE', '%'.$request->filter.'%')->Orwhere('resource_name', 'LIKE', '%'.$request->filter.'%')->paginate(10);
+    //     $output='';
+    //     foreach($scheduleload AS $sl){
+    //         $output.='<tr class="bg-white border-b white:bg-gray-800 white:border-gray-700 hover:bg-gray-50 white:hover:bg-gray-600">
+    //             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap white:text-white">
+    //                 '.$sl->run_time.'
+    //             </td>
+    //             <td class="px-6 py-4 text-center">
+    //                 '.$sl->mkt_type.'
+    //             </td>
+    //             <td class="px-6 py-4">
+    //                 '.$sl->time_interval.'
+    //             </td>
+    //             <td class="px-6 py-4 text-center">
+    //                 '.$sl->region_name.'
+    //             </td>
+    //             <td class="px-6 py-4">
+    //                 '.$sl->resource_name.'
+    //             </td>
+    //             <td class="px-6 py-4 text-center">
+    //                 '.$sl->resource_type.'
+    //             </td>
+    //             <td class="px-6 py-4 text-center">
+    //                 '.number_format($sl->schedule_mw,4).'
+    //             </td>
+    //             <td class="px-6 py-4 text-center">
+    //                 '.number_format($sl->lmp,4).'
+    //             </td>
+    //             <td class="px-6 py-4 text-center">
+    //                 '.number_format($sl->loss_factor,4).'
+    //             </td>
+    //             <td class="px-6 py-4 text-center">
+    //                 '.number_format($sl->lmp_smp,4).'
+    //             </td>
+    //             <td class="px-6 py-4 text-center">
+    //                 '.number_format($sl->lmp_loss,4).'
+    //             </td>
+    //             <td class="px-6 py-4 text-center">
+    //                 '.number_format($sl->congestion,4).'
+    //             </td>
+    //         </tr>';
+    //     }
+    //     echo $output."|".$scheduleload->appends(request()->all())->links();
+    //     //echo $filter_data->links();
+    // }
 
     /**
      * Show the form for editing the specified resource.

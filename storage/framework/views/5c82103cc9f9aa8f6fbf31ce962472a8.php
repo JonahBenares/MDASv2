@@ -94,6 +94,12 @@
         $(document).ready( function () {
             $('#table-01').DataTable();
         } );
+        $(document).ready( function () {
+            $('#table-02').DataTable({
+                "bPaginate": false,
+                "bInfo":false
+            });
+        } );
         $(document).on("click", ".editType", function () {
             var id = $(this).attr("data-id");
             var legend = $(this).attr("data-color");
@@ -631,23 +637,41 @@
             });
         }
 
-            function OutagesAdd() {
-                var powerplant_id = document.getElementById("resourceid-dropdown").value;
-                var base_url = '<?php echo e(URL::to("/")); ?>';
-                $.ajax({
-                    type: "POST",
-                    url: base_url+"/reportactualoutages/fetchAdd",
-                    data: {
-                        powerplant_id: powerplant_id,
-                        _token: '<?php echo e(csrf_token()); ?>'
-                    },
-                    success: function (output) {
-                        const exp = output.split("|");
-                        document.getElementById("capacity").value  = exp[0];
-                        document.getElementById("type_name").value  = exp[1];
-                    }
-                });
-            }
+        function OutagesAdd() {
+            var powerplant_id = document.getElementById("resourceid-dropdown").value;
+            var base_url = '<?php echo e(URL::to("/")); ?>';
+            $.ajax({
+                type: "POST",
+                url: base_url+"/reportactualoutages/fetchAdd",
+                data: {
+                    powerplant_id: powerplant_id,
+                    _token: '<?php echo e(csrf_token()); ?>'
+                },
+                success: function (output) {
+                    const exp = output.split("|");
+                    document.getElementById("capacity").value  = exp[0];
+                    document.getElementById("type_name").value  = exp[1];
+                }
+            });
+        }
+
+        function selectValidationDT() {
+            // var count = $('.filter').filter(function(){return $(this).val() != ''}).length;
+            // if (count<=2) {
+            //     let confirmAction = confirm("It may take time to load this report. Please add more filter to generate a more specific report.");
+            //     if(confirmAction){
+            //         document.getElementById("hexagon-spinner").style.display = "block"; 
+            //         return true;
+            //     }else{
+            //         document.getElementById("hexagon-spinner").style.display = "none"; 
+            //         return false;
+            //     }
+            // }
+            document.getElementById("hexagon-spinner").style.display = "block";
+            window.addEventListener("load", () => { 
+                document.getElementById("hexagon-spinner").style.display = "none"; 
+            }); 
+        }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </html>
