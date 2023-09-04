@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://tradingsvr/mdasv2/public/'),
+    'url' => env('APP_URL', 'http://tradingsvr/MDASv2/public/'),
 
     'asset_url' => env('ASSET_URL'),
 
